@@ -1,0 +1,4 @@
+#set($page_title="From Layout")
+#foreach($u in $list)
+${u.username}----
+#end

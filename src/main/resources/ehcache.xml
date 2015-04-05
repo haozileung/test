@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ehcache>
+	<diskStore path="java.io.tmpdir/cip" />
+	<!-- 定义默认的缓存区，如果在未指定缓存区时，默认使用该缓存区 -->
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false"
+		memoryStoreEvictionPolicy="LRU" />
+	<cache name="icache-global" maxElementsInMemory="10000" eternal="true"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU">
+	</cache>
+</ehcache>

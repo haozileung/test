@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools>
+	<toolbox scope="application">
+		<tool class="com.haozileung.test.velocity.MyTool" />
+		<tool class="com.haozileung.test.velocity.PermissionTool" />
+	</toolbox>
+</tools>
