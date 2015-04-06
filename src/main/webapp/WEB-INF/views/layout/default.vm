@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js">
+<html lang="zh_CN">
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,25 +9,85 @@
 <title>$!page_title</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<link rel="icon" type="image/png" href="assets/img/favicon.png">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="icon" sizes="192x192" href="assets/img/app-icon72x72@2x.png">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-<meta name="apple-mobile-web-app-title" content="Amaze UI" />
-<link rel="apple-touch-icon-precomposed" href="assets/img/app-icon72x72@2x.png">
-<meta name="msapplication-TileImage" content="assets/img/app-icon72x72@2x.png">
-<meta name="msapplication-TileColor" content="#0e90d2">
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <!-- Bootstrap Core CSS -->
+    <link href="$link.getContextURL()assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- MetisMenu CSS -->
+    <link href="$link.getContextURL()assets/metisMenu/metisMenu.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link href="$link.getContextURL()assets/css/admin.css" rel="stylesheet">
+    <!-- Custom Fonts -->
+    <link href="$link.getContextURL()assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="$link.getContextURL()assets/js/lib/html5shiv.js"></script>
+        <script src="$link.getContextURL()assets/js/lib/respond.min.js"></script>
+    <![endif]-->
 </head>
 <body>
-    $screen_content
-    <!--[if (gte IE 9)|!(IE)]><!-->
-    <script src="assets/js/jquery-2.1.3.min.js"></script>
-    <!--<![endif]-->
-    <!--[if lte IE 8 ]>
-    <script src="assets/js/jquery-1.11.2.min.js"></script>
-    <![endif]-->
-    <script src="assets/js/bootstrap.min.js"></script>
+<div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="$link.getContextURL()index">Admin</a>
+            </div>
+            <!-- /.navbar-header -->
+
+            <ul class="nav navbar-top-links navbar-right">            
+                <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                        </li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="$link.getContextURL()logout"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
+            <div class="navbar-default sidebar" role="navigation">
+                <div class="sidebar-nav navbar-collapse">
+                    <ul class="nav" id="side-menu">                        
+                        <li>
+                            <a href="$link.getContextURL()index"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- /.sidebar-collapse -->
+            </div>
+            <!-- /.navbar-static-side -->
+        </nav>
+        <!-- Page Content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+                $screen_content
+            </div>
+            <!-- /.container-fluid -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+     <!-- jQuery -->
+    <script src="$link.getContextURL()assets/js/lib/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="$link.getContextURL()assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="$link.getContextURL()assets/metisMenu/metisMenu.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="$link.getContextURL()assets/js/admin.js"></script>
 </body>
 </html>
