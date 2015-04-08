@@ -70,8 +70,7 @@ public class CacheHelper {
 			final String global_key = key + "@" + region;
 			// 2. 从全局二级缓存中获取数据
 			data = CacheManager.get(CACHE_GLOBAL, global_key);
-			// 2.1 取不到为第一次运行
-			if (data == null) {
+			if (data == null) {// 2.1 取不到为第一次运行
 				if (invoker != null) {
 					data = invoker.callback(args);
 					if (data != null) {
@@ -80,9 +79,7 @@ public class CacheHelper {
 								(Serializable) data);
 					}
 				}
-			}
-			// 2.2 如果取到了则执行自动更新数据策略
-			else if (invoker != null) {
+			} else if (invoker != null) {// 2.2 如果取到了则执行自动更新数据策略
 				String thread_name = "CacheUpdater-" + region + "-" + key;
 				g_ThreadPool.execute(new Thread(thread_name) {
 					public void run() {

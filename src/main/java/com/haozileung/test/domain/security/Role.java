@@ -1,25 +1,37 @@
 package com.haozileung.test.domain.security;
 
-public class Role {
+import java.io.Serializable;
+
+public class Role implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8177652945251421826L;
 	private Long id;
 	private String roleName;
-	private Status status;
+	private Integer status;
+
 	public Long getId() {
 		return id;
 	}
+
 	public String getRoleName() {
 		return roleName;
 	}
-	public Status getStatus() {
+
+	public Integer getStatus() {
 		return status;
 	}
+
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
 	}
-	public void setStatus(Status status) {
+
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 }

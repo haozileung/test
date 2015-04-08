@@ -14,7 +14,7 @@ public class User implements Serializable {
 
 	private String password;
 
-	private Status status;
+	private Integer status;
 
 	private String username;
 
@@ -30,7 +30,7 @@ public class User implements Serializable {
 		return password;
 	}
 
-	public Status getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
@@ -50,7 +50,7 @@ public class User implements Serializable {
 		this.password = password;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 

@@ -16,7 +16,6 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.haozileung.test.domain.security.Status;
 import com.haozileung.test.domain.security.User;
 import com.haozileung.test.infra.QueryHelper;
 
@@ -36,21 +35,19 @@ public class UserRealm extends AuthorizingRealm {
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		List<String> roleNames = QueryHelper
 				.query(String.class,
-						"SELECT r.roleName FROM t_role r LEFT JOIN t_user_role ur ON r.id = ur.roleId LEFT JOIN t_user u ON ur.userId = u.id WHERE r.status = 'ENABLED' AND u.status = 'ENABLED' AND u.email = ?",
+						"SELECT r.roleName FROM t_role r LEFT JOIN t_user_role ur ON r.id = ur.roleId LEFT JOIN t_user u ON ur.userId = u.id AND u.status = 0 WHERE r.status = 0 AND u.email = ?",
 						email);
-		List<String> permissionCodes = null;
-		if (roleNames != null) {
-			permissionCodes = QueryHelper
-					.query(String.class,
-							"SELECT p.permissionCode FROM t_permission p LEFT JOIN t_role_permission rp ON p.id = rp.permissionId LEFT JOIN t_role r ON rp.roleId = r.id WHERE r.status = 'ENABLED' AND r.roleName IN ('"
-									+ Joiner.on("','").join(roleNames) + "')");
-		}
 		if (roleNames != null) {
 			info.addRoles(roleNames);
+			List<String> permissionCodes = QueryHelper
+					.query(String.class,
+							"SELECT p.permissionCode FROM t_permission p LEFT JOIN t_role_permission rp ON p.id = rp.permissionId LEFT JOIN t_role r ON rp.roleId = r.id AND r.status = 0 WHERE p.status = 0 AND r.roleName IN ('"
+									+ Joiner.on("','").join(roleNames) + "')");
+			if (permissionCodes != null) {
+				info.addStringPermissions(permissionCodes);
+			}
 		}
-		if (permissionCodes != null) {
-			info.addStringPermissions(permissionCodes);
-		}
+
 		return info;
 	}
 
@@ -66,7 +63,7 @@ public class UserRealm extends AuthorizingRealm {
 		if (u == null) {
 			throw new UnknownAccountException(email + " is not found!");
 		}
-		if (Status.DISABLED.equals(u.getStatus())) {
+		if (u.getStatus() != null && u.getStatus().equals(1)) {
 			throw new LockedAccountException(email + " is locked!");
 		}
 		SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

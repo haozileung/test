@@ -21,8 +21,9 @@ public class CacheManager {
 			CacheManager.provider = (CacheProvider) Class.forName(prv_name)
 					.newInstance();
 		} catch (Exception e) {
-			logger.error("Unabled to initialize cache provider:" + prv_name
-					+ ", using ehcache default.");
+			logger.error(
+					"Unabled to initialize cache provider:{}, using ehcache default.",
+					prv_name);
 			CacheManager.provider = new EhCacheProvider();
 		}
 		CacheManager.provider.start();

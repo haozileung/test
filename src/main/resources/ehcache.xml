@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ehcache>
-	<diskStore path="java.io.tmpdir/cip" />
-	<!-- 定义默认的缓存区，如果在未指定缓存区时，默认使用该缓存区 -->
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd">
+	<diskStore path="java.io.tmpdir" />
+
 	<defaultCache maxElementsInMemory="10000" eternal="false"
 		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false"
-		memoryStoreEvictionPolicy="LRU" />
+		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+
+	<cache name="shiro-activeSessionCache" maxElementsInMemory="10000"
+		overflowToDisk="true" eternal="true" timeToLiveSeconds="0"
+		timeToIdleSeconds="0" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600" />
+	<cache name="authenticationCache" maxElementsInMemory="10000"
+		overflowToDisk="true" eternal="true" timeToLiveSeconds="0"
+		timeToIdleSeconds="0" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600" />
+	<cache name="authorizationCache" maxElementsInMemory="10000"
+		overflowToDisk="true" eternal="true" timeToLiveSeconds="0"
+		timeToIdleSeconds="0" diskPersistent="true"
+		diskExpiryThreadIntervalSeconds="600" />
+
 	<cache name="icache-global" maxElementsInMemory="10000" eternal="true"
 		overflowToDisk="false" memoryStoreEvictionPolicy="LFU">
 	</cache>
