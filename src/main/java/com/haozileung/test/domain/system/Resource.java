@@ -1,8 +1,8 @@
-package com.haozileung.test.domain.security;
+package com.haozileung.test.domain.system;
 
 import java.io.Serializable;
 
-public class Permission implements Serializable {
+public class Resource implements Serializable {
 	/**
 	 * 
 	 */

@@ -1,4 +1,4 @@
-package com.haozileung.test.domain.security;
+package com.haozileung.test.domain.system;
 
 import java.io.Serializable;
 

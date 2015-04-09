@@ -8,7 +8,6 @@ import org.slf4j.LoggerFactory;
 /**
  * 缓存助手
  * 
- * @author liudong
  */
 public class CacheManager {
 

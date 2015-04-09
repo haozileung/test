@@ -6,7 +6,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.haozileung.test.domain.security.User;
+import com.haozileung.test.domain.system.User;
 import com.haozileung.test.infra.DataSourceProvider;
 import com.haozileung.test.infra.PropertiesProvider;
 import com.haozileung.test.infra.QueryHelper;

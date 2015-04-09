@@ -7,8 +7,6 @@ import com.whalin.MemCached.MemCachedClient;
 
 /**
  * MemCached
- * 
- * @author liudong
  */
 public class MemCache implements Cache {
 

@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
  * Cache Provider plugin
  * 
  * Taken from EhCache 1.3 distribution
- * @author liudong
  */
 public class EhCacheProvider implements CacheProvider {
 

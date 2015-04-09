@@ -16,7 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
-import com.haozileung.test.domain.security.User;
+import com.haozileung.test.domain.system.User;
 import com.haozileung.test.infra.QueryHelper;
 
 public class UserRealm extends AuthorizingRealm {

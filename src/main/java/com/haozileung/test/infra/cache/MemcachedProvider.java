@@ -24,7 +24,6 @@ import com.whalin.MemCached.SockIOPool;
  * 		<property name="memcached.properties">/memcached.properties</property>
  * </pre>
  * 
- * @author liudong
  */
 public class MemcachedProvider implements CacheProvider {
 

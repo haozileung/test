@@ -22,7 +22,6 @@ import com.haozileung.test.infra.cache.CacheManager;
 /**
  * 数据库查询助手
  * 
- * @author Winter Lau
  */
 @SuppressWarnings("unchecked")
 public class QueryHelper {

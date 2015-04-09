@@ -3,7 +3,6 @@ package com.haozileung.test.infra.cache;
 /**
  * Something went wrong in the cache
  * 
- * @author liudong
  */
 public class CacheException extends RuntimeException {
 

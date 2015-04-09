@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 /**
  * 自动缓存数据重加载
  * 
- * @author Winter Lau
  */
 public class CacheHelper {
 

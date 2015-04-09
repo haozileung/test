@@ -10,7 +10,7 @@ import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.view.VelocityLayoutServlet;
 
-import com.haozileung.test.domain.security.User;
+import com.haozileung.test.domain.system.User;
 import com.haozileung.test.infra.QueryHelper;
 
 @WebServlet(name = "test", urlPatterns = { "/test" }, loadOnStartup = 1)

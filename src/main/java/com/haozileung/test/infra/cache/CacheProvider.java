@@ -2,7 +2,6 @@ package com.haozileung.test.infra.cache;
 
 /**
  * Support for pluggable caches.
- * @author liudong
  */
 public interface CacheProvider {
 
