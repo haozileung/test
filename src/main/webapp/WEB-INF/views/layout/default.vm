@@ -82,7 +82,7 @@
     </div>
     <!-- /#wrapper -->
      <!-- jQuery -->
-    <script src="$link.getContextURL()assets/js/lib/jquery.min.js"></script>
+    <script src="$link.getContextURL()assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="$link.getContextURL()assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->
