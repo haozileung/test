@@ -12,7 +12,7 @@ import org.apache.velocity.runtime.directive.Directive;
 import org.apache.velocity.runtime.parser.node.Node;
 import org.apache.velocity.runtime.parser.node.SimpleNode;
 
-import com.haozileung.test.infra.cache.CacheManager;
+import com.haozileung.test.infra.cache.L1CacheManager;
 
 /**
  * Velocity模板上用于控制缓存的指令
@@ -49,12 +49,12 @@ public class CacheDirective extends Directive {
         String tpl_key = key+"@"+region;
         String body_tpl = body.literal();
         String old_body_tpl = body_templates.get(tpl_key);
-        String cache_html = CacheManager.get(String.class, region, key);
+        String cache_html = L1CacheManager.get(String.class, region, key);
         if(cache_html == null || !StringUtils.equals(body_tpl, old_body_tpl)){
         	StringWriter sw = new StringWriter();
         	body.render(context, sw);
         	cache_html = sw.toString();
-        	CacheManager.set(region, key, cache_html);
+        	L1CacheManager.set(region, key, cache_html);
         	body_templates.put(tpl_key, body_tpl);
         }
         writer.write(cache_html);

@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import com.haozileung.test.infra.DataSourceProvider;
 import com.haozileung.test.infra.PropertiesProvider;
-import com.haozileung.test.infra.cache.CacheManager;
+import com.haozileung.test.infra.cache.CacheHelper;
 
 @WebListener
 public class AppInitializer implements ServletContextListener {
@@ -21,7 +21,7 @@ public class AppInitializer implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		PropertiesProvider.init();
 		DataSourceProvider.init();
-		CacheManager.init("com.haozileung.test.infra.cache.MemcachedProvider");
+		CacheHelper.init();
 		logger.info("项目已启动...");
 	}
 
@@ -29,7 +29,7 @@ public class AppInitializer implements ServletContextListener {
 	public void contextDestroyed(ServletContextEvent sce) {
 		DataSourceProvider.destroy();
 		PropertiesProvider.destroy();
-		CacheManager.destroy();
+		CacheHelper.destroy();
 		logger.info("项目已停止...");
 	}
 }

@@ -27,13 +27,14 @@ import com.whalin.MemCached.SockIOPool;
  */
 public class MemcachedProvider implements CacheProvider {
 
-	private static final Logger log = LoggerFactory.getLogger(MemcachedProvider.class);
+	private static final Logger log = LoggerFactory
+			.getLogger(MemcachedProvider.class);
 
 	private final static String DEFAULT_REGION_NAME = "____DEFAULT_CACHE_REGION";
 	private final static String CACHE_IDENT = "cache.";
 	private final static String SERVERS_CONF = "servers";
 
-	private Hashtable<String, MemCache> _CacheManager;
+	private Hashtable<String, MemCache> cacheManager;
 	private Properties _cache_properties = new Properties();
 
 	/*
@@ -87,7 +88,7 @@ public class MemcachedProvider implements CacheProvider {
 
 		pool.initialize();
 
-		_CacheManager = new Hashtable<String, MemCache>();
+		cacheManager = new Hashtable<String, MemCache>();
 	}
 
 	/*
@@ -100,7 +101,7 @@ public class MemcachedProvider implements CacheProvider {
 		if (StringUtils.isEmpty(name)) {
 			name = DEFAULT_REGION_NAME;
 		}
-		MemCache mCache = _CacheManager.get(name);
+		MemCache mCache = cacheManager.get(name);
 		if (mCache == null) {
 			String timeToLive = _cache_properties.getProperty(name);
 			int secondToLive = -1;
@@ -111,7 +112,7 @@ public class MemcachedProvider implements CacheProvider {
 			log.info("Building cache named " + name + " using secondToLive is "
 					+ secondToLive);
 			mCache = new MemCache(name, secondToLive);
-			_CacheManager.put(name, mCache);
+			cacheManager.put(name, mCache);
 		}
 		return mCache;
 	}
@@ -142,6 +143,10 @@ public class MemcachedProvider implements CacheProvider {
 	 * @see org.hibernate.cache.CacheProvider#stop()
 	 */
 	public void stop() {
+		for (MemCache mc : cacheManager.values()) {
+			mc.clear();
+		}
+		cacheManager = null;
 	}
 
 }

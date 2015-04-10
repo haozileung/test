@@ -49,7 +49,7 @@ public class MemCache implements Cache {
 	 * @param value
 	 *            a value
 	 * @throws CacheException
-	 *             if the {@link CacheManager} is shutdown or another
+	 *             if the {@link L1CacheManager} is shutdown or another
 	 *             {@link Exception} occurs.
 	 */
 	public void update(Object key, Object value) throws CacheException {
@@ -62,7 +62,7 @@ public class MemCache implements Cache {
 	 * @param key
 	 * @param value
 	 * @throws CacheException
-	 *             if the {@link CacheManager} is shutdown or another
+	 *             if the {@link L1CacheManager} is shutdown or another
 	 *             {@link Exception} occurs.
 	 */
 	public void put(Object key, Object value) throws CacheException {
@@ -108,5 +108,6 @@ public class MemCache implements Cache {
 	 * @throws CacheException
 	 */
 	public void destroy() throws CacheException {
+		this.clear();
 	}
 }

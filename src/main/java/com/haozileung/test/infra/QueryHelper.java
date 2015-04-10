@@ -17,7 +17,7 @@ import org.apache.commons.lang.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.haozileung.test.infra.cache.CacheManager;
+import com.haozileung.test.infra.cache.L1CacheManager;
 
 /**
  * 数据库查询助手
@@ -105,10 +105,10 @@ public class QueryHelper {
 
 	public static <T> T read_cache(Class<T> beanClass, String cache,
 			Serializable key, String sql, Object... params) {
-		T obj = (T) CacheManager.get(cache, key);
+		T obj = (T) L1CacheManager.get(cache, key);
 		if (obj == null) {
 			obj = read(beanClass, sql, params);
-			CacheManager.set(cache, key, (Serializable) obj);
+			L1CacheManager.set(cache, key, (Serializable) obj);
 		}
 		return obj;
 	}
@@ -150,10 +150,10 @@ public class QueryHelper {
 	 */
 	public static <T> List<T> query_cache(Class<T> beanClass,
 			String cache_region, Serializable key, String sql, Object... params) {
-		List<T> objs = (List<T>) CacheManager.get(cache_region, key);
+		List<T> objs = (List<T>) L1CacheManager.get(cache_region, key);
 		if (objs == null) {
 			objs = query(beanClass, sql, params);
-			CacheManager.set(cache_region, key, (Serializable) objs);
+			L1CacheManager.set(cache_region, key, (Serializable) objs);
 		}
 		return objs;
 	}
@@ -199,10 +199,10 @@ public class QueryHelper {
 	public static <T> List<T> query_slice_cache(Class<T> beanClass,
 			String cache, Serializable cache_key, int cache_obj_count,
 			String sql, int page, int count, Object... params) {
-		List<T> objs = (List<T>) CacheManager.get(cache, cache_key);
+		List<T> objs = (List<T>) L1CacheManager.get(cache, cache_key);
 		if (objs == null) {
 			objs = query_slice(beanClass, sql, 1, cache_obj_count, params);
-			CacheManager.set(cache, cache_key, (Serializable) objs);
+			L1CacheManager.set(cache, cache_key, (Serializable) objs);
 		}
 		if (objs == null || objs.size() == 0)
 			return objs;
@@ -248,10 +248,10 @@ public class QueryHelper {
 	 */
 	public static long stat_cache(String cache_region, Serializable key,
 			String sql, Object... params) {
-		Number value = (Number) CacheManager.get(cache_region, key);
+		Number value = (Number) L1CacheManager.get(cache_region, key);
 		if (value == null) {
 			value = stat(sql, params);
-			CacheManager.set(cache_region, key, value);
+			L1CacheManager.set(cache_region, key, value);
 		}
 		return value.longValue();
 	}

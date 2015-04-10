@@ -11,7 +11,6 @@ import com.haozileung.test.infra.DataSourceProvider;
 import com.haozileung.test.infra.PropertiesProvider;
 import com.haozileung.test.infra.QueryHelper;
 import com.haozileung.test.infra.cache.CacheHelper;
-import com.haozileung.test.infra.cache.CacheManager;
 import com.haozileung.test.infra.cache.ICacheInvoker;
 
 public class MyTest {
@@ -20,7 +19,7 @@ public class MyTest {
 	public void before() {
 		PropertiesProvider.init();
 		DataSourceProvider.init();
-		CacheManager.init("com.haozileung.test.infra.cache.MemcachedProvider");
+		CacheHelper.init();
 	}
 
 	@Test
@@ -56,7 +55,7 @@ public class MyTest {
 	public void after() {
 		DataSourceProvider.destroy();
 		PropertiesProvider.destroy();
-		CacheManager.destroy();
+		CacheHelper.destroy();
 	}
 
 }

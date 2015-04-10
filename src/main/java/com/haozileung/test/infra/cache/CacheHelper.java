@@ -16,6 +16,16 @@ import org.slf4j.LoggerFactory;
  */
 public class CacheHelper {
 
+	public static void init() {
+		L1CacheManager.init();
+		L2CacheManager.init();
+	}
+
+	public static void destroy() {
+		L1CacheManager.destroy();
+		L2CacheManager.destroy();
+	}
+
 	private static final Logger logger = LoggerFactory
 			.getLogger(CacheHelper.class);
 
@@ -50,7 +60,7 @@ public class CacheHelper {
 
 	}
 
-	private final static String CACHE_GLOBAL = "icache-global";
+	private static final String GLOBAL_CACHE = "global_cache";
 
 	/**
 	 * 获取缓存数据
@@ -64,17 +74,16 @@ public class CacheHelper {
 	public static Object get(final String region, final Serializable key,
 			final ICacheInvoker invoker, final Object... args) {
 		// 1. 从正常缓存中获取数据
-		Object data = CacheManager.get(region, key);
+		Object data = L1CacheManager.get(region, key);
 		if (data == null) {
-			final String global_key = key + "@" + region;
 			// 2. 从全局二级缓存中获取数据
-			data = CacheManager.get(CACHE_GLOBAL, global_key);
+			data = L2CacheManager.get(GLOBAL_CACHE, key);
 			if (data == null) {// 2.1 取不到为第一次运行
 				if (invoker != null) {
 					data = invoker.callback(args);
 					if (data != null) {
-						CacheManager.set(region, key, (Serializable) data);
-						CacheManager.set(CACHE_GLOBAL, global_key,
+						L1CacheManager.set(region, key, (Serializable) data);
+						L2CacheManager.set(GLOBAL_CACHE, key,
 								(Serializable) data);
 					}
 				}
@@ -84,9 +93,9 @@ public class CacheHelper {
 					public void run() {
 						Object result = invoker.callback(args);
 						if (result != null) {
-							CacheManager
-									.set(region, key, (Serializable) result);
-							CacheManager.set(CACHE_GLOBAL, global_key,
+							L1CacheManager.set(region, key,
+									(Serializable) result);
+							L2CacheManager.set(GLOBAL_CACHE, key,
 									(Serializable) result);
 						}
 					}

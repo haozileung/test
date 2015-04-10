@@ -9,29 +9,22 @@ import org.slf4j.LoggerFactory;
  * 缓存助手
  * 
  */
-public class CacheManager {
+public class L1CacheManager {
 
 	private final static Logger logger = LoggerFactory
-			.getLogger(CacheManager.class);
+			.getLogger(L1CacheManager.class);
 	private static CacheProvider provider;
 
-	public static void init(String prv_name) {
-		try {
-			CacheManager.provider = (CacheProvider) Class.forName(prv_name)
-					.newInstance();
-		} catch (Exception e) {
-			logger.error(
-					"Unabled to initialize cache provider:{}, using ehcache default.",
-					prv_name);
-			CacheManager.provider = new EhCacheProvider();
-		}
-		CacheManager.provider.start();
+	public static void init() {
+		provider = new EhCacheProvider();
+		provider.start();
+		logger.info("L1 Cache started...");
 	}
 
 	public static void destroy() {
-		if (CacheManager.provider != null) {
-			CacheManager.provider.stop();
-			CacheManager.provider = null;
+		if (provider != null) {
+			provider.stop();
+			provider = null;
 		}
 	}
 
