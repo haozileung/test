@@ -13,6 +13,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
@@ -20,6 +22,9 @@ import com.haozileung.test.domain.system.User;
 import com.haozileung.test.infra.QueryHelper;
 
 public class UserRealm extends AuthorizingRealm {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(UserRealm.class);
 
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
@@ -58,8 +63,13 @@ public class UserRealm extends AuthorizingRealm {
 		if (Strings.isNullOrEmpty(email)) {
 			return null;
 		}
-		User u = QueryHelper.read(User.class,
-				"SELECT * FROM t_user where email = ? LIMIT 1", email);
+		User u = null;
+		try {
+			u = QueryHelper.read(User.class,
+					"SELECT * FROM t_user where email = ? LIMIT 1", email);
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
 		if (u == null) {
 			throw new UnknownAccountException(email + " is not found!");
 		}

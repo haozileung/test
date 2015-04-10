@@ -61,7 +61,7 @@ public class LoginServlet extends VelocityViewServlet {
 			Preconditions.checkArgument(!Strings.isNullOrEmpty(email)
 					&& !Strings.isNullOrEmpty(password));
 		} catch (IllegalArgumentException e) {
-			logger.error(e.getMessage());
+			logger.error("参数异常", e);
 			return;
 		}
 		logger.debug("用户认证开始:" + email + " , " + password);
@@ -72,9 +72,7 @@ public class LoginServlet extends VelocityViewServlet {
 		}
 		try {
 			currentUser.login(token);
-			logger.debug("User [" + currentUser.getPrincipal()
-					+ "] logged in successfully.");
-			logger.debug("用户认证完毕:" + email);
+			logger.debug("用户认证完毕:{}", email);
 			response.sendRedirect("/index");
 			return;
 		} catch (UnknownAccountException uae) {
