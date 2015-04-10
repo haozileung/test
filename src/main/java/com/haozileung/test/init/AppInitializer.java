@@ -21,7 +21,7 @@ public class AppInitializer implements ServletContextListener {
 	public void contextInitialized(ServletContextEvent sce) {
 		PropertiesProvider.init();
 		DataSourceProvider.init();
-		CacheManager.init(null);
+		CacheManager.init("com.haozileung.test.infra.cache.MemcachedProvider");
 		logger.info("项目已启动...");
 	}
 

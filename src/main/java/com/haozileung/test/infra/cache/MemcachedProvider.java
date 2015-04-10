@@ -10,8 +10,8 @@ import java.util.Properties;
 
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.util.IOUtils;
 import com.whalin.MemCached.SockIOPool;
@@ -27,7 +27,7 @@ import com.whalin.MemCached.SockIOPool;
  */
 public class MemcachedProvider implements CacheProvider {
 
-	private static final Log log = LogFactory.getLog(MemcachedProvider.class);
+	private static final Logger log = LoggerFactory.getLogger(MemcachedProvider.class);
 
 	private final static String DEFAULT_REGION_NAME = "____DEFAULT_CACHE_REGION";
 	private final static String CACHE_IDENT = "cache.";
@@ -97,8 +97,9 @@ public class MemcachedProvider implements CacheProvider {
 	 * java.util.Properties)
 	 */
 	public MemCache buildCache(String name) throws CacheException {
-		if (StringUtils.isEmpty(name))
+		if (StringUtils.isEmpty(name)) {
 			name = DEFAULT_REGION_NAME;
+		}
 		MemCache mCache = _CacheManager.get(name);
 		if (mCache == null) {
 			String timeToLive = _cache_properties.getProperty(name);
@@ -133,15 +134,6 @@ public class MemcachedProvider implements CacheProvider {
 			log.warn("Illegal configuration value : " + str, e);
 		}
 		return -1;
-	}
-
-	public static void main(String[] args) {
-		System.out.println(_GetSeconds("ddd"));
-		System.out.println(_GetSeconds("102s"));
-		System.out.println(_GetSeconds("10m"));
-		System.out.println(_GetSeconds("1h"));
-		System.out.println(_GetSeconds("2d"));
-		System.out.println(_GetSeconds("2333"));
 	}
 
 	/*
