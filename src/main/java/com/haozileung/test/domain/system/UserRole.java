@@ -12,30 +12,30 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author Haozi
  *
  */
-public class Role implements Serializable {
+public class UserRole implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8127720436707168759L;
-	public static final String TABLE = "sys_role";
+	private static final long serialVersionUID = -2201466479697675334L;
+	public static final String TABLE = "sys_user_role";
 	private Long id;
-	private String name;
-	private Boolean status;
+	private Long roleId;
+	private Long userId;
 
-	public Role() {
+	public UserRole() {
 	}
 
-	public Role(Long id) {
+	public UserRole(Long id) {
 		this.id = id;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Role == false)
+		if (obj instanceof UserRole == false)
 			return false;
 		if (this == obj)
 			return true;
-		Role other = (Role) obj;
+		UserRole other = (UserRole) obj;
 		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
 
@@ -43,12 +43,12 @@ public class Role implements Serializable {
 		return this.id;
 	}
 
-	public String getName() {
-		return this.name;
+	public Long getRoleId() {
+		return this.roleId;
 	}
 
-	public Boolean getStatus() {
-		return this.status;
+	public Long getUserId() {
+		return this.userId;
 	}
 
 	@Override
@@ -60,18 +60,18 @@ public class Role implements Serializable {
 		this.id = value;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setRoleId(Long value) {
+		this.roleId = value;
 	}
 
-	public void setStatus(Boolean value) {
-		this.status = value;
+	public void setUserId(Long value) {
+		this.userId = value;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-				.append("Id", getId()).append("Name", getName())
-				.append("Status", getStatus()).toString();
+				.append("Id", getId()).append("UserId", getUserId())
+				.append("RoleId", getRoleId()).toString();
 	}
 }

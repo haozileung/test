@@ -12,30 +12,32 @@ import org.apache.commons.lang.builder.ToStringStyle;
  * @author Haozi
  *
  */
-public class Role implements Serializable {
+public class RoleResource implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -8127720436707168759L;
-	public static final String TABLE = "sys_role";
+	private static final long serialVersionUID = -4306085774977636498L;
+	public static final String TABLE = "sys_role_resource";
 	private Long id;
-	private String name;
-	private Boolean status;
+	private Long resourceId;
+	private Long roleId;
 
-	public Role() {
+	// columns END
+
+	public RoleResource() {
 	}
 
-	public Role(Long id) {
+	public RoleResource(Long id) {
 		this.id = id;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Role == false)
+		if (obj instanceof RoleResource == false)
 			return false;
 		if (this == obj)
 			return true;
-		Role other = (Role) obj;
+		RoleResource other = (RoleResource) obj;
 		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
 
@@ -43,12 +45,12 @@ public class Role implements Serializable {
 		return this.id;
 	}
 
-	public String getName() {
-		return this.name;
+	public Long getResourceId() {
+		return this.resourceId;
 	}
 
-	public Boolean getStatus() {
-		return this.status;
+	public Long getRoleId() {
+		return this.roleId;
 	}
 
 	@Override
@@ -60,18 +62,18 @@ public class Role implements Serializable {
 		this.id = value;
 	}
 
-	public void setName(String value) {
-		this.name = value;
+	public void setResourceId(Long value) {
+		this.resourceId = value;
 	}
 
-	public void setStatus(Boolean value) {
-		this.status = value;
+	public void setRoleId(Long value) {
+		this.roleId = value;
 	}
 
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-				.append("Id", getId()).append("Name", getName())
-				.append("Status", getStatus()).toString();
+				.append("Id", getId()).append("RoleId", getRoleId())
+				.append("ResourceId", getResourceId()).toString();
 	}
 }

@@ -1,123 +1,121 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 127.0.0.1
-Source Server Version : 50624
-Source Host           : 127.0.0.1:3306
+Source Server         : localhost
+Source Server Version : 50622
+Source Host           : localhost:3306
 Source Database       : test
 
 Target Server Type    : MYSQL
-Target Server Version : 50624
+Target Server Version : 50622
 File Encoding         : 65001
 
-Date: 2015-04-16 00:00:25
+Date: 2015-04-16 11:03:40
 */
 
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for t_dictionary
+-- Table structure for sys_dictionary
 -- ----------------------------
-DROP TABLE IF EXISTS `t_dictionary`;
-CREATE TABLE `t_dictionary` (
-  `id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `sys_dictionary`;
+CREATE TABLE `sys_dictionary` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(20) NOT NULL,
   `name` varchar(20) NOT NULL,
   `order` int(11) NOT NULL DEFAULT '0',
   `parentId` bigint(20) unsigned NOT NULL DEFAULT '0',
   `stataus` tinyint(4) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `index_code` (`code`),
+  KEY `index_parentId` (`parentId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_dictionary
+-- Records of sys_dictionary
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_resource
+-- Table structure for sys_resource
 -- ----------------------------
-DROP TABLE IF EXISTS `t_resource`;
-CREATE TABLE `t_resource` (
+DROP TABLE IF EXISTS `sys_resource`;
+CREATE TABLE `sys_resource` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `code` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `name` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `url` varchar(255) CHARACTER SET latin1 DEFAULT NULL,
-  `type` varchar(255) CHARACTER SET latin1 NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `type` varchar(255) NOT NULL,
   `groupId` bigint(20) unsigned NOT NULL DEFAULT '0',
   `status` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_resource
+-- Records of sys_resource
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_role
+-- Table structure for sys_role
 -- ----------------------------
-DROP TABLE IF EXISTS `t_role`;
-CREATE TABLE `t_role` (
+DROP TABLE IF EXISTS `sys_role`;
+CREATE TABLE `sys_role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `roleName` varchar(20) CHARACTER SET latin1 DEFAULT NULL,
+  `name` varchar(20) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_role
+-- Records of sys_role
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_role_resource
+-- Table structure for sys_role_resource
 -- ----------------------------
-DROP TABLE IF EXISTS `t_role_resource`;
-CREATE TABLE `t_role_resource` (
-  `id` bigint(20) NOT NULL,
+DROP TABLE IF EXISTS `sys_role_resource`;
+CREATE TABLE `sys_role_resource` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `roleId` bigint(20) unsigned NOT NULL,
   `resourceId` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_role_resource_t_resource_1` (`resourceId`),
-  KEY `fk_t_role_resource_t_role_1` (`roleId`),
-  CONSTRAINT `fk_t_role_resource_t_resource_1` FOREIGN KEY (`resourceId`) REFERENCES `t_resource` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_t_role_resource_t_role_1` FOREIGN KEY (`roleId`) REFERENCES `t_role` (`id`) ON DELETE CASCADE
+  KEY `index_resourceId` (`resourceId`) USING BTREE,
+  KEY `index_roleId` (`roleId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_role_resource
+-- Records of sys_role_resource
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_user
+-- Table structure for sys_user
 -- ----------------------------
-DROP TABLE IF EXISTS `t_user`;
-CREATE TABLE `t_user` (
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) CHARACTER SET latin1 NOT NULL,
-  `email` varchar(128) CHARACTER SET latin1 NOT NULL,
-  `password` varchar(256) CHARACTER SET latin1 NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `password` varchar(256) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_user
+-- Records of sys_user
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for t_user_role
+-- Table structure for sys_user_role
 -- ----------------------------
-DROP TABLE IF EXISTS `t_user_role`;
-CREATE TABLE `t_user_role` (
+DROP TABLE IF EXISTS `sys_user_role`;
+CREATE TABLE `sys_user_role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `userId` bigint(20) unsigned NOT NULL,
   `roleId` bigint(20) unsigned NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_t_user_role_t_role_1` (`roleId`),
-  KEY `fk_t_user_role_t_user_1` (`userId`),
-  CONSTRAINT `fk_t_user_role_t_role_1` FOREIGN KEY (`roleId`) REFERENCES `t_role` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `fk_t_user_role_t_user_1` FOREIGN KEY (`userId`) REFERENCES `t_user` (`id`) ON DELETE CASCADE
+  KEY `index_roleId` (`roleId`) USING BTREE,
+  KEY `index_userId` (`userId`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of t_user_role
+-- Records of sys_user_role
 -- ----------------------------

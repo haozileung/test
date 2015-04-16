@@ -2,59 +2,95 @@ package com.haozileung.test.domain.system;
 
 import java.io.Serializable;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+/**
+ * 
+ * @author Haozi
+ *
+ */
 public class User implements Serializable {
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3886396658069093652L;
-
+	private static final long serialVersionUID = -7862430991787586647L;
+	public static final String TABLE = "sys_user";
 	private String email;
-
 	private Long id;
-
 	private String password;
-
-	private Integer status;
-
+	private Boolean status;
 	private String username;
 
-	public String getEmail() {
-		return email;
+	public User() {
 	}
 
-	public Long getId() {
-		return id;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public Integer getStatus() {
-		return status;
-	}
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public void setId(Long id) {
+	public User(Long id) {
 		this.id = id;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof User == false)
+			return false;
+		if (this == obj)
+			return true;
+		User other = (User) obj;
+		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
 	}
 
-	public void setStatus(Integer status) {
-		this.status = status;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public Long getId() {
+		return this.id;
+	}
+
+	public String getPassword() {
+		return this.password;
+	}
+
+	public Boolean getStatus() {
+		return this.status;
+	}
+
+	public String getUsername() {
+		return this.username;
+	}
+
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder().append(getId()).toHashCode();
+	}
+
+	public void setEmail(String value) {
+		this.email = value;
+	}
+
+	public void setId(Long value) {
+		this.id = value;
+	}
+
+	public void setPassword(String value) {
+		this.password = value;
+	}
+
+	public void setStatus(Boolean value) {
+		this.status = value;
+	}
+
+	public void setUsername(String value) {
+		this.username = value;
+	}
+
+	@Override
+	public String toString() {
+		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
+				.append("Id", getId()).append("Username", getUsername())
+				.append("Email", getEmail()).append("Password", getPassword())
+				.append("Status", getStatus()).toString();
 	}
 }
