@@ -255,6 +255,9 @@ public class QueryHelper {
 		}
 		return value.longValue();
 	}
+	
+	public static void insert(){
+	}
 
 	/**
 	 * 执行INSERT/UPDATE/DELETE语句

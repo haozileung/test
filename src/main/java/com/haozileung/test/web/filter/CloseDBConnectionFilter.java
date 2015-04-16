@@ -15,7 +15,7 @@ import com.haozileung.test.infra.DataSourceProvider;
 /**
  * Servlet Filter implementation class CloseDBConnectionFilter
  */
-@WebFilter("/CloseDBConnectionFilter")
+@WebFilter(filterName = "CloseDBConnectionFilter", urlPatterns = "/*")
 public class CloseDBConnectionFilter implements Filter {
 
 	/**
@@ -35,6 +35,6 @@ public class CloseDBConnectionFilter implements Filter {
 	}
 
 	@Override
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig fc) throws ServletException {
 	}
 }
