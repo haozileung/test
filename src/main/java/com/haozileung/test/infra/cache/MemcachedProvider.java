@@ -37,6 +37,8 @@ public class MemcachedProvider implements CacheProvider {
 	private Hashtable<String, MemCache> cacheManager;
 	private Properties _cache_properties = new Properties();
 
+	private static boolean started = true;
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -85,8 +87,12 @@ public class MemcachedProvider implements CacheProvider {
 			throw new CacheException("Unabled to set properties to SockIOPool",
 					e);
 		}
-
-		pool.initialize();
+		try {
+			pool.initialize();
+		} catch (Exception e) {
+			log.error(e.getMessage(), e);
+			started = false;
+		}
 
 		cacheManager = new Hashtable<String, MemCache>();
 	}
@@ -98,6 +104,9 @@ public class MemcachedProvider implements CacheProvider {
 	 * java.util.Properties)
 	 */
 	public MemCache buildCache(String name) throws CacheException {
+		if (!started) {
+			throw new CacheException("MemcachedCacheProvider Not Started...");
+		}
 		if (StringUtils.isEmpty(name)) {
 			name = DEFAULT_REGION_NAME;
 		}

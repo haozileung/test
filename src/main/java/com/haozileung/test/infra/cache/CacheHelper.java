@@ -71,13 +71,14 @@ public class CacheHelper {
 	 * @param args
 	 * @return
 	 */
-	public static Object get(final String region, final Serializable key,
-			final ICacheInvoker invoker, final Object... args) {
+	@SuppressWarnings("unchecked")
+	public static <T> T get(final String region, final Serializable key,
+			final ICacheInvoker<T> invoker, final Object... args) {
 		// 1. 从正常缓存中获取数据
-		Object data = L1CacheManager.get(region, key);
+		T data = (T) L1CacheManager.get(region, key);
 		if (data == null) {
 			// 2. 从全局二级缓存中获取数据
-			data = L2CacheManager.get(GLOBAL_CACHE, key);
+			data = (T) L2CacheManager.get(GLOBAL_CACHE, key);
 			if (data == null) {// 2.1 取不到为第一次运行
 				if (invoker != null) {
 					data = invoker.callback(args);
