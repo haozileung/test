@@ -11,7 +11,6 @@ import com.haozileung.test.infra.DataSourceProvider;
 import com.haozileung.test.infra.PropertiesProvider;
 import com.haozileung.test.infra.QueryHelper;
 import com.haozileung.test.infra.cache.CacheHelper;
-import com.haozileung.test.infra.cache.ICacheInvoker;
 
 public class MyTest {
 
@@ -38,16 +37,12 @@ public class MyTest {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	private List<User> getUser() {
-		List<User> users = (List<User>) CacheHelper.get("User", "alluser",
-				new ICacheInvoker() {
-					@Override
-					public Object callback(Object... args) {
-						return QueryHelper.query(User.class,
-								"select * from t_user where status = ?", args);
-					}
-				}, 0);
+		List<User> users = (List<User>) CacheHelper.get(User.class.getName(),
+				"alluser", () -> {
+					return QueryHelper.query(User.class,
+							"select * from sys_user where status = ?", 1);
+				});
 		return users;
 	}
 

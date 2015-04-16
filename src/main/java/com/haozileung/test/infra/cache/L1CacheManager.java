@@ -26,6 +26,7 @@ public class L1CacheManager {
 			provider.stop();
 			provider = null;
 		}
+		logger.info("L1 Cache stopped...");
 	}
 
 	private final static Cache _GetCache(String cache_name) {

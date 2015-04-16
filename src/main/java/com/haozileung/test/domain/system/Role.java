@@ -1,11 +1,14 @@
 package com.haozileung.test.domain.system;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
+
+import com.haozileung.test.domain.system.repository.RoleRepository;
 
 /**
  * 
@@ -21,6 +24,10 @@ public class Role implements Serializable {
 	private Long id;
 	private String name;
 	private Boolean status;
+
+	public void setPermission(List<Long> permissionIds) {
+		RoleRepository.getInstance().setPermission(id, permissionIds);
+	}
 
 	public Role() {
 	}

@@ -3,7 +3,10 @@
  */
 package com.haozileung.test.domain.system.repository;
 
+import java.util.List;
+
 import com.haozileung.test.domain.system.Resource;
+import com.haozileung.test.domain.system.RoleResource;
 import com.haozileung.test.infra.QueryHelper;
 
 /**
@@ -53,6 +56,45 @@ public final class ResourceRepository {
 		sb.append(Resource.TABLE);
 		sb.append(" where id = ?");
 		QueryHelper.update(sb.toString(), id);
+		sb.delete(0, sb.length());
+		sb.append("delete from ");
+		sb.append(RoleResource.TABLE);
+		sb.append(" where resourceId = ?");
+		QueryHelper.update(sb.toString(), id);
+	}
+
+	public void saveAll(List<Resource> ress) {
+		if (ress != null && ress.size() > 0) {
+			Object[][] params = new Object[ress.size()][];
+			for (int i = 0; i < ress.size(); i++) {
+				Resource res = ress.get(i);
+				params[i] = new Object[] { res.getCode(), res.getName(),
+						res.getType(), res.getUrl(), res.getGroupId(),
+						res.getStatus() };
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.append("insert into ");
+			sb.append(Resource.TABLE);
+			sb.append(" (code,name,type,url,groupId,status) values (?,?,?,?,?,?)");
+			QueryHelper.batch(sb.toString(), params);
+		}
+	}
+
+	public void updateAll(List<Resource> ress) {
+		if (ress != null && ress.size() > 0) {
+			Object[][] params = new Object[ress.size()][];
+			for (int i = 0; i < ress.size(); i++) {
+				Resource res = ress.get(i);
+				params[i] = new Object[] { res.getCode(), res.getName(),
+						res.getType(), res.getUrl(), res.getGroupId(),
+						res.getStatus(), res.getId() };
+			}
+			StringBuilder sb = new StringBuilder();
+			sb.append("update ");
+			sb.append(Resource.TABLE);
+			sb.append(" set code=?,name=?,type=?,url=?,groupId=?,status=? where id = ?");
+			QueryHelper.batch(sb.toString(), params);
+		}
 	}
 
 }

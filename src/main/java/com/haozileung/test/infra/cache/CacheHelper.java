@@ -42,11 +42,11 @@ public class CacheHelper {
 
 		public void execute(Thread command) {
 			if (runningThreadNames.contains(command.getName())) {
-				logger.warn(command.getName()
-						+ " ===================> Running.");
+				logger.warn("{} ===================> Running.",
+						command.getName());
 				return;
 			}
-			logger.info(command.getName() + " ===================> Started.");
+			logger.info("{} ===================> Started.", command.getName());
 			super.execute(command);
 		}
 
@@ -55,7 +55,7 @@ public class CacheHelper {
 			super.afterExecute(r, t);
 			Thread thread = (Thread) r;
 			runningThreadNames.remove(thread.getName());
-			logger.info(thread.getName() + " ===================> Finished.");
+			logger.info("{} ===================> Finished.", thread.getName());
 		}
 
 	}
@@ -73,15 +73,17 @@ public class CacheHelper {
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> T get(final String region, final Serializable key,
-			final ICacheInvoker<T> invoker, final Object... args) {
+			final ICacheInvoker<T> invoker) {
 		// 1. 从正常缓存中获取数据
 		T data = (T) L1CacheManager.get(region, key);
 		if (data == null) {
+			logger.debug("在L1缓存中未找到内容！{} - {}", region, key);
 			// 2. 从全局二级缓存中获取数据
 			data = (T) L2CacheManager.get(GLOBAL_CACHE, key);
 			if (data == null) {// 2.1 取不到为第一次运行
+				logger.debug("在L2缓存中未找到内容！{} - {}", region, key);
 				if (invoker != null) {
-					data = invoker.callback(args);
+					data = invoker.callback();
 					if (data != null) {
 						L1CacheManager.set(region, key, (Serializable) data);
 						L2CacheManager.set(GLOBAL_CACHE, key,
@@ -89,10 +91,10 @@ public class CacheHelper {
 					}
 				}
 			} else if (invoker != null) {// 2.2 如果取到了则执行自动更新数据策略
-				String thread_name = "CacheUpdater-" + region + "-" + key;
+				String thread_name = "CacheUpdater-" + region + " - " + key;
 				g_ThreadPool.execute(new Thread(thread_name) {
 					public void run() {
-						Object result = invoker.callback(args);
+						Object result = invoker.callback();
 						if (result != null) {
 							L1CacheManager.set(region, key,
 									(Serializable) result);
@@ -106,4 +108,18 @@ public class CacheHelper {
 		return data;
 	}
 
+	public static void update(final String region, final Serializable key) {
+		L1CacheManager.evict(region, key);
+	}
+
+	public static void evict(final String region, final Serializable key) {
+		L1CacheManager.evict(region, key);
+		L2CacheManager.evict(region, key);
+	}
+
+	public static void updateNow(final String region, final Serializable key,
+			final Serializable value) {
+		L2CacheManager.set(region, key, value);
+		L1CacheManager.set(region, key, value);
+	}
 }
