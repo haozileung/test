@@ -17,6 +17,18 @@
     <link href="$link.getContextURL()assets/css/admin.css" rel="stylesheet">
     <!-- Custom Fonts -->
     <link href="$link.getContextURL()assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="$link.getContextURL()assets/datatable/css/jquery.dataTables.min.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="$link.getContextURL()assets/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="$link.getContextURL()assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="$link.getContextURL()assets/metisMenu/metisMenu.min.js"></script>
+    <script
+	src="$link.getContextURL()assets/datatable/js/jquery.dataTables.min.js"></script>
+    <!-- Custom Theme JavaScript -->
+    <script src="$link.getContextURL()assets/js/admin.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
         <script src="$link.getContextURL()assets/js/lib/html5shiv.js"></script>
@@ -94,13 +106,5 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-     <!-- jQuery -->
-    <script src="$link.getContextURL()assets/jquery/jquery.min.js"></script>
-    <!-- Bootstrap Core JavaScript -->
-    <script src="$link.getContextURL()assets/bootstrap/js/bootstrap.min.js"></script>
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="$link.getContextURL()assets/metisMenu/metisMenu.min.js"></script>
-    <!-- Custom Theme JavaScript -->
-    <script src="$link.getContextURL()assets/js/admin.js"></script>
 </body>
 </html>

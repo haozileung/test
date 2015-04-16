@@ -255,9 +255,6 @@ public class QueryHelper {
 		}
 		return value.longValue();
 	}
-	
-	public static void insert(){
-	}
 
 	/**
 	 * 执行INSERT/UPDATE/DELETE语句
@@ -291,8 +288,5 @@ public class QueryHelper {
 			logger.error(e.getMessage(), e);
 		}
 		return null;
-	}
-
-	public static void closeConnection() {
 	}
 }

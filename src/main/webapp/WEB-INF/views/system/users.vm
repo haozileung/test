@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+	<div class="panel-body">
+		<div class="table-responsive" id="result"></div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$.get("$link.getContextURL()userdata", function(data) {
+			$("#result").html(data);
+			$("#resultList").DataTable({paging:false,searching:false,info:false});
+		});
+	});
+</script>
