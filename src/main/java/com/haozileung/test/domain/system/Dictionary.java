@@ -33,12 +33,14 @@ public class Dictionary implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj instanceof Dictionary == false)
+        if (obj instanceof Dictionary) {
+            if (this == obj)
+                return true;
+            Dictionary other = (Dictionary) obj;
+            return new EqualsBuilder().append(getId(), other.getId()).isEquals();
+        } else {
             return false;
-        if (this == obj)
-            return true;
-        Dictionary other = (Dictionary) obj;
-        return new EqualsBuilder().append(getId(), other.getId()).isEquals();
+        }
     }
 
     public String getCode() {

@@ -67,7 +67,7 @@ public class UserRealm extends AuthorizingRealm {
         if (u == null) {
             throw new UnknownAccountException(email + " is not found!");
         }
-        if (u.getStatus() != null && u.getStatus().equals(1)) {
+        if ((u.getStatus() != null) && u.getStatus().equals(1)) {
             throw new LockedAccountException(email + " is locked!");
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

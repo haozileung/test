@@ -32,7 +32,7 @@ public class EhCacheProvider implements CacheProvider {
     private static final Logger log = LoggerFactory.getLogger(EhCacheProvider.class);
 
     private CacheManager manager;
-    private Hashtable<String, EhCache> _CacheManager;
+    private Hashtable<String, EhCache> _cacheManager;
 
     /**
      * Builds a Cache.
@@ -43,12 +43,11 @@ public class EhCacheProvider implements CacheProvider {
      * where the name attribute matches the name parameter in this builder.
      *
      * @param name the name of the cache. Must match a cache configured in ehcache.xml
-     * @param properties not used
      * @return a newly built cache will be built and initialised
      * @throws CacheException inter alia, if a cache of the same name already exists
      */
     public EhCache buildCache(String name) throws CacheException {
-        EhCache ehcache = _CacheManager.get(name);
+        EhCache ehcache = _cacheManager.get(name);
         if (ehcache != null)
             return ehcache;
         try {
@@ -59,9 +58,9 @@ public class EhCacheProvider implements CacheProvider {
                 cache = manager.getCache(name);
                 log.debug("started EHCache region: " + name);
             }
-            synchronized (_CacheManager) {
+            synchronized (_cacheManager) {
                 ehcache = new EhCache(cache);
-                _CacheManager.put(name, ehcache);
+                _cacheManager.put(name, ehcache);
                 return ehcache;
             }
         } catch (net.sf.ehcache.CacheException e) {
@@ -73,7 +72,6 @@ public class EhCacheProvider implements CacheProvider {
      * Callback to perform any necessary initialization of the underlying cache implementation
      * during SessionFactory construction.
      *
-     * @param properties current configuration settings.
      */
     public void start() throws CacheException {
         if (manager != null) {
@@ -81,7 +79,7 @@ public class EhCacheProvider implements CacheProvider {
             return;
         }
         manager = CacheManager.create();
-        _CacheManager = new Hashtable<String, EhCache>();
+        _cacheManager = new Hashtable<>();
     }
 
     /**

@@ -62,7 +62,7 @@ public class QueryHelper {
         }
     };
 
-    private final static boolean _IsPrimitive(Class<?> cls) {
+    private static boolean _IsPrimitive(Class<?> cls) {
         return cls.isPrimitive() || PrimitiveClasses.contains(cls);
     }
 

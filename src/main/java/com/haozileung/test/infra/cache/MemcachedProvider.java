@@ -11,14 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
 
-/**
- * Memcached plugin for Hibernate 配置信息(hibernate.cfg.xml)
- * <p>
- * <pre>
- * 		<property name="cache.provider_class">cn.youcity.db.MemcachedProvider</property>
- * 		<property name="memcached.properties">/memcached.properties</property>
- * </pre>
- */
 public class MemcachedProvider implements CacheProvider {
 
     private static final Logger log = LoggerFactory
@@ -89,7 +81,7 @@ public class MemcachedProvider implements CacheProvider {
                 keys.remove();
             }
         }
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, String> map = new HashMap<>();
         for (String key : _cache_properties.stringPropertyNames()) {
             map.put(key, _cache_properties.getProperty(key));
         }
@@ -106,7 +98,7 @@ public class MemcachedProvider implements CacheProvider {
             started = false;
         }
 
-        cacheManager = new Hashtable<String, MemCache>();
+        cacheManager = new Hashtable<>();
     }
 
     /*
@@ -144,9 +136,7 @@ public class MemcachedProvider implements CacheProvider {
      * @see org.hibernate.cache.CacheProvider#stop()
      */
     public void stop() {
-        for (MemCache mc : cacheManager.values()) {
-            mc.clear();
-        }
+        cacheManager.values().forEach(MemCache::clear);
         cacheManager = null;
     }
 
