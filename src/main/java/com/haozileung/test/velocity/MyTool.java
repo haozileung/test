@@ -6,9 +6,8 @@ import org.apache.velocity.tools.config.ValidScope;
 
 /**
  * 通用工具
- * 
- * @author lianghaopeng
  *
+ * @author lianghaopeng
  */
 @DefaultKey("mytools")
 @ValidScope(Scope.APPLICATION)
