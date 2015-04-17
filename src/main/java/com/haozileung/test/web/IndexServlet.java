@@ -24,10 +24,8 @@ public class IndexServlet extends VelocityLayoutServlet {
     @Override
     protected Template handleRequest(HttpServletRequest request,
                                      HttpServletResponse response, Context ctx) {
-        List<User> list = CacheHelper.get(User.class.getName(), "all", () -> {
-            return QueryHelper.query(User.class,
-                    "select username from sys_user where status = ?", 1);
-        });
+        List<User> list = CacheHelper.get(User.class.getName(), "all", () -> QueryHelper.query(User.class,
+                "select username from sys_user where status = ?", 1));
         ctx.put("list", list);
         return getTemplate("/index.html");
     }
