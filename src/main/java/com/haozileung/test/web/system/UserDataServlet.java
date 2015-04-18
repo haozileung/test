@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-@WebServlet(name = "user", urlPatterns = {"/userdata"}, loadOnStartup = 1)
+@WebServlet(name = "user", urlPatterns = {"/user/list"}, loadOnStartup = 1)
 public class UserDataServlet extends VelocityViewServlet {
 
     /**
@@ -39,7 +39,7 @@ public class UserDataServlet extends VelocityViewServlet {
         List<User> list = QueryHelper.query_slice(User.class,
                 "select * from sys_user", pageNo, pageSize);
         Long count = QueryHelper.stat("select count(*) from sys_user");
-        Page<User> page = new Page<User>(pageSize);
+        Page<User> page = new Page<>(pageSize);
         page.setPageNo(pageNo);
         page.setTotalCount(count);
         page.setResult(list);

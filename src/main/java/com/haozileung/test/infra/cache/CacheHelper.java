@@ -48,7 +48,7 @@ public class CacheHelper {
             // 2. 从全局二级缓存中获取数据,执行自动更新数据策略，结果直接返回
             data = (T) L2CacheManager.get(GLOBAL_CACHE, key);
             if (invoker != null) {
-                String thread_name = String.format("CacheUpdater-%s - %s", region, key);
+                String thread_name = String.format("CacheUpdater-%s-%s", region, key);
                 g_ThreadPool.execute(new Thread(thread_name) {
                     public void run() {
                         Object result = invoker.callback();
@@ -96,7 +96,7 @@ public class CacheHelper {
                         command.getName());
                 return;
             }
-            logger.info("{} ===================> Started.", command.getName());
+            logger.debug("{} ===================> Started.", command.getName());
             super.execute(command);
         }
 
@@ -105,7 +105,7 @@ public class CacheHelper {
             super.afterExecute(r, t);
             Thread thread = (Thread) r;
             runningThreadNames.remove(thread.getName());
-            logger.info("{} ===================> Finished.", thread.getName());
+            logger.debug("{} ===================> Finished.", thread.getName());
         }
 
     }

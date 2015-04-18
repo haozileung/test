@@ -122,8 +122,7 @@ public class MemcachedProvider implements CacheProvider {
                 timeToLive = timeToLive.toLowerCase().trim();
                 secondToLive = _GetSeconds(timeToLive);
             }
-            log.info("Building cache named " + name + " using secondToLive is "
-                    + secondToLive);
+            log.debug("Building cache named {} using secondToLive is {}", name, secondToLive);
             mCache = new MemCache(name, secondToLive);
             cacheManager.put(name, mCache);
         }

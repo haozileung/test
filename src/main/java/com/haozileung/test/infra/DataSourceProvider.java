@@ -4,7 +4,6 @@ import com.alibaba.druid.pool.DruidDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sql.DataSource;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -19,10 +18,6 @@ public class DataSourceProvider {
     private static DruidDataSource druidDataSource;
 
     private static boolean show_sql = true;
-
-    public static DataSource getDataSource() {
-        return druidDataSource;
-    }
 
     public static final void init() {
         if (null == druidDataSource) {
