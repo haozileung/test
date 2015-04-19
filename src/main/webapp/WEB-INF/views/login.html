@@ -51,9 +51,16 @@
                 </div>
             </div>
         </div>
+        <div class="row">
+            #if($errorMsg)
+            <div class="col-md-8 col-md-offset-2">
+                <div class="alert alert-danger">$errorMsg</div>
+            </div>
+            #end
+        </div>
     </div>
     <!-- jQuery -->
-    <script src="$link.getContextPath()/assets/js/lib/jquery.min.js"></script>
+    <script src="$link.getContextPath()/assets/jquery/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
     <script src="$link.getContextPath()/assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- Metis Menu Plugin JavaScript -->

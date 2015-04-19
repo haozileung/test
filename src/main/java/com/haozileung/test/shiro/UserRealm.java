@@ -34,13 +34,13 @@ public class UserRealm extends AuthorizingRealm {
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         List<String> roleNames = QueryHelper
                 .query(String.class,
-                        "SELECT r.roleName FROM t_role r LEFT JOIN t_user_role ur ON r.id = ur.roleId LEFT JOIN t_user u ON ur.userId = u.id AND u.status = 0 WHERE r.status = 0 AND u.email = ?",
+                        "SELECT r.roleName FROM sys_role r LEFT JOIN sys_user_role ur ON r.id = ur.roleId LEFT JOIN sys_user u ON ur.userId = u.id AND u.status = 1 WHERE r.status = 1 AND u.email = ?",
                         email);
         if (roleNames != null) {
             info.addRoles(roleNames);
             List<String> permissionCodes = QueryHelper
                     .query(String.class,
-                            "SELECT p.permissionCode FROM t_permission p LEFT JOIN t_role_permission rp ON p.id = rp.permissionId LEFT JOIN t_role r ON rp.roleId = r.id AND r.status = 0 WHERE p.status = 0 AND r.roleName IN ('"
+                            "SELECT p.permissionCode FROM sys_permission p LEFT JOIN sys_role_permission rp ON p.id = rp.permissionId LEFT JOIN sys_role r ON rp.roleId = r.id AND r.status = 0 WHERE p.status = 0 AND r.roleName IN ('"
                                     + Joiner.on("','").join(roleNames) + "')");
             if (permissionCodes != null) {
                 info.addStringPermissions(permissionCodes);
@@ -60,14 +60,14 @@ public class UserRealm extends AuthorizingRealm {
         User u = null;
         try {
             u = QueryHelper.read(User.class,
-                    "SELECT * FROM t_user where email = ? LIMIT 1", email);
+                    "SELECT * FROM sys_user where email = ? LIMIT 1", email);
         } catch (Exception e) {
             logger.error(e.getMessage());
         }
         if (u == null) {
             throw new UnknownAccountException(email + " is not found!");
         }
-        if ((u.getStatus() != null) && u.getStatus().equals(1)) {
+        if (u.getStatus()) {
             throw new LockedAccountException(email + " is locked!");
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(

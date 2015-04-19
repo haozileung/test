@@ -1,0 +1,37 @@
+<form class="form-horizontal" id="userForm" action="$link.getContextPath()/user/save" method="post">
+    <div class="form-group">
+        <label for="id" class="col-sm-2 control-label">UserID</label>
+
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="id" name="id" readonly value="$!user.id">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">用户名</label>
+
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="username" name="username" value="$!user.username">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="email" class="col-sm-2 control-label">邮箱</label>
+
+        <div class="col-sm-10">
+            <input type="email" class="form-control" id="email" name="email" value="$!user.email">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="username" class="col-sm-2 control-label">密码</label>
+
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="password" name="password" value="">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="status" class="col-sm-2 control-label">状态</label>
+
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="status" readonly value="#if($user.status) 禁用 #else 启用 #end">
+        </div>
+    </div>
+</form>

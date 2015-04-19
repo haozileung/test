@@ -20,7 +20,7 @@ import java.io.IOException;
 /**
  * Servlet implementation class LoginServlet
  */
-@WebServlet(name = "login", urlPatterns = {"/login"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/login"}, loadOnStartup = 1)
 public class LoginServlet extends VelocityViewServlet {
     /**
      *

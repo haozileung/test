@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Users
  */
-@WebServlet(name = "users", urlPatterns = {"/users"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/users"}, loadOnStartup = 1)
 public class UserServlet extends VelocityLayoutServlet {
     private static final long serialVersionUID = 1L;
 

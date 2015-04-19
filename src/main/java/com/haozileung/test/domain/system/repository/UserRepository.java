@@ -24,9 +24,7 @@ public final class UserRepository {
         sb.append("select * from ");
         sb.append(User.TABLE);
         sb.append(" where id = ?");
-        return CacheHelper.get(User.class.getName(), uid, () -> {
-            return QueryHelper.read(User.class, sb.toString(), uid);
-        });
+        return QueryHelper.read(User.class, sb.toString(), uid);
     }
 
     public void save(User user) {
@@ -46,7 +44,6 @@ public final class UserRepository {
         QueryHelper.update(sb.toString(), user.getUsername(),
                 user.getPassword(), user.getEmail(), user.getStatus(),
                 user.getId());
-        CacheHelper.updateNow(User.class.getName(), user.getId(), user);
 
     }
 
@@ -61,7 +58,6 @@ public final class UserRepository {
         sb.append(UserRole.TABLE);
         sb.append(" where userId = ?");
         QueryHelper.update(sb.toString(), uid);
-        CacheHelper.evict(UserRepository.class.getName(), uid);
     }
 
     public void saveAll(List<User> users) {
@@ -94,8 +90,7 @@ public final class UserRepository {
             sb.append(User.TABLE);
             sb.append(" set username=?,password=?,email=?,status=? where id = ?");
             QueryHelper.batch(sb.toString(), params);
-            for (int i = 0; i < users.size(); i++) {
-                User user = users.get(i);
+            for (User user : users) {
                 CacheHelper.updateNow(User.class.getName(), user.getId(), user);
             }
         }

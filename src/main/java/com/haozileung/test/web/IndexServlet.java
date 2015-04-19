@@ -1,8 +1,5 @@
 package com.haozileung.test.web;
 
-import com.haozileung.test.domain.system.User;
-import com.haozileung.test.infra.QueryHelper;
-import com.haozileung.test.infra.cache.CacheHelper;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
 import org.apache.velocity.tools.view.VelocityLayoutServlet;
@@ -10,9 +7,8 @@ import org.apache.velocity.tools.view.VelocityLayoutServlet;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
-@WebServlet(name = "index", urlPatterns = {"/index"}, loadOnStartup = 1)
+@WebServlet(urlPatterns = {"/index"}, loadOnStartup = 1)
 public class IndexServlet extends VelocityLayoutServlet {
 
     /**
@@ -24,9 +20,6 @@ public class IndexServlet extends VelocityLayoutServlet {
     @Override
     protected Template handleRequest(HttpServletRequest request,
                                      HttpServletResponse response, Context ctx) {
-        List<User> list = CacheHelper.get(User.class.getName(), "all", () -> QueryHelper.query(User.class,
-                "select username from sys_user where status = ?", 1));
-        ctx.put("list", list);
         return getTemplate("/index.html");
     }
 }

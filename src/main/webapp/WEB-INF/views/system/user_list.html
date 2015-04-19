@@ -16,8 +16,11 @@
         <td>$user.id</td>
         <td>$user.username</td>
         <td>$user.email</td>
-        <td>#if($user.status) 启用 #else 禁用 #end</td>
-        <td><a  href="javascript:void(0);">修改</a> <a href="javascript:void(0);">禁用</a></td>
+        <td>#if($user.status) 禁用 #else 启用 #end</td>
+        <td>
+            <a href="javascript:void(0);" onclick="show($user.id)">修改</a>
+            <a href="javascript:void(0);" onclick="ban($user.id)">#if($user.status) 启用 #else 禁用 #end</a>
+        </td>
     </tr>
     #end
     </tbody>
