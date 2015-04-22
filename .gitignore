@@ -4,3 +4,4 @@
 .project
 test.iml
 .idea/
+/target/
