@@ -16,10 +16,10 @@ Date: 2015-04-16 11:03:40
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for sys_dictionary
+-- Table structure for dictionary
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_dictionary`;
-CREATE TABLE `sys_dictionary` (
+DROP TABLE IF EXISTS `dictionary`;
+CREATE TABLE `dictionary` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(20) NOT NULL,
   `name` varchar(20) NOT NULL,
@@ -32,14 +32,14 @@ CREATE TABLE `sys_dictionary` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_dictionary
+-- Records of dictionary
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_resource
+-- Table structure for resource
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_resource`;
-CREATE TABLE `sys_resource` (
+DROP TABLE IF EXISTS `resource`;
+CREATE TABLE `resource` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `code` varchar(255) NOT NULL,
   `name` varchar(255) NOT NULL,
@@ -51,14 +51,14 @@ CREATE TABLE `sys_resource` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_resource
+-- Records of resource
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_role
+-- Table structure for role
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role`;
-CREATE TABLE `sys_role` (
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
@@ -66,14 +66,14 @@ CREATE TABLE `sys_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_role
+-- Records of role
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_role_resource
+-- Table structure for role_resource
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_role_resource`;
-CREATE TABLE `sys_role_resource` (
+DROP TABLE IF EXISTS `role_resource`;
+CREATE TABLE `role_resource` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `roleId` bigint(20) unsigned NOT NULL,
   `resourceId` bigint(20) unsigned NOT NULL,
@@ -83,16 +83,16 @@ CREATE TABLE `sys_role_resource` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_role_resource
+-- Records of role_resource
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_user
+-- Table structure for user
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user`;
-CREATE TABLE `sys_user` (
+DROP TABLE IF EXISTS `user`;
+CREATE TABLE `user` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `username` varchar(20) NOT NULL,
+  `name` varchar(20) NOT NULL,
   `email` varchar(128) NOT NULL,
   `password` varchar(256) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
@@ -100,14 +100,14 @@ CREATE TABLE `sys_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_user
+-- Records of user
 -- ----------------------------
 
 -- ----------------------------
--- Table structure for sys_user_role
+-- Table structure for user_role
 -- ----------------------------
-DROP TABLE IF EXISTS `sys_user_role`;
-CREATE TABLE `sys_user_role` (
+DROP TABLE IF EXISTS `user_role`;
+CREATE TABLE `user_role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `userId` bigint(20) unsigned NOT NULL,
   `roleId` bigint(20) unsigned NOT NULL,
@@ -117,5 +117,5 @@ CREATE TABLE `sys_user_role` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
--- Records of sys_user_role
+-- Records of user_role
 -- ----------------------------

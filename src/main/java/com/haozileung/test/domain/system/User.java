@@ -1,20 +1,19 @@
 package com.haozileung.test.domain.system;
 
-import java.io.Serializable;
-import java.util.List;
-
+import com.haozileung.test.domain.system.repository.UserRepository;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.haozileung.test.domain.system.repository.UserRepository;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Haozi
  */
 public class User implements Serializable {
-	public static final String TABLE = "sys_user";
+	public static final String TABLE = "user";
 	/**
      *
      */
@@ -23,7 +22,7 @@ public class User implements Serializable {
 	private Long id;
 	private String password;
 	private Boolean status;
-	private String username;
+	private String name;
 
 	public User() {
 	}
@@ -78,12 +77,12 @@ public class User implements Serializable {
 		this.status = value;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public String getName() {
+		return this.name;
 	}
 
-	public void setUsername(String value) {
-		this.username = value;
+	public void setName(String value) {
+		this.name = value;
 	}
 
 	@Override
@@ -94,7 +93,7 @@ public class User implements Serializable {
 	@Override
 	public String toString() {
 		return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-				.append("Id", getId()).append("Username", getUsername())
+				.append("Id", getId()).append("name", getName())
 				.append("Email", getEmail()).append("Password", getPassword())
 				.append("Status", getStatus()).toString();
 	}

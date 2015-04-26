@@ -1,18 +1,9 @@
 package com.haozileung.test.web;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.LockedAccountException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.apache.velocity.Template;
 import org.apache.velocity.context.Context;
@@ -20,8 +11,11 @@ import org.apache.velocity.tools.view.VelocityViewServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.base.Preconditions;
-import com.google.common.base.Strings;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Servlet implementation class LoginServlet
@@ -45,10 +39,10 @@ public class LoginServlet extends VelocityViewServlet {
 	@Override
 	public void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		Subject currentUser = SecurityUtils.getSubject();
-		if (currentUser.isAuthenticated()) {
-			response.sendRedirect("/index");
-		}
+//		Subject currentUser = SecurityUtils.getSubject();
+//		if (currentUser.isAuthenticated()) {
+//			response.sendRedirect("/index");
+//		}
 		doRequest(request, response);
 	}
 
@@ -77,11 +71,11 @@ public class LoginServlet extends VelocityViewServlet {
 			response.sendRedirect("/index");
 			return;
 		} catch (UnknownAccountException uae) {
-			logger.debug("用户认证失败:username wasn't in the system.");
+			logger.debug("用户认证失败:name wasn't in the system.");
 		} catch (IncorrectCredentialsException ice) {
 			logger.debug("用户认证失败:password didn't match.");
 		} catch (LockedAccountException lae) {
-			logger.debug("用户认证失败:account for that username is locked - can't login.");
+			logger.debug("用户认证失败:account for that name is locked - can't login.");
 		} catch (AuthenticationException ae) {
 			logger.debug("用户认证失败:unexpected condition.");
 		}

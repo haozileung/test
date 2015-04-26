@@ -1,21 +1,19 @@
 package com.haozileung.test.web.system;
 
-import java.util.List;
-
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang.StringUtils;
-import org.apache.velocity.Template;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.view.VelocityViewServlet;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.haozileung.test.domain.system.User;
 import com.haozileung.test.infra.Page;
 import com.haozileung.test.infra.QueryHelper;
+import org.apache.commons.lang.StringUtils;
+import org.apache.velocity.Template;
+import org.apache.velocity.context.Context;
+import org.apache.velocity.tools.view.VelocityViewServlet;
+
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @WebServlet(urlPatterns = { "/user/list" }, loadOnStartup = 1)
 public class UserListServlet extends VelocityViewServlet {
@@ -32,7 +30,7 @@ public class UserListServlet extends VelocityViewServlet {
 		String p = request.getParameter("pageNo");
 		String s = request.getParameter("pageSize");
 		String email = request.getParameter("email");
-		String username = request.getParameter("username");
+		String name = request.getParameter("name");
 		Integer pageNo = 1;
 		Integer pageSize = 25;
 		if (!Strings.isNullOrEmpty(p) && StringUtils.isNumeric(p)) {
@@ -43,16 +41,16 @@ public class UserListServlet extends VelocityViewServlet {
 		}
 		List<Object> params = Lists.newArrayList();
 		StringBuffer where = new StringBuffer(" where 1 = 1 ");
-		if (!Strings.isNullOrEmpty(username)) {
-			where.append(" and username = ? ");
-			params.add(username);
+		if (!Strings.isNullOrEmpty(name)) {
+			where.append(" and name = ? ");
+			params.add(name);
 		}
 		if (!Strings.isNullOrEmpty(email)) {
 			where.append(" and email = ?");
 			params.add(email);
 		}
-		StringBuffer query = new StringBuffer("select * from sys_user");
-		StringBuffer count = new StringBuffer("select count(*) from sys_user");
+		StringBuffer query = new StringBuffer("select * from user");
+		StringBuffer count = new StringBuffer("select count(*) from user");
 		query.append(where);
 		count.append(where);
 		List<User> list = QueryHelper.query_slice(User.class, query.toString(),

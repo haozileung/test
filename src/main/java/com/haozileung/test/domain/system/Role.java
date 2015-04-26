@@ -1,20 +1,19 @@
 package com.haozileung.test.domain.system;
 
-import java.io.Serializable;
-import java.util.List;
-
+import com.haozileung.test.domain.system.repository.RoleRepository;
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import com.haozileung.test.domain.system.repository.RoleRepository;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * @author Haozi
  */
 public class Role implements Serializable {
-	public static final String TABLE = "sys_role";
+	public static final String TABLE = "role";
 	/**
      *
      */

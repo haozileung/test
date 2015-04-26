@@ -3,12 +3,12 @@
  */
 package com.haozileung.test.domain.system.repository;
 
-import java.util.List;
-
 import com.haozileung.test.domain.system.User;
 import com.haozileung.test.domain.system.UserRole;
 import com.haozileung.test.infra.QueryHelper;
 import com.haozileung.test.infra.cache.CacheHelper;
+
+import java.util.List;
 
 /**
  * @author YamchaL
@@ -31,8 +31,8 @@ public final class UserRepository {
 		StringBuilder sb = new StringBuilder();
 		sb.append("insert into ");
 		sb.append(User.TABLE);
-		sb.append(" (username,password,email,status) values (?,?,?,?)");
-		QueryHelper.update(sb.toString(), user.getUsername(),
+		sb.append(" (name,password,email,status) values (?,?,?,?)");
+		QueryHelper.update(sb.toString(), user.getName(),
 				user.getPassword(), user.getEmail(), user.getStatus());
 	}
 
@@ -40,8 +40,8 @@ public final class UserRepository {
 		StringBuilder sb = new StringBuilder();
 		sb.append("update ");
 		sb.append(User.TABLE);
-		sb.append(" set username=?,password=?,email=?,status=? where id = ?");
-		QueryHelper.update(sb.toString(), user.getUsername(),
+		sb.append(" set name=?,password=?,email=?,status=? where id = ?");
+		QueryHelper.update(sb.toString(), user.getName(),
 				user.getPassword(), user.getEmail(), user.getStatus(),
 				user.getId());
 
@@ -65,13 +65,13 @@ public final class UserRepository {
 			Object[][] params = new Object[users.size()][];
 			for (int i = 0; i < users.size(); i++) {
 				User user = users.get(i);
-				params[i] = new Object[] { user.getUsername(),
+				params[i] = new Object[]{user.getName(),
 						user.getPassword(), user.getEmail(), user.getStatus() };
 			}
 			StringBuilder sb = new StringBuilder();
 			sb.append("insert into ");
 			sb.append(User.TABLE);
-			sb.append(" (username,password,email,status) values (?,?,?,?)");
+			sb.append(" (name,password,email,status) values (?,?,?,?)");
 			QueryHelper.batch(sb.toString(), params);
 		}
 	}
@@ -81,14 +81,14 @@ public final class UserRepository {
 			Object[][] params = new Object[users.size()][];
 			for (int i = 0; i < users.size(); i++) {
 				User user = users.get(i);
-				params[i] = new Object[] { user.getUsername(),
+				params[i] = new Object[]{user.getName(),
 						user.getPassword(), user.getEmail(), user.getStatus(),
 						user.getId() };
 			}
 			StringBuilder sb = new StringBuilder();
 			sb.append("update ");
 			sb.append(User.TABLE);
-			sb.append(" set username=?,password=?,email=?,status=? where id = ?");
+			sb.append(" set name=?,password=?,email=?,status=? where id = ?");
 			QueryHelper.batch(sb.toString(), params);
 			for (User user : users) {
 				CacheHelper.updateNow(User.class.getName(), user.getId(), user);

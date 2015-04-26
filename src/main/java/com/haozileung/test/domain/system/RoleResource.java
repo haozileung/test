@@ -1,17 +1,17 @@
 package com.haozileung.test.domain.system;
 
-import java.io.Serializable;
-
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import java.io.Serializable;
+
 /**
  * @author Haozi
  */
 public class RoleResource implements Serializable {
-	public static final String TABLE = "sys_role_resource";
+	public static final String TABLE = "role_resource";
 	/**
      *
      */

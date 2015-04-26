@@ -1,17 +1,16 @@
 package test;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
+import com.haozileung.test.domain.system.User;
+import com.haozileung.test.infra.DataSourceProvider;
+import com.haozileung.test.infra.PropertiesProvider;
+import com.haozileung.test.infra.cache.CacheHelper;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.ResultSetHandler;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.haozileung.test.domain.system.User;
-import com.haozileung.test.infra.DataSourceProvider;
-import com.haozileung.test.infra.PropertiesProvider;
-import com.haozileung.test.infra.cache.CacheHelper;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class MyTest {
 
@@ -28,7 +27,7 @@ public class MyTest {
 		QueryRunner run = new QueryRunner();
 		try {
 			run.insert(DataSourceProvider.getConnection(),
-					"insert into sys_user", new ResultSetHandler<User>() {
+					"insert into user", new ResultSetHandler<User>() {
 						@Override
 						public User handle(ResultSet rs) throws SQLException {
 							return null;
