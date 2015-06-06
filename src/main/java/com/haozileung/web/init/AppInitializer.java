@@ -1,4 +1,4 @@
-package com.haozileung.test.init;
+package com.haozileung.web.init;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;

@@ -1,4 +1,4 @@
-package com.haozileung.test.web;
+package com.haozileung.web.web;
 
 import java.io.IOException;
 
