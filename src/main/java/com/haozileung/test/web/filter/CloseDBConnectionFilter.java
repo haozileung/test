@@ -10,7 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
-import com.haozileung.test.infra.DataSourceProvider;
+import com.haozileung.infra.utils.DataSourceUtils;
 
 /**
  * Servlet Filter implementation class CloseDBConnectionFilter
@@ -27,7 +27,7 @@ public class CloseDBConnectionFilter implements Filter {
 		try {
 			chain.doFilter(request, response);
 		} finally {
-			DataSourceProvider.closeConnection();
+			DataSourceUtils.closeConnection();
 		}
 	}
 

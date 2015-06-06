@@ -7,9 +7,9 @@ import javax.servlet.annotation.WebListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.haozileung.test.infra.DataSourceProvider;
-import com.haozileung.test.infra.PropertiesProvider;
-import com.haozileung.test.infra.cache.CacheHelper;
+import com.haozileung.infra.cache.CacheHelper;
+import com.haozileung.infra.utils.DataSourceUtils;
+import com.haozileung.infra.utils.PropertiesUtils;
 
 @WebListener
 public class AppInitializer implements ServletContextListener {
@@ -19,16 +19,16 @@ public class AppInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		PropertiesProvider.init();
-		DataSourceProvider.init();
+		PropertiesUtils.init();
+		DataSourceUtils.init();
 		CacheHelper.init();
 		logger.info("项目已启动...");
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
-		DataSourceProvider.destroy();
-		PropertiesProvider.destroy();
+		DataSourceUtils.destroy();
+		PropertiesUtils.destroy();
 		CacheHelper.destroy();
 		logger.info("项目已停止...");
 	}

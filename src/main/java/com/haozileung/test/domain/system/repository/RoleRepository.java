@@ -5,10 +5,10 @@ package com.haozileung.test.domain.system.repository;
 
 import java.util.List;
 
+import com.haozileung.infra.utils.QueryUtils;
 import com.haozileung.test.domain.system.Role;
 import com.haozileung.test.domain.system.RoleResource;
 import com.haozileung.test.domain.system.UserRole;
-import com.haozileung.test.infra.QueryHelper;
 
 /**
  * @author YamchaL
@@ -24,7 +24,7 @@ public final class RoleRepository {
 		sb.append("select * from ");
 		sb.append(Role.TABLE);
 		sb.append(" where id = ?");
-		return QueryHelper.read(Role.class, sb.toString(), id);
+		return QueryUtils.read(Role.class, sb.toString(), id);
 	}
 
 	public void save(Role role) {
@@ -32,7 +32,7 @@ public final class RoleRepository {
 		sb.append("insert into ");
 		sb.append(Role.TABLE);
 		sb.append(" (name,status) values (?,?)");
-		QueryHelper.update(sb.toString(), role.getName(), role.getStatus());
+		QueryUtils.update(sb.toString(), role.getName(), role.getStatus());
 	}
 
 	public void update(Role role) {
@@ -40,7 +40,7 @@ public final class RoleRepository {
 		sb.append("update ");
 		sb.append(Role.TABLE);
 		sb.append(" set name=?,status=? where id = ?");
-		QueryHelper.update(sb.toString(), role.getName(), role.getStatus(),
+		QueryUtils.update(sb.toString(), role.getName(), role.getStatus(),
 				role.getId());
 	}
 
@@ -49,17 +49,17 @@ public final class RoleRepository {
 		sb.append("delete from ");
 		sb.append(Role.TABLE);
 		sb.append(" where id = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 		sb.delete(0, sb.length());
 		sb.append("delete from ");
 		sb.append(RoleResource.TABLE);
 		sb.append(" where roleId = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 		sb.delete(0, sb.length());
 		sb.append("delete from ");
 		sb.append(UserRole.TABLE);
 		sb.append(" where roleId = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 	}
 
 	public void saveAll(List<Role> roles) {
@@ -73,7 +73,7 @@ public final class RoleRepository {
 			sb.append("insert into ");
 			sb.append(Role.TABLE);
 			sb.append(" (name,status) values (?,?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -89,7 +89,7 @@ public final class RoleRepository {
 			sb.append("update ");
 			sb.append(Role.TABLE);
 			sb.append(" set name=?,status=? where id = ?");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -99,7 +99,7 @@ public final class RoleRepository {
 			sb.append("delete from ");
 			sb.append(UserRole.TABLE);
 			sb.append(" where userId = ?");
-			QueryHelper.update(sb.toString(), roleId);
+			QueryUtils.update(sb.toString(), roleId);
 			Object[][] params = new Object[permissionIds.size()][];
 			for (int i = 0; i < permissionIds.size(); i++) {
 				Long permissionId = permissionIds.get(i);
@@ -109,7 +109,7 @@ public final class RoleRepository {
 			sb.append("INSERT INTO ");
 			sb.append(RoleResource.TABLE);
 			sb.append(" (roleId, resourceId) values (?, ?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -118,7 +118,7 @@ public final class RoleRepository {
 		sb.append("select * from ");
 		sb.append(RoleResource.TABLE);
 		sb.append(" where roleId = ?");
-		return QueryHelper.query(RoleResource.class, sb.toString(), roleId);
+		return QueryUtils.query(RoleResource.class, sb.toString(), roleId);
 
 	}
 

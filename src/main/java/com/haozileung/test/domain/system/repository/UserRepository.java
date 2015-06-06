@@ -3,10 +3,10 @@
  */
 package com.haozileung.test.domain.system.repository;
 
+import com.haozileung.infra.cache.CacheHelper;
+import com.haozileung.infra.utils.QueryUtils;
 import com.haozileung.test.domain.system.User;
 import com.haozileung.test.domain.system.UserRole;
-import com.haozileung.test.infra.QueryHelper;
-import com.haozileung.test.infra.cache.CacheHelper;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ public final class UserRepository {
 		sb.append("select * from ");
 		sb.append(User.TABLE);
 		sb.append(" where id = ?");
-		return QueryHelper.read(User.class, sb.toString(), uid);
+		return QueryUtils.read(User.class, sb.toString(), uid);
 	}
 
 	public void save(User user) {
@@ -32,7 +32,7 @@ public final class UserRepository {
 		sb.append("insert into ");
 		sb.append(User.TABLE);
 		sb.append(" (name,password,email,status) values (?,?,?,?)");
-		QueryHelper.update(sb.toString(), user.getName(),
+		QueryUtils.update(sb.toString(), user.getName(),
 				user.getPassword(), user.getEmail(), user.getStatus());
 	}
 
@@ -41,7 +41,7 @@ public final class UserRepository {
 		sb.append("update ");
 		sb.append(User.TABLE);
 		sb.append(" set name=?,password=?,email=?,status=? where id = ?");
-		QueryHelper.update(sb.toString(), user.getName(),
+		QueryUtils.update(sb.toString(), user.getName(),
 				user.getPassword(), user.getEmail(), user.getStatus(),
 				user.getId());
 
@@ -52,12 +52,12 @@ public final class UserRepository {
 		sb.append("delete from ");
 		sb.append(User.TABLE);
 		sb.append(" where id = ?");
-		QueryHelper.update(sb.toString(), uid);
+		QueryUtils.update(sb.toString(), uid);
 		sb.delete(0, sb.length());
 		sb.append("delete from ");
 		sb.append(UserRole.TABLE);
 		sb.append(" where userId = ?");
-		QueryHelper.update(sb.toString(), uid);
+		QueryUtils.update(sb.toString(), uid);
 	}
 
 	public void saveAll(List<User> users) {
@@ -72,7 +72,7 @@ public final class UserRepository {
 			sb.append("insert into ");
 			sb.append(User.TABLE);
 			sb.append(" (name,password,email,status) values (?,?,?,?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -89,7 +89,7 @@ public final class UserRepository {
 			sb.append("update ");
 			sb.append(User.TABLE);
 			sb.append(" set name=?,password=?,email=?,status=? where id = ?");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 			for (User user : users) {
 				CacheHelper.updateNow(User.class.getName(), user.getId(), user);
 			}
@@ -102,7 +102,7 @@ public final class UserRepository {
 			sb.append("delete from ");
 			sb.append(UserRole.TABLE);
 			sb.append(" where userId = ?");
-			QueryHelper.update(sb.toString(), uid);
+			QueryUtils.update(sb.toString(), uid);
 			Object[][] params = new Object[roleIds.size()][];
 			for (int i = 0; i < roleIds.size(); i++) {
 				Long roleId = roleIds.get(i);
@@ -112,7 +112,7 @@ public final class UserRepository {
 			sb.append("INSERT INTO ");
 			sb.append(UserRole.TABLE);
 			sb.append(" (userId, roleId) values (?, ?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -121,7 +121,7 @@ public final class UserRepository {
 		sb.append("select * from ");
 		sb.append(UserRole.TABLE);
 		sb.append(" where userId = ?");
-		return QueryHelper.query(UserRole.class, sb.toString(), uid);
+		return QueryUtils.query(UserRole.class, sb.toString(), uid);
 
 	}
 

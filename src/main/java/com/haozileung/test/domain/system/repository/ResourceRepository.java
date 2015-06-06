@@ -5,9 +5,9 @@ package com.haozileung.test.domain.system.repository;
 
 import java.util.List;
 
+import com.haozileung.infra.utils.QueryUtils;
 import com.haozileung.test.domain.system.Resource;
 import com.haozileung.test.domain.system.RoleResource;
-import com.haozileung.test.infra.QueryHelper;
 
 /**
  * @author YamchaL
@@ -23,7 +23,7 @@ public final class ResourceRepository {
 		sb.append("select * from ");
 		sb.append(Resource.TABLE);
 		sb.append(" where id = ?");
-		return QueryHelper.read(Resource.class, sb.toString(), id);
+		return QueryUtils.read(Resource.class, sb.toString(), id);
 	}
 
 	public void save(Resource res) {
@@ -31,7 +31,7 @@ public final class ResourceRepository {
 		sb.append("insert into ");
 		sb.append(Resource.TABLE);
 		sb.append(" (code,name,type,url,groupId,status) values (?,?,?,?,?,?)");
-		QueryHelper.update(sb.toString(), res.getCode(), res.getName(),
+		QueryUtils.update(sb.toString(), res.getCode(), res.getName(),
 				res.getType(), res.getUrl(), res.getGroupId(), res.getStatus());
 	}
 
@@ -40,7 +40,7 @@ public final class ResourceRepository {
 		sb.append("update ");
 		sb.append(Resource.TABLE);
 		sb.append(" set code=?,name=?,type=?,url=?,groupId=?,status=? where id = ?");
-		QueryHelper.update(sb.toString(), res.getCode(), res.getName(),
+		QueryUtils.update(sb.toString(), res.getCode(), res.getName(),
 				res.getType(), res.getUrl(), res.getGroupId(), res.getStatus(),
 				res.getId());
 	}
@@ -50,12 +50,12 @@ public final class ResourceRepository {
 		sb.append("delete from ");
 		sb.append(Resource.TABLE);
 		sb.append(" where id = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 		sb.delete(0, sb.length());
 		sb.append("delete from ");
 		sb.append(RoleResource.TABLE);
 		sb.append(" where resourceId = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 	}
 
 	public void saveAll(List<Resource> ress) {
@@ -71,7 +71,7 @@ public final class ResourceRepository {
 			sb.append("insert into ");
 			sb.append(Resource.TABLE);
 			sb.append(" (code,name,type,url,groupId,status) values (?,?,?,?,?,?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -88,7 +88,7 @@ public final class ResourceRepository {
 			sb.append("update ");
 			sb.append(Resource.TABLE);
 			sb.append(" set code=?,name=?,type=?,url=?,groupId=?,status=? where id = ?");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 

@@ -5,8 +5,8 @@ package com.haozileung.test.domain.system.repository;
 
 import java.util.List;
 
+import com.haozileung.infra.utils.QueryUtils;
 import com.haozileung.test.domain.system.Dictionary;
-import com.haozileung.test.infra.QueryHelper;
 
 /**
  * @author YamchaL
@@ -22,7 +22,7 @@ public final class DictionaryRepository {
 		sb.append("select * from ");
 		sb.append(Dictionary.TABLE);
 		sb.append(" where id = ?");
-		return QueryHelper.read_cache(Dictionary.class,
+		return QueryUtils.read_cache(Dictionary.class,
 				Dictionary.class.getName(), id, sb.toString(), id);
 	}
 
@@ -31,7 +31,7 @@ public final class DictionaryRepository {
 		sb.append("insert into ");
 		sb.append(Dictionary.TABLE);
 		sb.append(" (code,name,order,parentId,status) values (?,?,?,?,?)");
-		QueryHelper.update(sb.toString(), dic.getCode(), dic.getName(),
+		QueryUtils.update(sb.toString(), dic.getCode(), dic.getName(),
 				dic.getOrder(), dic.getParentId(), dic.getStataus());
 	}
 
@@ -40,7 +40,7 @@ public final class DictionaryRepository {
 		sb.append("update ");
 		sb.append(Dictionary.TABLE);
 		sb.append(" set code=?,name=?,order=?,parentId=?,status=? where id = ?");
-		QueryHelper.update(sb.toString(), dic.getCode(), dic.getName(),
+		QueryUtils.update(sb.toString(), dic.getCode(), dic.getName(),
 				dic.getOrder(), dic.getParentId(), dic.getStataus(),
 				dic.getId());
 	}
@@ -50,7 +50,7 @@ public final class DictionaryRepository {
 		sb.append("delete from ");
 		sb.append(Dictionary.TABLE);
 		sb.append(" where id = ?");
-		QueryHelper.update(sb.toString(), id);
+		QueryUtils.update(sb.toString(), id);
 	}
 
 	public void saveAll(List<Dictionary> dics) {
@@ -65,7 +65,7 @@ public final class DictionaryRepository {
 			sb.append("insert into ");
 			sb.append(Dictionary.TABLE);
 			sb.append(" (code,name,order,parentId,status) values (?,?,?,?,?)");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
@@ -82,7 +82,7 @@ public final class DictionaryRepository {
 			sb.append("update ");
 			sb.append(Dictionary.TABLE);
 			sb.append(" set code=?,name=?,order=?,parentId=?,status=? where id = ?");
-			QueryHelper.batch(sb.toString(), params);
+			QueryUtils.batch(sb.toString(), params);
 		}
 	}
 
