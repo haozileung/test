@@ -171,21 +171,7 @@
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.eclipse.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.2.5.v20141112</version>
-				<configuration>
-					<stopPort>9966</stopPort>
-					<stopKey>foo</stopKey>
-					<reload>manual</reload>
-					<webAppSourceDirectory>src\main\webapp</webAppSourceDirectory>
-					<webApp>
-						<defaultsDescriptor>other/webdefault.xml</defaultsDescriptor>
-					</webApp>
-				</configuration>
-			</plugin>
+			</plugin>			
 		</plugins>
 	</build>
 	<artifactId>frontend</artifactId>
