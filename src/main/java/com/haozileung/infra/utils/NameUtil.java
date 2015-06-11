@@ -1,6 +1,6 @@
 package com.haozileung.infra.utils;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * 名称操作辅助类

@@ -1,25 +1,28 @@
 package com.haozileung.web.web;
 
+import java.io.IOException;
+
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.velocity.Template;
-import org.apache.velocity.context.Context;
-import org.apache.velocity.tools.view.VelocityLayoutServlet;
+import org.beetl.ext.servlet.ServletGroupTemplate;
 
 @WebServlet(urlPatterns = { "/index" }, loadOnStartup = 1)
-public class IndexServlet extends VelocityLayoutServlet {
+public class IndexServlet extends HttpServlet {
 
 	/**
-     *
-     */
-	private static final long serialVersionUID = -7189409201757362254L;
+	 * 
+	 */
+	private static final long serialVersionUID = -840470989620299816L;
 
-	// 处理请求
 	@Override
-	protected Template handleRequest(HttpServletRequest request,
-			HttpServletResponse response, Context ctx) {
-		return getTemplate("/index.html");
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
+		resp.setContentType("text/html;charset=UTF-8");
+		ServletGroupTemplate.instance().render("/index.html", req, resp);
 	}
+
 }

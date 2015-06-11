@@ -6,23 +6,23 @@
     <meta name="description" content="">
     <meta name="keywords" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-    <title>$!page_title</title>
+    <title>${page_title!}</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
     <!-- Bootstrap Core CSS -->
-    <link href="$link.getContextPath()/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${ctxPath}/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom Fonts -->
-    <link href="$link.getContextPath()/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="$link.getContextPath()/assets/css/my.css" rel="stylesheet" type="text/css">
+    <link href="${ctxPath}/assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="${ctxPath}/assets/css/my.css" rel="stylesheet" type="text/css">
     <!-- jQuery -->
-    <script src="$link.getContextPath()/assets/jquery/jquery.min.js"></script>
-    <script src="$link.getContextPath()/assets/jquery/jquery.form.min.js"></script>
+    <script src="${ctxPath}/assets/jquery/jquery.min.js"></script>
+    <script src="${ctxPath}/assets/jquery/jquery.form.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
-    <script src="$link.getContextPath()/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="${ctxPath}/assets/bootstrap/js/bootstrap.min.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script src="$link.getContextPath()/assets/js/lib/html5shiv.js"></script>
-    <script src="$link.getContextPath()/assets/js/lib/respond.min.js"></script>
+    <script src="${ctxPath}/assets/js/lib/html5shiv.js"></script>
+    <script src="${ctxPath}/assets/js/lib/respond.min.js"></script>
     <![endif]-->
 </head>
 <body>
@@ -83,7 +83,7 @@
 </nav>
 <!-- Begin page content -->
 <div class="container">
-    $screen_content
+    ${layoutContent}
 </div>
 
 <footer class="footer">

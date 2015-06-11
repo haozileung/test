@@ -13,7 +13,7 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
 import org.apache.commons.dbutils.handlers.ColumnListHandler;
 import org.apache.commons.dbutils.handlers.ScalarHandler;
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -177,7 +177,7 @@ public class QueryUtils {
 		int from = (page - 1) * count;
 		count = (count > 0) ? count : Integer.MAX_VALUE;
 		return query(beanClass, sql + " LIMIT ?,?",
-				ArrayUtils.addAll(params, new Integer[] { from, count }));
+				ArrayUtils.addAll(params, from, count));
 	}
 
 	/**
