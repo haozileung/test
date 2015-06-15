@@ -21,13 +21,13 @@ public class CacheHelper {
 	private static final String GLOBAL_CACHE = "global_cache";
 
 	public static void init() {
-		L1CacheManager.init();
-		L2CacheManager.init();
+		EhCacheManager.init();
+		MemcacheManager.init();
 	}
 
 	public static void destroy() {
-		L1CacheManager.destroy();
-		L2CacheManager.destroy();
+		EhCacheManager.destroy();
+		MemcacheManager.destroy();
 	}
 
 	/**
@@ -45,11 +45,11 @@ public class CacheHelper {
 	public static <T> T get(final String region, final Serializable key,
 			final ICacheInvoker<T> invoker) {
 		// 1. 从正常缓存中获取数据
-		T data = (T) L1CacheManager.get(region, key);
+		T data = (T) EhCacheManager.get(region, key);
 		if (data == null) {
 			logger.debug("在L1缓存中未找到内容！{} - {}", region, key);
 			// 2. 从全局二级缓存中获取数据,执行自动更新数据策略，结果直接返回
-			data = (T) L2CacheManager.get(GLOBAL_CACHE, key);
+			data = (T) MemcacheManager.get(GLOBAL_CACHE, key);
 			if (invoker != null) {
 				String thread_name = String.format("CacheUpdater-%s-%s",
 						region, key);
@@ -58,32 +58,31 @@ public class CacheHelper {
 					public void run() {
 						Object result = invoker.callback();
 						if (result != null) {
-							L1CacheManager.set(region, key,
+							EhCacheManager.set(region, key,
 									(Serializable) result);
-							L2CacheManager.set(GLOBAL_CACHE, key,
+							MemcacheManager.set(GLOBAL_CACHE, key,
 									(Serializable) result);
 						}
 					}
 				});
-
 			}
 		}
 		return data;
 	}
 
 	public static void update(final String region, final Serializable key) {
-		L1CacheManager.evict(region, key);
+		EhCacheManager.evict(region, key);
 	}
 
 	public static void evict(final String region, final Serializable key) {
-		L1CacheManager.evict(region, key);
-		L2CacheManager.evict(region, key);
+		EhCacheManager.evict(region, key);
+		MemcacheManager.evict(region, key);
 	}
 
 	public static void updateNow(final String region, final Serializable key,
 			final Serializable value) {
-		L2CacheManager.set(region, key, value);
-		L1CacheManager.set(region, key, value);
+		MemcacheManager.set(region, key, value);
+		EhCacheManager.set(region, key, value);
 	}
 
 	static class CacheUpdater extends ThreadPoolExecutor {

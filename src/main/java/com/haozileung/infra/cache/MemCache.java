@@ -51,7 +51,7 @@ public class MemCache implements Cache {
 	 * @param value
 	 *            a value
 	 * @throws CacheException
-	 *             if the {@link L1CacheManager} is shutdown or another
+	 *             if the {@link EhCacheManager} is shutdown or another
 	 *             {@link Exception} occurs.
 	 */
 	@Override
@@ -65,7 +65,7 @@ public class MemCache implements Cache {
 	 * @param key
 	 * @param value
 	 * @throws CacheException
-	 *             if the {@link L1CacheManager} is shutdown or another
+	 *             if the {@link EhCacheManager} is shutdown or another
 	 *             {@link Exception} occurs.
 	 */
 	@Override

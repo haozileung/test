@@ -26,6 +26,7 @@ public class CloseDBConnectionFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		try {
 			chain.doFilter(request, response);
+		} catch (Exception e) {
 		} finally {
 			DataSourceUtils.closeConnection();
 		}

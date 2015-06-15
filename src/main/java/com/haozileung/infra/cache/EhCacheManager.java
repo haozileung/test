@@ -8,16 +8,16 @@ import org.slf4j.LoggerFactory;
 /**
  * 缓存助手
  */
-public class L1CacheManager {
+public class EhCacheManager {
 
 	private final static Logger logger = LoggerFactory
-			.getLogger(L1CacheManager.class);
+			.getLogger(EhCacheManager.class);
 	private static CacheProvider provider;
 
 	public static void init() {
 		provider = new EhCacheProvider();
 		provider.start();
-		logger.info("L1 Cache started...");
+		logger.info("EhCacheManager started...");
 	}
 
 	public static void destroy() {
@@ -25,7 +25,7 @@ public class L1CacheManager {
 			provider.stop();
 			provider = null;
 		}
-		logger.info("L1 Cache stopped...");
+		logger.info("EhCacheManager stopped...");
 	}
 
 	private final static Cache _GetCache(String cache_name) {

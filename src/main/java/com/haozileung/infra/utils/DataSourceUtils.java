@@ -23,8 +23,8 @@ public class DataSourceUtils {
 	public static final void init() {
 		if (null == druidDataSource) {
 			druidDataSource = new DruidDataSource();
-			druidDataSource.setUrl(PropertiesUtils.getProperties()
-					.getProperty("db.url"));
+			druidDataSource.setUrl(PropertiesUtils.getProperties().getProperty(
+					"db.url"));
 			druidDataSource.setUsername(PropertiesUtils.getProperties()
 					.getProperty("db.username"));
 			druidDataSource.setPassword(PropertiesUtils.getProperties()
@@ -50,8 +50,8 @@ public class DataSourceUtils {
 			} catch (SQLException e) {
 				logger.error(e.getMessage(), e);
 			}
-			String show_sql_prop = PropertiesUtils.getProperties()
-					.getProperty("show_sql");
+			String show_sql_prop = PropertiesUtils.getProperties().getProperty(
+					"show_sql");
 			show_sql = ((show_sql_prop != null) && show_sql_prop
 					.equalsIgnoreCase("true"));
 		}
@@ -61,6 +61,7 @@ public class DataSourceUtils {
 		Connection conn = conns.get();
 		if (conn == null || conn.isClosed()) {
 			conn = druidDataSource.getConnection();
+			conn.setAutoCommit(false);
 			conns.set(conn);
 		}
 		return (show_sql && !Proxy.isProxyClass(conn.getClass())) ? new _DebugConnection(
@@ -72,15 +73,27 @@ public class DataSourceUtils {
 	 */
 	public final static void closeConnection() {
 		Connection conn = conns.get();
-		try {
-			if (conn != null && !conn.isClosed()) {
-				conn.setAutoCommit(true);
-				conn.close();
+		if (conn != null) {
+			try {
+				if (!conn.isClosed()) {
+					conn.commit();
+				}
+			} catch (SQLException e) {
+				logger.error("Unabled to commit connection!!! ", e);
+				try {
+					conn.rollback();
+				} catch (SQLException e1) {
+					logger.error("Unabled to rollback connection!!! ", e1);
+				}
+			} finally {
+				try {
+					conn.close();
+				} catch (SQLException e) {
+					logger.error("Unabled to close connection!!! ", e);
+				}
 			}
-		} catch (SQLException e) {
-			logger.error("Unabled to close connection!!! ", e);
+			conns.set(null);
 		}
-		conns.set(null);
 	}
 
 	public static void destroy() {
