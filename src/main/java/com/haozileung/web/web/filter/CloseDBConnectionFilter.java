@@ -10,6 +10,9 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.haozileung.infra.utils.DataSourceUtils;
 
 /**
@@ -17,6 +20,9 @@ import com.haozileung.infra.utils.DataSourceUtils;
  */
 @WebFilter(filterName = "CloseDBConnectionFilter", urlPatterns = "/*")
 public class CloseDBConnectionFilter implements Filter {
+
+	private static final Logger logger = LoggerFactory
+			.getLogger(CloseDBConnectionFilter.class);
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
@@ -27,8 +33,10 @@ public class CloseDBConnectionFilter implements Filter {
 		try {
 			chain.doFilter(request, response);
 		} catch (Exception e) {
+			logger.error(e.getMessage());
+			DataSourceUtils.closeConnection(true);
 		} finally {
-			DataSourceUtils.closeConnection();
+			DataSourceUtils.closeConnection(false);
 		}
 	}
 

@@ -71,25 +71,36 @@ public class DataSourceUtils {
 	/**
 	 * 关闭连接
 	 */
-	public final static void closeConnection() {
+	public final static void closeConnection(boolean rollback) {
 		Connection conn = conns.get();
 		if (conn != null) {
-			try {
-				if (!conn.isClosed()) {
-					conn.commit();
-				}
-			} catch (SQLException e) {
-				logger.error("Unabled to commit connection!!! ", e);
+			if (rollback) {
 				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					logger.error("Unabled to rollback connection!!! ", e1);
-				}
-			} finally {
-				try {
-					conn.close();
+					if (!conn.isClosed()) {
+						conn.rollback();
+						conn.close();
+					}
 				} catch (SQLException e) {
-					logger.error("Unabled to close connection!!! ", e);
+					logger.error("Unabled to rollback connection!!! ", e);
+				}
+			} else {
+				try {
+					if (!conn.isClosed()) {
+						conn.commit();
+					}
+				} catch (SQLException e) {
+					logger.error("Unabled to commit connection!!! ", e);
+					try {
+						conn.rollback();
+					} catch (SQLException e1) {
+						logger.error("Unabled to rollback connection!!! ", e1);
+					}
+				} finally {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						logger.error("Unabled to close connection!!! ", e);
+					}
 				}
 			}
 			conns.set(null);
