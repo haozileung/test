@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.haozileung.infra.dao.exceptions.DaoException;
 import com.haozileung.infra.utils.DataSourceUtils;
 
 /**
@@ -32,8 +33,8 @@ public class CloseDBConnectionFilter implements Filter {
 			FilterChain chain) throws IOException, ServletException {
 		try {
 			chain.doFilter(request, response);
-		} catch (Exception e) {
-			logger.error(e.getMessage());
+		} catch (DaoException e) {
+			logger.error(e.getMessage(), e);
 			DataSourceUtils.closeConnection(true);
 		} finally {
 			DataSourceUtils.closeConnection(false);

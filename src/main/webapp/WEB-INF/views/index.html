@@ -1,17 +1,16 @@
 <!--: 
-layout("/layout/default.html",{page_title :'主页'}){
+layout("/layout/default.html",{page_title :'主頁'}){
 -->
 <div class="row">
 	<div class="col-lg-12">
 		<h1 class="page-header">Home</h1>
 		<!--: 
-		var a = 2; 
-		var b = 3; 
-		var result = a+b;
-		var c = "测试 ";
+		for(user in users){
 		-->
-		hello 2+3=${result}
-		${c}
+        ${userLP.index}===${user.name}===${user.id}<br />
+        <!--:
+        }
+		-->
 	</div>
 	<!-- /.col-lg-12 -->
 </div>

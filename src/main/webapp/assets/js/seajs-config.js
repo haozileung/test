@@ -4,6 +4,7 @@ seajs.config({
 		'form' : 'lib/jquery/jquery.form.min.js',
 		'bootstrap' : '../../plugins/bootstrap/js/bootstrap.min.js'
 	},
-	preload : [ 'bootstrap' ],
+	preload : 'bootstrap',
 	charset : 'utf-8'
 });
+seajs.use('controller/main');
