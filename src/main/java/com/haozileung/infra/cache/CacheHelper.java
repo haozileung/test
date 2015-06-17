@@ -18,7 +18,6 @@ public class CacheHelper {
 	final static CacheUpdater g_ThreadPool = new CacheUpdater();
 	private static final Logger logger = LoggerFactory
 			.getLogger(CacheHelper.class);
-	private static final String GLOBAL_CACHE = "global_cache";
 
 	public static void init() {
 		EhCacheManager.init();
@@ -49,22 +48,30 @@ public class CacheHelper {
 		if (data == null) {
 			logger.debug("在L1缓存中未找到内容！{} - {}", region, key);
 			// 2. 从全局二级缓存中获取数据,执行自动更新数据策略，结果直接返回
-			data = (T) MemcacheManager.get(GLOBAL_CACHE, key);
+			data = (T) MemcacheManager.get(region, key);
 			if (invoker != null) {
-				String thread_name = String.format("CacheUpdater-%s-%s",
-						region, key);
-				g_ThreadPool.execute(new Thread(thread_name) {
-					@Override
-					public void run() {
-						Object result = invoker.callback();
-						if (result != null) {
-							EhCacheManager.set(region, key,
-									(Serializable) result);
-							MemcacheManager.set(GLOBAL_CACHE, key,
-									(Serializable) result);
+				if (data == null) {
+					logger.debug("在L2缓存中未找到内容！{} - {}", region, key);
+					data = invoker.callback();
+					EhCacheManager.set(region, key, (Serializable) data);
+					MemcacheManager.set(region, key, (Serializable) data);
+				} else {
+					logger.debug("执行自动更新数据策略{} - {}", region, key);
+					String thread_name = String.format("CacheUpdater-%s-%s",
+							region, key);
+					g_ThreadPool.execute(new Thread(thread_name) {
+						@Override
+						public void run() {
+							Object result = invoker.callback();
+							if (result != null) {
+								EhCacheManager.set(region, key,
+										(Serializable) result);
+								MemcacheManager.set(region, key,
+										(Serializable) result);
+							}
 						}
-					}
-				});
+					});
+				}
 			}
 		}
 		return data;

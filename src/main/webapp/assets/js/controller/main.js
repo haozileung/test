@@ -1,5 +1,7 @@
-define(function(require, exports, module) {
+define(function(require) {
+	var $ = require('jquery');
 	require("bootstrap");
-	var Main = {};
-	module.exports = Main;
+	$(document).ready(function() {
+		console.debug($.now());
+	});
 });
