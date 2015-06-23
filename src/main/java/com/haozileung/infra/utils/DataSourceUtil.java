@@ -75,10 +75,15 @@ public class DataSourceUtil {
 				try {
 					if (!conn.isClosed()) {
 						conn.rollback();
-						conn.close();
 					}
 				} catch (SQLException e) {
 					logger.error("Unabled to rollback connection!!! ", e);
+				} finally {
+					try {
+						conn.close();
+					} catch (SQLException e) {
+						logger.error("Unabled to close connection!!! ", e);
+					}
 				}
 			} else {
 				try {
