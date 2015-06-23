@@ -14,8 +14,7 @@ import org.beetl.ext.servlet.ServletGroupTemplate;
 import com.haozileung.infra.cache.CacheHelper;
 import com.haozileung.infra.cache.ICacheInvoker;
 import com.haozileung.infra.dao.persistence.Criteria;
-import com.haozileung.infra.dao.persistence.JdbcDao;
-import com.haozileung.infra.dao.persistence.JdbcDaoDbUtilsImpl;
+import com.haozileung.infra.dao.persistence.JdbcDaoUtil;
 
 @WebServlet(urlPatterns = { "/index" }, loadOnStartup = 1)
 public class IndexServlet extends HttpServlet {
@@ -33,13 +32,11 @@ public class IndexServlet extends HttpServlet {
 				new ICacheInvoker<List<User>>() {
 					@Override
 					public List<User> callback() {
-						JdbcDao dao = new JdbcDaoDbUtilsImpl();
-						List<User> users = dao.queryList(Criteria
-								.create(User.class));
+						List<User> users = JdbcDaoUtil.getInstance().queryList(
+								Criteria.create(User.class));
 						return users;
 					}
 				});
-
 		req.setAttribute("users", users);
 		ServletGroupTemplate.instance().render("/index.html", req, resp);
 	}
