@@ -14,12 +14,6 @@ public class MemcacheManager {
 			.getLogger(MemcacheManager.class);
 	private static CacheProvider provider;
 
-	public static void init() {
-		provider = new MemcachedProvider();
-		provider.start();
-		logger.info("MemcacheManager started...");
-	}
-
 	public static void destroy() {
 		if (provider != null) {
 			provider.stop();
@@ -31,6 +25,8 @@ public class MemcacheManager {
 	private final static Cache _GetCache(String cache_name) {
 		if (provider == null) {
 			provider = new MemcachedProvider();
+			provider.start();
+			logger.info("MemcacheManager started...");
 		}
 		return provider.buildCache(cache_name);
 	}

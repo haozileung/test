@@ -14,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.haozileung.infra.dao.exceptions.DaoException;
-import com.haozileung.infra.utils.DataSourceUtils;
+import com.haozileung.infra.utils.DataSourceUtil;
 
 /**
  * Servlet Filter implementation class CloseDBConnectionFilter
@@ -35,9 +35,9 @@ public class CloseDBConnectionFilter implements Filter {
 			chain.doFilter(request, response);
 		} catch (DaoException e) {
 			logger.error(e.getMessage(), e);
-			DataSourceUtils.closeConnection(true);
+			DataSourceUtil.closeConnection(true);
 		} finally {
-			DataSourceUtils.closeConnection(false);
+			DataSourceUtil.closeConnection(false);
 		}
 	}
 

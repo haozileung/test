@@ -15,14 +15,9 @@ import org.slf4j.LoggerFactory;
  */
 public class CacheHelper {
 
-	final static CacheUpdater g_ThreadPool = new CacheUpdater();
+	private final static CacheUpdater g_ThreadPool = new CacheUpdater();
 	private static final Logger logger = LoggerFactory
 			.getLogger(CacheHelper.class);
-
-	public static void init() {
-		EhCacheManager.init();
-		MemcacheManager.init();
-	}
 
 	public static void destroy() {
 		EhCacheManager.destroy();

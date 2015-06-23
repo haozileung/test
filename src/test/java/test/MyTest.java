@@ -1,17 +1,11 @@
 package test;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import com.haozileung.infra.cache.MemcacheManager;
 
 public class MyTest {
-
-	@Before
-	public void before() {
-		MemcacheManager.init();
-	}
 
 	@Test
 	public void test() {

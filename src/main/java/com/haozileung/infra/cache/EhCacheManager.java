@@ -14,12 +14,6 @@ public class EhCacheManager {
 			.getLogger(EhCacheManager.class);
 	private static CacheProvider provider;
 
-	public static void init() {
-		provider = new EhCacheProvider();
-		provider.start();
-		logger.info("EhCacheManager started...");
-	}
-
 	public static void destroy() {
 		if (provider != null) {
 			provider.stop();
@@ -31,6 +25,8 @@ public class EhCacheManager {
 	private final static Cache _GetCache(String cache_name) {
 		if (provider == null) {
 			provider = new EhCacheProvider();
+			provider.start();
+			logger.info("EhCacheManager started...");
 		}
 		return provider.buildCache(cache_name);
 	}
