@@ -9,10 +9,12 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.common.base.Strings;
 import com.haozileung.infra.dao.exceptions.DaoException;
 import com.haozileung.infra.utils.DataSourceUtil;
 
@@ -22,22 +24,28 @@ import com.haozileung.infra.utils.DataSourceUtil;
 @WebFilter(filterName = "CloseDBConnectionFilter", urlPatterns = "/*")
 public class CloseDBConnectionFilter implements Filter {
 
-	private static final Logger logger = LoggerFactory
-			.getLogger(CloseDBConnectionFilter.class);
+	private static final Logger logger = LoggerFactory.getLogger(CloseDBConnectionFilter.class);
 
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain chain) throws IOException, ServletException {
-		try {
-			chain.doFilter(request, response);
-		} catch (DaoException e) {
-			logger.error(e.getMessage(), e);
-			DataSourceUtil.closeConnection(true);
-		} finally {
-			DataSourceUtil.closeConnection(false);
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		if (request instanceof HttpServletRequest) {
+			String url = ((HttpServletRequest) request).getRequestURL().toString();
+			if (!Strings.isNullOrEmpty(url) && url.contains(".")) {
+				chain.doFilter(request, response);
+			} else {
+				try {
+					chain.doFilter(request, response);
+				} catch (DaoException e) {
+					logger.error(e.getMessage(), e);
+					DataSourceUtil.closeConnection(true);
+				} finally {
+					DataSourceUtil.closeConnection(false);
+				}
+			}
 		}
 	}
 

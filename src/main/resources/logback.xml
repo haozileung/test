@@ -7,11 +7,8 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-	<logger name="com.haozileung" level="DEBUG">
-	</logger>
-	<logger name="velocity" level="INFO">
-	</logger>
-	<root level="INFO">
+	<logger name="com.haozileung" level="DEBUG" />
+	<root level="ERROR">
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
