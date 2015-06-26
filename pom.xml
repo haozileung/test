@@ -127,6 +127,7 @@
 	</dependencies>
 	<build>
 		<finalName>test</finalName>
+		<outputDirectory>src/main/webapp/WEB-INF/classes</outputDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -149,6 +150,26 @@
 				<version>2.4</version>
 				<configuration>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.3.0.v20150612</version>
+				<configuration>
+					<stopPort>9966</stopPort>
+					<stopKey>foo</stopKey>
+					<reload>manual</reload>
+					<webAppSourceDirectory>src\main\webapp</webAppSourceDirectory>
+					<webApp>
+						<defaultsDescriptor>other/webdefault.xml</defaultsDescriptor>
+					</webApp>
+					<systemProperties>
+						<systemProperty>
+							<name>org.eclipse.jetty.util.URI.charset</name>
+							<value>UTF-8</value>
+						</systemProperty>
+					</systemProperties>
 				</configuration>
 			</plugin>
 		</plugins>
