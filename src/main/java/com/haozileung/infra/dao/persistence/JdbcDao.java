@@ -129,7 +129,7 @@ public interface JdbcDao {
 	 * @param entity
 	 * @return
 	 */
-	int queryCount(Object entity);
+	Long queryCount(Object entity);
 
 	/**
 	 * 查询记录数
@@ -138,7 +138,7 @@ public interface JdbcDao {
 	 *            the criteria
 	 * @return int int
 	 */
-	int queryCount(Criteria criteria);
+	Long queryCount(Criteria criteria);
 
 	/**
 	 * 查询记录数
@@ -149,7 +149,7 @@ public interface JdbcDao {
 	 *            the criteria
 	 * @return int int
 	 */
-	int queryCount(Object entity, Criteria criteria);
+	Long queryCount(Object entity, Criteria criteria);
 
 	/**
 	 * 根据主键得到记录
@@ -265,6 +265,32 @@ public interface JdbcDao {
 	 */
 	Long addForObject(final String sql, final Object[] args);
 
+	/**
+	 * 
+	 * @param sql
+	 * @param countSql
+	 * @param pager
+	 * @param args
+	 * @param clazz
+	 * @return
+	 */
 	<T> Pager pageSearch(final String sql, final String countSql, Pager pager,
 			final Object[] args, final Class<T> clazz);
+
+	/**
+	 * 
+	 * @param pager
+	 * @param entity
+	 * @return
+	 */
+	<T> Pager pageSearch(Pager pager, Object entity);
+
+	/**
+	 * 
+	 * @param pager
+	 * @param criteria
+	 * @return
+	 */
+	<T> Pager pageSearch(Pager pager, Criteria criteria);
+
 }

@@ -2,6 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.haozileung.web</groupId>
+	<artifactId>test</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.1</version>
 	<name>test Maven Webapp</name>
@@ -9,11 +10,6 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>commons-collections</groupId>
-			<artifactId>commons-collections</artifactId>
-			<version>3.2.1</version>
-		</dependency>
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
@@ -37,6 +33,11 @@
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>3.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -174,5 +175,4 @@
 			</plugin>
 		</plugins>
 	</build>
-	<artifactId>frontend</artifactId>
 </project>

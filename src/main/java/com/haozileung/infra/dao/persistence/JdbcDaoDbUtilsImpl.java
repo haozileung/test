@@ -79,8 +79,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		final BoundSql boundSql = SqlAssembleUtils.buildInsertSql(entity, null,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -91,8 +91,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		final BoundSql boundSql = SqlAssembleUtils.buildInsertSql(null,
 				criteria, this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -103,8 +103,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		BoundSql boundSql = SqlAssembleUtils.buildUpdateSql(null, criteria,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -115,8 +115,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		BoundSql boundSql = SqlAssembleUtils.buildUpdateSql(entity, null,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -127,8 +127,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		BoundSql boundSql = SqlAssembleUtils.buildDeleteSql(null, criteria,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -139,8 +139,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		BoundSql boundSql = SqlAssembleUtils.buildDeleteSql(entity, null,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -151,8 +151,8 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		BoundSql boundSql = SqlAssembleUtils.buildDeleteSql(clazz, id,
 				this.getNameHandler());
 		try {
-			runner.update(DataSourceUtil.getConnection(),
-					boundSql.getSql(), boundSql.getParams().toArray());
+			runner.update(DataSourceUtil.getConnection(), boundSql.getSql(),
+					boundSql.getParams().toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -177,10 +177,11 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		List<T> list = null;
 		try {
 			list = runner
-					.query(DataSourceUtil.getConnection(), boundSql
-							.getSql(), new BeanListHandler<T>(
-							(Class<T>) criteria.getEntityClass()), boundSql
-							.getParams().toArray());
+					.query(DataSourceUtil.getConnection(),
+							boundSql.getSql(),
+							new BeanListHandler<T>((Class<T>) criteria
+									.getEntityClass()), boundSql.getParams()
+									.toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
 		}
@@ -222,44 +223,44 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 	}
 
 	@Override
-	public int queryCount(Object entity, Criteria criteria) {
+	public Long queryCount(Object entity, Criteria criteria) {
 		BoundSql boundSql = SqlAssembleUtils.buildCountSql(entity, criteria,
 				this.getNameHandler());
 		try {
 			return runner.query(DataSourceUtil.getConnection(), boundSql
-					.getSql(), new ScalarHandler<Integer>(), boundSql
-					.getParams().toArray());
+					.getSql(), new ScalarHandler<Long>(), boundSql.getParams()
+					.toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			return 0;
+			return 0L;
 		}
 	}
 
 	@Override
-	public int queryCount(Object entity) {
+	public Long queryCount(Object entity) {
 		BoundSql boundSql = SqlAssembleUtils.buildCountSql(entity, null,
 				this.getNameHandler());
 		try {
 			return runner.query(DataSourceUtil.getConnection(), boundSql
-					.getSql(), new ScalarHandler<Integer>(), boundSql
-					.getParams().toArray());
+					.getSql(), new ScalarHandler<Long>(), boundSql.getParams()
+					.toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			return 0;
+			return 0L;
 		}
 	}
 
 	@Override
-	public int queryCount(Criteria criteria) {
+	public Long queryCount(Criteria criteria) {
 		BoundSql boundSql = SqlAssembleUtils.buildCountSql(null, criteria,
 				this.getNameHandler());
 		try {
 			return runner.query(DataSourceUtil.getConnection(), boundSql
-					.getSql(), new ScalarHandler<Integer>(), boundSql
-					.getParams().toArray());
+					.getSql(), new ScalarHandler<Long>(), boundSql.getParams()
+					.toArray());
 		} catch (SQLException e) {
 			logger.error(e.getMessage(), e);
-			return 0;
+			return 0L;
 		}
 	}
 
@@ -434,5 +435,58 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 			logger.error(e.getMessage(), e);
 			return null;
 		}
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Pager pageSearch(Pager pager, Object entity) {
+		if (pager == null) {
+			logger.error("Pager Cann't be NULL! ");
+			return null;
+		}
+		BoundSql boundSql = SqlAssembleUtils.buildListSql(entity, null,
+				this.getNameHandler());
+		String sql = boundSql.getSql();
+		sql += " LIMIT " + pager.getOffset() + "," + pager.getItemsPerPage();
+		List<T> data = null;
+		try {
+			data = runner.query(DataSourceUtil.getConnection(), sql,
+					new BeanListHandler<T>((Class<T>) entity.getClass()),
+					boundSql.getParams().toArray());
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e);
+		}
+		pager.setList(data);
+		Long count = this.queryCount(entity);
+		pager.setItemsTotal(count);
+		return pager;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> Pager pageSearch(Pager pager, Criteria criteria) {
+		if (pager == null) {
+			logger.error("Pager Cann't be NULL! ");
+			return null;
+		}
+		BoundSql boundSql = SqlAssembleUtils.buildListSql(null, criteria,
+				this.getNameHandler());
+		String sql = boundSql.getSql();
+		sql += " LIMIT " + pager.getOffset() + "," + pager.getItemsPerPage();
+		List<T> data = null;
+		try {
+			data = runner
+					.query(DataSourceUtil.getConnection(),
+							sql,
+							new BeanListHandler<T>((Class<T>) criteria
+									.getEntityClass()), boundSql.getParams()
+									.toArray());
+		} catch (SQLException e) {
+			logger.error(e.getMessage(), e);
+		}
+		pager.setList(data);
+		Long count = this.queryCount(criteria);
+		pager.setItemsTotal(count);
+		return pager;
 	}
 }
