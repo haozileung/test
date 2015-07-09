@@ -3,7 +3,7 @@ package com.haozileung.infra.dao.pager;
 import java.io.Serializable;
 import java.util.List;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
 import com.haozileung.infra.dao.bean.BeanConverter;
 
