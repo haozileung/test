@@ -1,31 +1,28 @@
 package test;
 
-import org.junit.After;
 import org.junit.Test;
 
-import com.haozileung.infra.cache.MemcacheManager;
+import com.haozileung.infra.cache.CacheHelper;
+import com.haozileung.infra.cache.ICacheInvoker;
 
 public class MyTest {
 
 	@Test
 	public void test() {
-		String test = "test";
-		MemcacheManager.set("test", "1", test);
-		String v = (String) MemcacheManager.get("test", "1");
-		System.out.println("+++++" + v);
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		ICacheInvoker<String> invoker = new ICacheInvoker<String>() {
+			@Override
+			public String callback() {
+				return "CacheHelper";
+			}
+		};
+		for (int i = 0; i < 20; i++) {
+			System.out.println(CacheHelper.get("test", "test", invoker));
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		String v2 = (String) MemcacheManager.get("test", "1");
-		System.out.println("+++++" + v2);
 	}
-
-	@After
-	public void after() {
-		MemcacheManager.destroy();
-	}
-
 }

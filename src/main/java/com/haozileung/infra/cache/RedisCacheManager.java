@@ -8,9 +8,9 @@ import org.slf4j.LoggerFactory;
 /**
  * 缓存助手
  */
-public class MemcacheManager {
+public class RedisCacheManager {
 
-	private final static Logger logger = LoggerFactory.getLogger(MemcacheManager.class);
+	private final static Logger logger = LoggerFactory.getLogger(RedisCacheManager.class);
 	private static CacheProvider provider;
 
 	public static void destroy() {
@@ -18,14 +18,14 @@ public class MemcacheManager {
 			provider.stop();
 			provider = null;
 		}
-		logger.info("MemcacheManager stopped...");
+		logger.info("RedisCacheManager stopped...");
 	}
 
 	private final static Cache _GetCache(String cache_name) {
 		if (provider == null) {
-			provider = new MemcachedProvider();
+			provider = new RedisCacheProvider();
 			provider.start();
-			logger.info("MemcacheManager started...");
+			logger.info("RedisCacheManager started...");
 		}
 		return provider.buildCache(cache_name);
 	}
@@ -37,7 +37,7 @@ public class MemcacheManager {
 	 * @param key
 	 * @return
 	 */
-	public final static Object get(String name, String key) {
+	public final static Object get(String name, Object key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
 		return null;
@@ -53,7 +53,7 @@ public class MemcacheManager {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public final static <T> T get(Class<T> resultClass, String name, String key) {
+	public final static <T> T get(Class<T> resultClass, String name, Object key) {
 		if (name != null && key != null)
 			return (T) _GetCache(name).get(key);
 		return null;
@@ -66,7 +66,7 @@ public class MemcacheManager {
 	 * @param key
 	 * @param value
 	 */
-	public final static void set(String name, String key, Serializable value) {
+	public final static void set(String name, Object key, Serializable value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
 	}
@@ -77,7 +77,7 @@ public class MemcacheManager {
 	 * @param name
 	 * @param key
 	 */
-	public final static void evict(String name, String key) {
+	public final static void evict(String name, Object key) {
 		if (name != null && key != null)
 			_GetCache(name).remove(key);
 	}

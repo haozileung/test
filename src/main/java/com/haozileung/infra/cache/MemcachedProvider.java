@@ -2,6 +2,7 @@ package com.haozileung.infra.cache;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -13,7 +14,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.fastjson.util.IOUtils;
+import com.google.common.io.ByteSource;
+import com.google.common.io.Resources;
 import com.whalin.MemCached.SockIOPool;
 
 public class MemcachedProvider implements CacheProvider {
@@ -56,19 +58,26 @@ public class MemcachedProvider implements CacheProvider {
 	@Override
 	@SuppressWarnings({ "rawtypes" })
 	public void start() throws CacheException {
-		String conf = "/memcached.properties";
-		InputStream in = getClass().getResourceAsStream(conf);
-		Properties memcached_conf = new Properties();
+		String conf = "memcached.properties";
+		final URL url = Resources.getResource(conf);
+		final ByteSource byteSource = Resources.asByteSource(url);
+		final Properties props = new Properties();
+		InputStream inputStream = null;
 		try {
-			memcached_conf.load(in);
-		} catch (IOException e) {
-			throw new CacheException("Unabled to load properties from " + conf,
-					e);
+			inputStream = byteSource.openBufferedStream();
+			props.load(inputStream);
+		} catch (final IOException ioException) {
+			ioException.printStackTrace();
 		} finally {
-			IOUtils.close(in);
+			if (inputStream != null) {
+				try {
+					inputStream.close();
+				} catch (final IOException ioException) {
+					ioException.printStackTrace();
+				}
+			}
 		}
-
-		String servers = memcached_conf.getProperty(SERVERS_CONF);
+		String servers = props.getProperty(SERVERS_CONF);
 		if (StringUtils.isBlank(servers)) {
 			throw new CacheException(
 					"configuration 'memcached.servers' get a empty value");
@@ -76,7 +85,7 @@ public class MemcachedProvider implements CacheProvider {
 		SockIOPool pool = SockIOPool.getInstance();
 		pool.setServers(servers.split(","));
 
-		Properties base_conf = (Properties) memcached_conf.clone();
+		Properties base_conf = (Properties) props.clone();
 		base_conf.remove(SERVERS_CONF);
 		Iterator keys = base_conf.keySet().iterator();
 		while (keys.hasNext()) {

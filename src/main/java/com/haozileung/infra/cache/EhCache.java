@@ -16,6 +16,7 @@
  */
 package com.haozileung.infra.cache;
 
+import java.io.Serializable;
 import java.util.List;
 
 import net.sf.ehcache.CacheManager;
@@ -82,7 +83,7 @@ public class EhCache implements Cache {
 	 *             {@link Exception} occurs.
 	 */
 	@Override
-	public void update(Object key, Object value) throws CacheException {
+	public void update(Object key, Serializable value) throws CacheException {
 		put(key, value);
 	}
 
@@ -98,7 +99,7 @@ public class EhCache implements Cache {
 	 *             {@link Exception} occurs.
 	 */
 	@Override
-	public void put(Object key, Object value) throws CacheException {
+	public void put(Object key, Serializable value) throws CacheException {
 		try {
 			Element element = new Element(key, value);
 			cache.put(element);

@@ -1,5 +1,6 @@
 package com.haozileung.infra.cache;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -24,7 +25,7 @@ public interface Cache {
 	 * @param value
 	 * @throws CacheException
 	 */
-	public void put(Object key, Object value) throws CacheException;
+	public void put(Object key, Serializable value) throws CacheException;
 
 	/**
 	 * Add an item to the cache
@@ -33,7 +34,7 @@ public interface Cache {
 	 * @param value
 	 * @throws CacheException
 	 */
-	public void update(Object key, Object value) throws CacheException;
+	public void update(Object key, Serializable value) throws CacheException;
 
 	@SuppressWarnings("rawtypes")
 	public List keys() throws CacheException;
