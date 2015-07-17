@@ -34,7 +34,7 @@ public class CloseDBConnectionFilter implements Filter {
 			throws IOException, ServletException {
 		if (request instanceof HttpServletRequest) {
 			String url = ((HttpServletRequest) request).getRequestURL().toString();
-			if (!Strings.isNullOrEmpty(url) && url.contains(".")) {
+			if (!Strings.isNullOrEmpty(url) && !url.contains(".")) {
 				chain.doFilter(request, response);
 			} else {
 				try {
