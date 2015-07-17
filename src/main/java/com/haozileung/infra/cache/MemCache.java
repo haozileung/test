@@ -12,8 +12,8 @@ import com.whalin.MemCached.MemCachedClient;
 public class MemCache implements Cache {
 
 	private MemCachedClient mc;
-	private int secondToLive;
-	private int hash;
+	private final int secondToLive;
+	private final int hash;
 
 	/**
 	 * Creates a new Hibernate pluggable cache based on a cache name.

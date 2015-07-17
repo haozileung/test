@@ -1,4 +1,4 @@
-package com.haozileung.web.web.filter;
+package com.haozileung.web.filter;
 
 import java.io.IOException;
 

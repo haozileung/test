@@ -14,7 +14,7 @@ import redis.clients.jedis.Jedis;
 public class RedisCache implements Cache {
 
 	private final static Logger log = LoggerFactory.getLogger(RedisCache.class);
-	private String region;
+	private final String region;
 
 	public RedisCache(String region) {
 		this.region = region;

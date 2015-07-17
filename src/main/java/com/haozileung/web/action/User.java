@@ -1,4 +1,4 @@
-package com.haozileung.web.web;
+package com.haozileung.web.action;
 
 import java.io.Serializable;
 
