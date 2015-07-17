@@ -112,7 +112,6 @@ public final class ActionServlet extends HttpServlet {
 			throws InstantiationException, IllegalAccessException, IOException, IllegalArgumentException,
 			InvocationTargetException {
 		String requestURI = req.getRequestURI();
-		System.out.println(requestURI+"================================");
 		String[] parts = StringUtils.split(requestURI, '/');
 		if (parts.length < 2) {
 			resp.setStatus(404);
@@ -192,7 +191,6 @@ public final class ActionServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		System.out.println("........starting ....");
 		String tmp = getInitParameter("packages");
 		action_packages = Arrays.asList(StringUtils.split(tmp, ','));
 		String initial_actions = getInitParameter("initial_actions");
