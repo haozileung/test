@@ -47,10 +47,6 @@
 			<param-name>packages</param-name>
 			<param-value>com.haozileung.web.action</param-value>
 		</init-param>
-		<init-param>
-			<param-name>initial_actions</param-name>
-			<param-value>index</param-value>
-		</init-param>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>ActionServlet</servlet-name>

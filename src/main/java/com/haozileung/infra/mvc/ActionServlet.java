@@ -15,9 +15,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
+import org.beetl.ext.servlet.ServletGroupTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.google.common.base.Strings;
+import com.haozileung.infra.dao.exceptions.DaoException;
+import com.haozileung.infra.utils.DataSourceUtil;
 
 public final class ActionServlet extends HttpServlet {
+
+	private final static Logger logger = LoggerFactory.getLogger(ActionServlet.class);
 
 	private final static HashMap<String, Object> actions = new HashMap<String, Object>();
 	private final static HashMap<String, Method> methods = new HashMap<String, Method>();
@@ -108,25 +116,29 @@ public final class ActionServlet extends HttpServlet {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private boolean _process(HttpServletRequest req, HttpServletResponse resp, boolean is_post)
-			throws InstantiationException, IllegalAccessException, IOException, IllegalArgumentException,
-			InvocationTargetException {
+	private boolean _process(HttpServletRequest req, HttpServletResponse resp) throws InstantiationException,
+			IllegalAccessException, IOException, IllegalArgumentException, InvocationTargetException {
 		String requestURI = req.getRequestURI();
 		String[] parts = StringUtils.split(requestURI, '/');
-		if (parts.length < 2) {
-			resp.setStatus(404);
-			return false;
-		}
 		// 加载Action类
-		Object action = this._LoadAction(parts[1]);
+		String action_name = (parts.length > 0) ? parts[0] : "index";
+		if (Strings.isNullOrEmpty(action_name)) {
+			action_name = "index";
+		}
+		Object action = this._LoadAction(action_name);
 		if (action == null) {
-			resp.setStatus(404);
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
 			return false;
 		}
-		String action_method_name = (parts.length > 2) ? parts[2] : "index";
+		String action_method_name = (parts.length > 1) ? parts[1] : "index";
+		if (Strings.isNullOrEmpty(action_method_name)) {
+			action_method_name = "index";
+		}
 		Method m_action = this._GetActionMethod(action, action_method_name);
 		if (m_action == null) {
-			resp.setStatus(404);
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
 			return false;
 		}
 
@@ -142,20 +154,9 @@ public final class ActionServlet extends HttpServlet {
 		case 2:
 			m_action.invoke(action, req, resp);
 			break;
-		case 3:
-			StringBuilder args = new StringBuilder();
-			for (int i = 3; i < parts.length; i++) {
-				if (StringUtils.isBlank(parts[i]))
-					continue;
-				if (args.length() > 0)
-					args.append('/');
-				args.append(parts[i]);
-			}
-			boolean isLong = m_action.getParameterTypes()[2].equals(long.class);
-			m_action.invoke(action, req, resp, isLong ? NumberUtils.toLong(args.toString(), -1L) : args.toString());
-			break;
 		default:
-			resp.setStatus(404);
+			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
 			return false;
 		}
 
@@ -169,11 +170,11 @@ public final class ActionServlet extends HttpServlet {
 				Method dm = action.getClass().getMethod("destroy");
 				if (dm != null) {
 					dm.invoke(action);
-					log("!!!!!!!!! " + action.getClass().getSimpleName() + " destroy !!!!!!!!!");
+					logger.info("!!!!!!!!! " + action.getClass().getSimpleName() + " destroy !!!!!!!!!");
 				}
 			} catch (NoSuchMethodException e) {
 			} catch (Exception e) {
-				log("Unabled to destroy action: " + action.getClass().getSimpleName(), e);
+				logger.info("Unabled to destroy action: " + action.getClass().getSimpleName(), e);
 			}
 		}
 		super.destroy();
@@ -181,25 +182,18 @@ public final class ActionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, false);
+		process(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp, true);
+		process(req, resp);
 	}
 
 	@Override
 	public void init() throws ServletException {
 		String tmp = getInitParameter("packages");
 		action_packages = Arrays.asList(StringUtils.split(tmp, ','));
-		String initial_actions = getInitParameter("initial_actions");
-		for (String action : StringUtils.split(initial_actions, ','))
-			try {
-				_LoadAction(action);
-			} catch (Exception e) {
-				log("Failed to initial action : " + action, e);
-			}
 	}
 
 	/**
@@ -211,23 +205,22 @@ public final class ActionServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void process(HttpServletRequest req, HttpServletResponse resp, boolean is_post)
-			throws ServletException, IOException {
+	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		resp.setContentType("text/html;charset=utf-8");
 		try {
-			_process(req, resp, is_post);
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvocationTargetException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				_process(req, resp);
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				logger.info(e.getMessage(), e);
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
+			} catch (DaoException e) {
+				logger.info(e.getMessage(), e);
+				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
+			}
+		} finally {
+			DataSourceUtil.closeConnection(true);
 		}
 	}
 
