@@ -37,7 +37,7 @@ public class EhCacheManager {
 	 * @param key
 	 * @return
 	 */
-	public final static Object get(String name, String key) {
+	public final static Object get(String name, Object key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
 		return null;
@@ -53,7 +53,7 @@ public class EhCacheManager {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public final static <T> T get(Class<T> resultClass, String name, String key) {
+	public final static <T> T get(Class<T> resultClass, String name, Object key) {
 		if (name != null && key != null)
 			return (T) _GetCache(name).get(key);
 		return null;
@@ -66,7 +66,7 @@ public class EhCacheManager {
 	 * @param key
 	 * @param value
 	 */
-	public final static void set(String name, String key, Serializable value) {
+	public final static void set(String name, Object key, Serializable value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
 	}
@@ -77,7 +77,7 @@ public class EhCacheManager {
 	 * @param name
 	 * @param key
 	 */
-	public final static void evict(String name, String key) {
+	public final static void evict(String name, Object key) {
 		if (name != null && key != null)
 			_GetCache(name).remove(key);
 	}

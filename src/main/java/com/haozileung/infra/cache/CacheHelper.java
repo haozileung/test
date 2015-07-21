@@ -35,7 +35,7 @@ public class CacheHelper {
 	 * @return 返回对应类型的数据
 	 */
 	@SuppressWarnings("unchecked")
-	public static <T> T get(final String region, final String key, final ICacheInvoker<T> invoker) {
+	public static <T> T get(final String region, final Object key, final ICacheInvoker<T> invoker) {
 		// 1. 从正常缓存中获取数据
 		T data = (T) EhCacheManager.get(region, key);
 		if (data == null) {
@@ -67,16 +67,16 @@ public class CacheHelper {
 		return data;
 	}
 
-	public static void update(final String region, final String key) {
+	public static void update(final String region, final Object key) {
 		EhCacheManager.evict(region, key);
 	}
 
-	public static void evict(final String region, final String key) {
+	public static void evict(final String region, final Object key) {
 		EhCacheManager.evict(region, key);
 		RedisCacheManager.evict(region, key);
 	}
 
-	public static void updateNow(final String region, final String key, final Serializable value) {
+	public static void updateNow(final String region, final Object key, final Serializable value) {
 		RedisCacheManager.set(region, key, value);
 		EhCacheManager.set(region, key, value);
 	}
@@ -86,7 +86,7 @@ public class CacheHelper {
 		private List<String> runningThreadNames = new Vector<>();
 
 		public CacheUpdater() {
-			super(0, 20, 5, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20),
+			super(2, 20, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20),
 					new ThreadPoolExecutor.DiscardOldestPolicy());
 		}
 
