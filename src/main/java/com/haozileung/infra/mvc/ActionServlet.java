@@ -5,6 +5,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +20,9 @@ import org.beetl.ext.servlet.ServletGroupTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.haozileung.infra.dao.exceptions.DaoException;
 import com.haozileung.infra.utils.DataSourceUtil;
@@ -141,25 +145,32 @@ public final class ActionServlet extends HttpServlet {
 			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
 			return false;
 		}
-
 		// 调用Action方法之准备参数
 		int arg_c = m_action.getParameterTypes().length;
+		Object result = null;
 		switch (arg_c) {
 		case 0:
-			m_action.invoke(action);
+			result = m_action.invoke(action);
 			break;
 		case 1:
-			m_action.invoke(action, req);
+			result = m_action.invoke(action, req);
 			break;
 		case 2:
-			m_action.invoke(action, req, resp);
+			result = m_action.invoke(action, req, resp);
 			break;
 		default:
 			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
 			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
 			return false;
 		}
-
+		if (result != null) {
+			if (result instanceof String) {
+				ServletGroupTemplate.instance().render((String) result, req, resp);
+			} else {
+				resp.setContentType("application/json;charset=UTF-8");
+				resp.getWriter().write(JSON.toJSONString(result));
+			}
+		}
 		return true;
 	}
 
@@ -206,6 +217,7 @@ public final class ActionServlet extends HttpServlet {
 	 * @throws IOException
 	 */
 	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		printParams(req);
 		resp.setContentType("text/html;charset=utf-8");
 		try {
 			try {
@@ -217,10 +229,27 @@ public final class ActionServlet extends HttpServlet {
 				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
 			} catch (DaoException e) {
 				logger.info(e.getMessage(), e);
+				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
 			}
 		} finally {
 			DataSourceUtil.closeConnection(true);
+		}
+	}
+
+	private void printParams(HttpServletRequest request) {
+		String uri = request.getRequestURI();
+		if (uri != null && uri.contains(".")) {
+			return;
+		}
+		logger.debug("URL : {}", uri);
+		Enumeration<String> paramNames = request.getParameterNames();
+		String[] emptyValues = new String[0];
+		while (paramNames.hasMoreElements()) {// 遍历Enumeration
+			String name = (String) paramNames.nextElement();// 取出下一个元素
+			String[] value = MoreObjects.firstNonNull(request.getParameterValues(name), emptyValues);// 获取元素的值
+			logger.debug("{} = {}", name, Joiner.on(",").join(value));
+
 		}
 	}
 

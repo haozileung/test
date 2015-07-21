@@ -40,7 +40,5 @@ public class MD5Util {
 		} else {
 			return Optional.absent();
 		}
-
 	}
-
 }
