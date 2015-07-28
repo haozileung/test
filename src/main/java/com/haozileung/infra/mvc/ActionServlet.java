@@ -25,9 +25,18 @@ import com.google.common.base.Joiner;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Strings;
 import com.haozileung.infra.dao.exceptions.DaoException;
-import com.haozileung.infra.utils.DataSourceUtil;
 
 public final class ActionServlet extends HttpServlet {
+
+	@Override
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		process(req, resp, "put");
+	}
+
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		process(req, resp, "delete");
+	}
 
 	private final static Logger logger = LoggerFactory.getLogger(ActionServlet.class);
 
@@ -120,8 +129,9 @@ public final class ActionServlet extends HttpServlet {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private boolean _process(HttpServletRequest req, HttpServletResponse resp) throws InstantiationException,
-			IllegalAccessException, IOException, IllegalArgumentException, InvocationTargetException {
+	private boolean _process(HttpServletRequest req, HttpServletResponse resp, String method)
+			throws InstantiationException, IllegalAccessException, IOException, IllegalArgumentException,
+			InvocationTargetException {
 		String requestURI = req.getRequestURI();
 		String[] parts = StringUtils.split(requestURI, '/');
 		// 加载Action类
@@ -131,18 +141,14 @@ public final class ActionServlet extends HttpServlet {
 		}
 		Object action = this._LoadAction(action_name);
 		if (action == null) {
-			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
+			req.setAttribute("view", "/errors/404.html");
+			render(HttpServletResponse.SC_NOT_FOUND, req, resp);
 			return false;
 		}
-		String action_method_name = (parts.length > 1) ? parts[1] : "index";
-		if (Strings.isNullOrEmpty(action_method_name)) {
-			action_method_name = "index";
-		}
-		Method m_action = this._GetActionMethod(action, action_method_name);
+		Method m_action = this._GetActionMethod(action, method);
 		if (m_action == null) {
-			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
+			req.setAttribute("view", "/errors/404.html");
+			render(HttpServletResponse.SC_NOT_FOUND, req, resp);
 			return false;
 		}
 		// 调用Action方法之准备参数
@@ -159,16 +165,23 @@ public final class ActionServlet extends HttpServlet {
 			result = m_action.invoke(action, req, resp);
 			break;
 		default:
-			resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-			ServletGroupTemplate.instance().render("/errors/404.html", req, resp);
+			req.setAttribute("view", "/errors/404.html");
+			render(HttpServletResponse.SC_NOT_FOUND, req, resp);
 			return false;
 		}
 		if (result != null) {
 			if (result instanceof String) {
-				ServletGroupTemplate.instance().render((String) result, req, resp);
+				if (((String) result).startsWith("redirect:")) {
+					result = ((String) result).replace("redirect:", "");
+					resp.sendRedirect((String) result);
+				} else {
+					req.setAttribute("view", result);
+					render(HttpServletResponse.SC_OK, req, resp);
+				}
 			} else {
 				resp.setContentType("application/json;charset=UTF-8");
-				resp.getWriter().write(JSON.toJSONString(result));
+				req.setAttribute("data", result);
+				render(HttpServletResponse.SC_OK, req, resp);
 			}
 		}
 		return true;
@@ -193,12 +206,12 @@ public final class ActionServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp);
+		process(req, resp, "get");
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		process(req, resp);
+		process(req, resp, "post");
 	}
 
 	@Override
@@ -216,24 +229,21 @@ public final class ActionServlet extends HttpServlet {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void process(HttpServletRequest req, HttpServletResponse resp, String method)
+			throws ServletException, IOException {
 		printParams(req);
 		resp.setContentType("text/html;charset=utf-8");
 		try {
-			try {
-				_process(req, resp);
-			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-					| InvocationTargetException e) {
-				logger.info(e.getMessage(), e);
-				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
-			} catch (DaoException e) {
-				logger.info(e.getMessage(), e);
-				resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-				ServletGroupTemplate.instance().render("/errors/500.html", req, resp);
-			}
-		} finally {
-			DataSourceUtil.closeConnection(true);
+			_process(req, resp, method);
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+				| InvocationTargetException e) {
+			logger.info(e.getMessage(), e);
+			req.setAttribute("view", "/errors/500.html");
+			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, req, resp);
+		} catch (DaoException e) {
+			logger.info(e.getMessage(), e);
+			req.setAttribute("view", "/errors/500.html");
+			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, req, resp);
 		}
 	}
 
@@ -253,4 +263,20 @@ public final class ActionServlet extends HttpServlet {
 		}
 	}
 
+	private void render(int code, HttpServletRequest req, HttpServletResponse resp) {
+		String contentType = resp.getContentType();
+		if (contentType.indexOf("html") > -1) {
+			resp.setStatus(code);
+			String view = (String) req.getAttribute("view");
+			ServletGroupTemplate.instance().render(view, req, resp);
+		}
+		if (contentType.indexOf("json") > -1) {
+			resp.setStatus(code);
+			try {
+				resp.getWriter().write(JSON.toJSONString(req.getAttribute("data")));
+			} catch (IOException e) {
+				logger.error(e.getMessage(), e);
+			}
+		}
+	}
 }
