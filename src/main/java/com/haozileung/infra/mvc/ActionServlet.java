@@ -1,5 +1,20 @@
 package com.haozileung.infra.mvc;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Strings;
+import com.haozileung.infra.dao.exceptions.DaoException;
+import org.apache.commons.lang3.StringUtils;
+import org.beetl.ext.servlet.ServletGroupTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -9,24 +24,16 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-import org.beetl.ext.servlet.ServletGroupTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
-import com.google.common.base.Joiner;
-import com.google.common.base.MoreObjects;
-import com.google.common.base.Strings;
-import com.haozileung.infra.dao.exceptions.DaoException;
-
 public final class ActionServlet extends HttpServlet {
+
+	private final static Logger logger = LoggerFactory.getLogger(ActionServlet.class);
+	private final static HashMap<String, Object> actions = new HashMap<String, Object>();
+	private final static HashMap<String, Method> methods = new HashMap<String, Method>();
+	/**
+	 *
+	 */
+	private static final long serialVersionUID = 1L;
+	private List<String> action_packages = null;
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -37,18 +44,6 @@ public final class ActionServlet extends HttpServlet {
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		process(req, resp, "delete");
 	}
-
-	private final static Logger logger = LoggerFactory.getLogger(ActionServlet.class);
-
-	private final static HashMap<String, Object> actions = new HashMap<String, Object>();
-	private final static HashMap<String, Method> methods = new HashMap<String, Method>();
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
-	private List<String> action_packages = null;
 
 	/**
 	 * 获取名为{method}的方法
@@ -121,7 +116,6 @@ public final class ActionServlet extends HttpServlet {
 	 * 
 	 * @param req
 	 * @param resp
-	 * @param is_post
 	 * @return
 	 * @throws InstantiationException
 	 * @throws IllegalAccessException
@@ -171,9 +165,9 @@ public final class ActionServlet extends HttpServlet {
 		}
 		if (result != null) {
 			if (result instanceof String) {
-				if (((String) result).startsWith("redirect:")) {
-					result = ((String) result).replace("redirect:", "");
-					resp.sendRedirect((String) result);
+				String s = (String) result;
+				if (s.startsWith("redirect:")) {
+					resp.sendRedirect(s);
 				} else {
 					req.setAttribute("view", result);
 					render(HttpServletResponse.SC_OK, req, resp);
@@ -225,7 +219,6 @@ public final class ActionServlet extends HttpServlet {
 	 * 
 	 * @param req
 	 * @param resp
-	 * @param is_post
 	 * @throws ServletException
 	 * @throws IOException
 	 */
@@ -256,7 +249,7 @@ public final class ActionServlet extends HttpServlet {
 		Enumeration<String> paramNames = request.getParameterNames();
 		String[] emptyValues = new String[0];
 		while (paramNames.hasMoreElements()) {// 遍历Enumeration
-			String name = (String) paramNames.nextElement();// 取出下一个元素
+			String name = paramNames.nextElement();// 取出下一个元素
 			String[] value = MoreObjects.firstNonNull(request.getParameterValues(name), emptyValues);// 获取元素的值
 			logger.debug("{} = {}", name, Joiner.on(",").join(value));
 
@@ -265,13 +258,12 @@ public final class ActionServlet extends HttpServlet {
 
 	private void render(int code, HttpServletRequest req, HttpServletResponse resp) {
 		String contentType = resp.getContentType();
+		resp.setStatus(code);
 		if (contentType.indexOf("html") > -1) {
-			resp.setStatus(code);
 			String view = (String) req.getAttribute("view");
 			ServletGroupTemplate.instance().render(view, req, resp);
 		}
 		if (contentType.indexOf("json") > -1) {
-			resp.setStatus(code);
 			try {
 				resp.getWriter().write(JSON.toJSONString(req.getAttribute("data")));
 			} catch (IOException e) {
