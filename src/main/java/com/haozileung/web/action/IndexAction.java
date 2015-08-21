@@ -13,6 +13,9 @@ import com.haozileung.infra.utils.DataSourceUtil;
 public class IndexAction {
 
 	public String get(HttpServletRequest request, HttpServletResponse response) {
+		Map<String, Object> result = Maps.newHashMap();
+		request.setAttribute("code", 0);
+		request.setAttribute("message", "測試test");
 		return "/index.html";
 	}
 
