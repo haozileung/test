@@ -233,7 +233,7 @@ public final class ActionServlet extends HttpServlet {
      */
     protected void process(HttpServletRequest req, HttpServletResponse resp, String method)
             throws ServletException, IOException {
-        printParams(req);
+        //printParams(req);
         resp.setContentType("text/html;charset=utf-8");
         if (req.getHeader("Accept").contains("application/json")) {
             resp.setContentType("application/json;charset=utf-8");
