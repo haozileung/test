@@ -1,0 +1,16 @@
+{
+  "name": "web",
+  "version": "0.0.1",
+  "author": "HaoziLeung",
+  "spm": {
+    "output": [
+      "js/index.js",
+      "css/index.css"
+    ],
+    "dependencies": {
+      "jquery": "~2.1.4",
+      "moment": "~2.10.6",
+      "bootstrap": "~3.3.1"
+    }
+  }
+}

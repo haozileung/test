@@ -1,6 +1,7 @@
 package com.haozileung.infra.dao.persistence;
 
 import java.util.List;
+import java.util.Map;
 
 import com.haozileung.infra.dao.pager.Pager;
 
@@ -224,8 +225,7 @@ public interface JdbcDao {
 	 * @param mappedClass
 	 * @return
 	 */
-	<T> T queryForObject(final String sql, final Object[] args,
-			final Class<T> mappedClass);
+	<T> T queryForObject(final String sql, final Object[] args, final Class<T> mappedClass);
 
 	/**
 	 * 
@@ -234,8 +234,7 @@ public interface JdbcDao {
 	 * @param mappedClass
 	 * @return
 	 */
-	<T> T queryForSimpleObject(final String sql, final Object[] args,
-			final Class<T> mappedClass);
+	<T> T queryForSimpleObject(final String sql, final Object[] args, final Class<T> mappedClass);
 
 	/**
 	 * 
@@ -244,8 +243,7 @@ public interface JdbcDao {
 	 * @param mappedClass
 	 * @return
 	 */
-	<T> List<T> queryForSimpleObjectList(String sql, Object[] args,
-			final Class<T> mappedClass);
+	<T> List<T> queryForSimpleObjectList(String sql, Object[] args, final Class<T> mappedClass);
 
 	/**
 	 * 
@@ -254,8 +252,7 @@ public interface JdbcDao {
 	 * @param clazz
 	 * @return
 	 */
-	<T> List<T> queryForObjectList(final String sql, final Object[] args,
-			final Class<T> clazz);
+	<T> List<T> queryForObjectList(final String sql, final Object[] args, final Class<T> clazz);
 
 	/**
 	 * 
@@ -274,8 +271,8 @@ public interface JdbcDao {
 	 * @param clazz
 	 * @return
 	 */
-	<T> Pager pageSearch(final String sql, final String countSql, Pager pager,
-			final Object[] args, final Class<T> clazz);
+	<T> Pager pageSearch(final String sql, final String countSql, Pager pager, final Object[] args,
+			final Class<T> clazz);
 
 	/**
 	 * 
@@ -292,5 +289,9 @@ public interface JdbcDao {
 	 * @return
 	 */
 	<T> Pager pageSearch(Pager pager, Criteria criteria);
+
+	Map<String, Object> queryForMap(final String sql, final Object[] args);
+
+	List<Map<String, Object>> queryForMapList(final String sql, final Object[] args);
 
 }

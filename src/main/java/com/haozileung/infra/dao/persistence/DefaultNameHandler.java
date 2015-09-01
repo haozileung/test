@@ -16,8 +16,7 @@ import com.haozileung.infra.dao.annotation.Table;
  */
 public class DefaultNameHandler implements NameHandler {
 
-	private static Map<Class<?>, Map<String, String>> nameMap = Maps
-			.newConcurrentMap();
+	private static Map<Class<?>, Map<String, String>> nameMap = Maps.newConcurrentMap();
 
 	/**
 	 * 根据实体名获取表名
@@ -34,7 +33,7 @@ public class DefaultNameHandler implements NameHandler {
 	}
 
 	private void init(Class<?> entityClass) {
-		String tableName = entityClass.getSimpleName();
+		String tableName = null;
 		String keyName = "id";
 		// 获得实体的字段(包括父类）
 		Map<String, String> map = Maps.newConcurrentMap();
@@ -42,25 +41,26 @@ public class DefaultNameHandler implements NameHandler {
 		if (entityClass.getAnnotation(Table.class) != null) {
 			// 初始化表名
 			tableName = entityClass.getAnnotation(Table.class).value();
-			if (Strings.isNullOrEmpty(tableName)) {
-				tableName = entityClass.getSimpleName();
-			}
+		}
+		if (Strings.isNullOrEmpty(tableName)) {
+			tableName = entityClass.getSimpleName();
 		}
 		map.put("_tableName_", tableName);
 		for (Field f : fields) {
-			// 拿到这个实体的主键名
-			if (f.getAnnotation(ID.class) != null) {
-				if (f.getAnnotation(Column.class) != null) {
-					keyName = f.getAnnotation(Column.class).value();
-				} else {
-					keyName = f.getName();
-				}
-			}
-			map.put("_keyName_", keyName);
 			if (f.getAnnotation(Column.class) != null) {
-				map.put(f.getName(), f.getAnnotation(Column.class).value());
+				// 拿到这个实体的主键名
+				if (f.getAnnotation(ID.class) != null) {
+					map.put("_keyName_", keyName);
+				} else {
+					map.put(f.getName(), f.getAnnotation(Column.class).value());
+				}
 			} else {
-				map.put(f.getName(), f.getName());
+				// 拿到这个实体的主键名
+				if (f.getAnnotation(ID.class) != null) {
+					map.put("_keyName_", keyName);
+				} else {
+					map.put(f.getName(), f.getName());
+				}
 			}
 		}
 		nameMap.put(entityClass, map);

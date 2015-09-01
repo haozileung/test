@@ -2,87 +2,66 @@ package com.haozileung.web.domain;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 public class Post implements Serializable {
 
-    private Long id;
+	private Long id;
 
-    private String title;
+	private String title;
 
-    private String content;
+	private String content;
 
-    private Author author;
+	private Author author;
 
-    private Date createTime;
+	private Date createTime;
 
-    private Integer viewCount;
+	private Integer viewCount;
 
-    private List<Comment> comments;
+	public Author getAuthor() {
+		return author;
+	}
 
-    private List<Catagory> catagories;
+	public void setAuthor(Author author) {
+		this.author = author;
+	}
 
-    public Author getAuthor() {
-        return author;
-    }
+	public String getContent() {
+		return content;
+	}
 
-    public void setAuthor(Author author) {
-        this.author = author;
-    }
+	public void setContent(String content) {
+		this.content = content;
+	}
 
-    public List<Catagory> getCatagories() {
-        return catagories;
-    }
+	public Date getCreateTime() {
+		return createTime;
+	}
 
-    public void setCatagories(List<Catagory> catagories) {
-        this.catagories = catagories;
-    }
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
 
-    public List<Comment> getComments() {
-        return comments;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setComments(List<Comment> comments) {
-        this.comments = comments;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getContent() {
-        return content;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    public void setContent(String content) {
-        this.content = content;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public Date getCreateTime() {
-        return createTime;
-    }
+	public Integer getViewCount() {
+		return viewCount;
+	}
 
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public Integer getViewCount() {
-        return viewCount;
-    }
-
-    public void setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
-    }
+	public void setViewCount(Integer viewCount) {
+		this.viewCount = viewCount;
+	}
 }
