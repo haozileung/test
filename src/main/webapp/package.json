@@ -1,12 +1,13 @@
 {
-  "name": "web",
-  "version": "0.0.1",
-  "author": "HaoziLeung",
   "spm": {
+    "main": "js/index.js",
     "output": [
       "js/index.js",
-      "css/index.css"
+      "index.html"
     ],
+    "build": {
+      "extractCSS": true
+    },
     "dependencies": {
       "jquery": "~2.1.4",
       "moment": "~2.10.6",
