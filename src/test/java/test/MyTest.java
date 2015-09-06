@@ -1,28 +1,22 @@
 package test;
 
+import com.google.common.base.Joiner;
+import com.google.common.base.Splitter;
+import com.google.common.collect.Lists;
+import org.apache.commons.collections4.ListUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 
 import com.haozileung.infra.cache.CacheHelper;
 import com.haozileung.infra.cache.ICacheInvoker;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 public class MyTest {
 
 	@Test
 	public void test() {
-		ICacheInvoker<String> invoker = new ICacheInvoker<String>() {
-			@Override
-			public String callback() {
-				return "CacheHelper";
-			}
-		};
-		for (int i = 0; i < 20; i++) {
-			System.out.println(CacheHelper.get("test", "test", invoker));
-			try {
-				Thread.sleep(1000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
 	}
 }
