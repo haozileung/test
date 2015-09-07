@@ -1,9 +1,8 @@
 {
   "spm": {
-    "main": "index.js",
     "output": [
-      "index.js",
-      "index.html"
+      "assets/*/*.js",
+      "*.html"
     ],
     "build": {
       "extractCSS": true

@@ -15,8 +15,6 @@ public class Post implements Serializable {
 
 	private Date createTime;
 
-	private Integer viewCount;
-
 	public Author getAuthor() {
 		return author;
 	}
@@ -55,13 +53,5 @@ public class Post implements Serializable {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public Integer getViewCount() {
-		return viewCount;
-	}
-
-	public void setViewCount(Integer viewCount) {
-		this.viewCount = viewCount;
 	}
 }

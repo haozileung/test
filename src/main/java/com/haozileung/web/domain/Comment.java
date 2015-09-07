@@ -6,14 +6,19 @@ import java.util.Date;
 public class Comment implements Serializable {
 
     private Long id;
-
+    private Long parentId;
     private String name;
-
     private String email;
-
     private Date createTime;
-
     private String message;
+
+    public Long getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
+    }
 
     public Date getCreateTime() {
         return createTime;
