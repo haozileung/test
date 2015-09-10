@@ -1,4 +1,4 @@
-package com.haozileung.web.domain;
+package com.haozileung.web.domain.blog;
 
 import java.io.Serializable;
 

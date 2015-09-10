@@ -1,4 +1,4 @@
-package com.haozileung.web.domain;
+package com.haozileung.web.domain.blog;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -6,18 +6,18 @@ import java.util.Date;
 public class Comment implements Serializable {
 
     private Long id;
-    private Long parentId;
+    private Long postId;
     private String name;
     private String email;
     private Date createTime;
     private String message;
 
-    public Long getParentId() {
-        return parentId;
+    public Long getPostId() {
+        return postId;
     }
 
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    public void setPostId(Long postId) {
+        this.postId = postId;
     }
 
     public Date getCreateTime() {
