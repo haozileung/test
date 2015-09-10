@@ -1,15 +1,14 @@
 package com.haozileung.infra.cache;
 
+import org.apache.commons.lang3.SerializationUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import redis.clients.jedis.Jedis;
+
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.commons.lang3.SerializationUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import redis.clients.jedis.Jedis;
 
 public class RedisCache implements Cache {
 
@@ -63,14 +62,14 @@ public class RedisCache implements Cache {
 	}
 
 	@Override
-	public void put(Object key, Serializable value) throws CacheException {
+	public void put(Object key, Object value) throws CacheException {
 		if (value == null)
 			remove(key);
 		else {
 			boolean broken = false;
 			Jedis cache = RedisCacheProvider.getResource();
 			try {
-				cache.set(getKeyName(key).getBytes(), SerializationUtils.serialize(value));
+				cache.set(getKeyName(key).getBytes(), SerializationUtils.serialize((Serializable) value));
 			} catch (Exception e) {
 				broken = true;
 				throw new CacheException(e);
@@ -81,7 +80,7 @@ public class RedisCache implements Cache {
 	}
 
 	@Override
-	public void update(Object key, Serializable value) throws CacheException {
+	public void update(Object key, Object value) throws CacheException {
 		put(key, value);
 	}
 

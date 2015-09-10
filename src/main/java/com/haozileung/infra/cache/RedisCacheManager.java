@@ -1,7 +1,5 @@
 package com.haozileung.infra.cache;
 
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -66,7 +64,7 @@ public class RedisCacheManager {
 	 * @param key
 	 * @param value
 	 */
-	public final static void set(String name, Object key, Serializable value) {
+	public final static void set(String name, Object key, Object value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
 	}

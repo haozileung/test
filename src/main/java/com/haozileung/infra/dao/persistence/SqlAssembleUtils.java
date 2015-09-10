@@ -1,5 +1,13 @@
 package com.haozileung.infra.dao.persistence;
 
+import com.haozileung.infra.dao.exceptions.DaoException;
+import com.haozileung.infra.utils.ClassUtil;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.beans.BeanInfo;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
@@ -8,15 +16,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.haozileung.infra.dao.exceptions.DaoException;
-import com.haozileung.infra.utils.ClassUtil;
 
 /**
  * SQL组装工具类
@@ -494,7 +493,6 @@ public class SqlAssembleUtils {
 
 		StringBuilder sb = new StringBuilder(" ORDER BY ");
 		if (criteria != null) {
-
 			for (AutoField autoField : criteria.getOrderByFields()) {
 
 				sb.append(
@@ -503,7 +501,6 @@ public class SqlAssembleUtils {
 								autoField.getName())).append(" ")
 						.append(autoField.getFieldOperator()).append(",");
 			}
-
 			if (sb.length() > 10) {
 				sb.deleteCharAt(sb.length() - 1);
 			}
@@ -511,6 +508,9 @@ public class SqlAssembleUtils {
 
 		if (sb.length() < 11) {
 			sb.append(boundSql.getPrimaryKey()).append(" DESC");
+		}
+		if (criteria != null && criteria.getLimit() != null) {
+			sb.append(" LIMIT ").append(criteria.getLimit());
 		}
 		boundSql.setSql(boundSql.getSql() + sb.toString());
 		return boundSql;

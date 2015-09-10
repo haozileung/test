@@ -1,15 +1,14 @@
 package com.haozileung.infra.dao.persistence;
 
-import java.lang.reflect.Field;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.haozileung.infra.dao.annotation.Column;
 import com.haozileung.infra.dao.annotation.ID;
 import com.haozileung.infra.dao.annotation.Table;
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Field;
+import java.util.Map;
 
 /**
  * 默认名称处理handler
@@ -46,18 +45,19 @@ public class DefaultNameHandler implements NameHandler {
 			tableName = entityClass.getSimpleName();
 		}
 		map.put("_tableName_", tableName);
+		map.put("_keyName_", keyName);
 		for (Field f : fields) {
 			if (f.getAnnotation(Column.class) != null) {
 				// 拿到这个实体的主键名
 				if (f.getAnnotation(ID.class) != null) {
-					map.put("_keyName_", keyName);
+					map.put("_keyName_", f.getAnnotation(Column.class).value());
 				} else {
 					map.put(f.getName(), f.getAnnotation(Column.class).value());
 				}
 			} else {
 				// 拿到这个实体的主键名
 				if (f.getAnnotation(ID.class) != null) {
-					map.put("_keyName_", keyName);
+					map.put("_keyName_", f.getName());
 				} else {
 					map.put(f.getName(), f.getName());
 				}

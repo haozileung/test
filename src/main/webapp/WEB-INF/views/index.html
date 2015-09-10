@@ -5,5 +5,7 @@ css:"<link rel='stylesheet' href='assets/index/index.css'>",
 js:"<script src='assets/index/index.js'></script>"
 }){
 -->
-${post.id!}=${post.title!}=${post.content!}=${post.createTime!}
+<!--: for(p in page){-->
+${p.id!} = ${p.title!} = ${p.content!}=${p.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"} <br/>
+<!--:}-->
 <!--: }-->

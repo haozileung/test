@@ -1,19 +1,18 @@
 package com.haozileung.infra.cache;
 
-import java.io.Serializable;
+import com.whalin.MemCached.MemCachedClient;
+
 import java.util.Calendar;
 import java.util.List;
-
-import com.whalin.MemCached.MemCachedClient;
 
 /**
  * MemCached
  */
 public class MemCache implements Cache {
 
-	private MemCachedClient mc;
 	private final int secondToLive;
 	private final int hash;
+	private MemCachedClient mc;
 
 	/**
 	 * Creates a new Hibernate pluggable cache based on a cache name.
@@ -56,7 +55,7 @@ public class MemCache implements Cache {
 	 *             {@link Exception} occurs.
 	 */
 	@Override
-	public void update(Object key, Serializable value) throws CacheException {
+	public void update(Object key, Object value) throws CacheException {
 		put(key, value);
 	}
 
@@ -70,7 +69,7 @@ public class MemCache implements Cache {
 	 *             {@link Exception} occurs.
 	 */
 	@Override
-	public void put(Object key, Serializable value) throws CacheException {
+	public void put(Object key, Object value) throws CacheException {
 		if (key == null) {
 			return;
 		}

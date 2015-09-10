@@ -3,6 +3,6 @@
 	xsi:noNamespaceSchemaLocation="ehcache.xsd">
 	<diskStore path="java.io.tmpdir" />
 	<defaultCache maxElementsInMemory="10000" eternal="false"
-		timeToIdleSeconds="120" timeToLiveSeconds="5" overflowToDisk="false"
-		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
+				  timeToIdleSeconds="120" timeToLiveSeconds="60" overflowToDisk="false"
+				  diskPersistent="false"/>
 </ehcache>

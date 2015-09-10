@@ -1,10 +1,10 @@
 package com.haozileung.infra.dao.persistence;
 
+import com.haozileung.infra.dao.exceptions.DaoException;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import com.haozileung.infra.dao.exceptions.DaoException;
 
 /**
  * sql操作Criteria
@@ -41,6 +41,8 @@ public class Criteria {
 	 */
 	private boolean isWhere = false;
 
+	private Integer limit;
+
 	/**
 	 * constructor
 	 *
@@ -62,6 +64,10 @@ public class Criteria {
 		return new Criteria(clazz);
 	}
 
+	public Integer getLimit() {
+		return this.limit;
+	}
+
 	/**
 	 * 添加白名单
 	 *
@@ -73,6 +79,11 @@ public class Criteria {
 			this.includeFields = new ArrayList<String>();
 		}
 		this.includeFields.addAll(Arrays.asList(field));
+		return this;
+	}
+
+	public Criteria limit(int size) {
+		this.limit = size;
 		return this;
 	}
 

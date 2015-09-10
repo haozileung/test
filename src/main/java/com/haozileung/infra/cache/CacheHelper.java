@@ -1,14 +1,14 @@
 package com.haozileung.infra.cache;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * 自动缓存数据重加载
@@ -20,7 +20,7 @@ public class CacheHelper {
 
 	public static void destroy() {
 		EhCacheManager.destroy();
-		RedisCacheManager.destroy();
+		MemcacheManager.destroy();
 	}
 
 	/**
@@ -41,13 +41,13 @@ public class CacheHelper {
 		if (data == null) {
 			logger.debug("在L1缓存中未找到内容！{} - {}", region, key);
 			// 2. 从全局二级缓存中获取数据,执行自动更新数据策略，结果直接返回
-			data = (T) RedisCacheManager.get(region, key);
+			data = (T) MemcacheManager.get(region, String.valueOf(key));
 			if (invoker != null) {
 				if (data == null) {
 					logger.debug("在L2缓存中未找到内容！{} - {}", region, key);
 					data = invoker.callback();
-					EhCacheManager.set(region, key, (Serializable) data);
-					RedisCacheManager.set(region, key, (Serializable) data);
+					EhCacheManager.set(region, key, data);
+					MemcacheManager.set(region, String.valueOf(key), data);
 				} else {
 					logger.debug("执行自动更新数据策略{} - {}", region, key);
 					String thread_name = String.format("CacheUpdater-%s-%s", region, key);
@@ -56,8 +56,8 @@ public class CacheHelper {
 						public void run() {
 							Object result = invoker.callback();
 							if (result != null) {
-								EhCacheManager.set(region, key, (Serializable) result);
-								RedisCacheManager.set(region, key, (Serializable) result);
+								EhCacheManager.set(region, key, result);
+								MemcacheManager.set(region, String.valueOf(key), result);
 							}
 						}
 					});
@@ -73,11 +73,11 @@ public class CacheHelper {
 
 	public static void evict(final String region, final Object key) {
 		EhCacheManager.evict(region, key);
-		RedisCacheManager.evict(region, key);
+		MemcacheManager.evict(region, String.valueOf(key));
 	}
 
 	public static void updateNow(final String region, final Object key, final Serializable value) {
-		RedisCacheManager.set(region, key, value);
+		MemcacheManager.set(region, String.valueOf(key), value);
 		EhCacheManager.set(region, key, value);
 	}
 
