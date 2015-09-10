@@ -1,13 +1,9 @@
 <!--: 
-layout("/layout/default.html",{page_title :'主頁'}){
+layout("/layout/default.html",{
+page_title :'主頁',
+css:"<link rel='stylesheet' href='assets/index/index.css'>",
+js:"<script src='assets/index/index.js'></script>"
+}){
 -->
-<div class="row">
-	<div class="col-lg-12">
-		<h1 class="page-header">Home</h1>
-		${code!}=====${message!}
-		${blogs()}
-	</div>
-	<!-- /.col-lg-12 -->
-</div>
-<!-- /.row -->
+<a href="javascript:;" class="btn btn-default" id="btn">Click Me!</a>
 <!--: }-->
