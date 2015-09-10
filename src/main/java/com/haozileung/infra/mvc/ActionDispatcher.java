@@ -1,5 +1,17 @@
 package com.haozileung.infra.mvc;
 
+import com.alibaba.fastjson.JSON;
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
+import com.haozileung.infra.dao.exceptions.DaoException;
+import org.apache.commons.lang3.StringUtils;
+import org.beetl.ext.servlet.ServletGroupTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -8,24 +20,9 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+public final class ActionDispatcher implements Filter {
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
-import org.beetl.ext.servlet.ServletGroupTemplate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.alibaba.fastjson.JSON;
-import com.google.common.base.Strings;
-import com.haozileung.infra.dao.exceptions.DaoException;
-
-public final class ActionDispather implements Filter {
-
-    private final static Logger logger = LoggerFactory.getLogger(ActionDispather.class);
+    private final static Logger logger = LoggerFactory.getLogger(ActionDispatcher.class);
     private final static HashMap<String, Object> actions = new HashMap<String, Object>();
     private final static HashMap<String, Method> methods = new HashMap<String, Method>();
     /**
