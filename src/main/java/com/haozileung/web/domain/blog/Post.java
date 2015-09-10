@@ -1,8 +1,11 @@
 package com.haozileung.web.domain.blog;
 
+import com.haozileung.infra.dao.annotation.Table;
+
 import java.io.Serializable;
 import java.util.Date;
 
+@Table("t_post")
 public class Post implements Serializable {
 
     private Long id;

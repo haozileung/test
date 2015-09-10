@@ -109,12 +109,15 @@ public final class ActionDispatcher implements Filter {
         List<String> parts = Lists.newArrayList(StringUtils.split(requestURI, "/"));
         // 加载Action类
         String action_name = "";
-        String method =req.getMethod().toLowerCase();
+        String method = req.getMethod().toLowerCase();
         if (parts.size() > 0) {
-            String cls_name= parts.get(parts.size()-1);
-            parts.remove(parts.size()-1);
-            action_name =  "."+Joiner.on(".").join(parts);
-            action_name += "."+StringUtils.capitalize(cls_name);
+            String cls_name = parts.get(parts.size() - 1);
+            parts.remove(parts.size() - 1);
+            if (parts.size() > 0) {
+                action_name += ".";
+                action_name += Joiner.on(".").join(parts);
+            }
+            action_name += "." + StringUtils.capitalize(cls_name);
         } else {
             action_name = ".Index";
         }
