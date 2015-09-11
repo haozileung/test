@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>${page_title!}</title>
+    ${css!}
+</head>
+<body>
+<div id="header">
+    <h1>HaoziLeung's Blog</h1>
+
+    <h2>Life is life, fight for it.</h2>
+</div>
+<div id="content">
+    ${layoutContent}
+</div>
+<div id="footer">
+    <p>Copyright &copy; ${date(),dateFormat="yyyy"} haozileung.com</p>
+</div>
+${js!}
+</body>
+</html>

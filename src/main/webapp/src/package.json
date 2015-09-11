@@ -1,17 +1,14 @@
 {
   "spm": {
     "output": [
-      "assets/*/*.js",
-      "*.html"
+      "assets/js/*.js"
     ],
     "build": {
       "extractCSS": true
     },
     "dependencies": {
       "jquery": "~2.1.4",
-      "moment": "~2.10.6",
-      "bootstrap": "~3.3.1",
-      "normalize.css": "~3.0.1"
+      "moment": "~2.10.6"
     }
   }
 }
