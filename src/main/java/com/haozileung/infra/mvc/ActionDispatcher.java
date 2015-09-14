@@ -25,10 +25,6 @@ public final class ActionDispatcher implements Filter {
     private final static Logger logger = LoggerFactory.getLogger(ActionDispatcher.class);
     private final static HashMap<String, Object> actions = new HashMap<String, Object>();
     private final static HashMap<String, Method> methods = new HashMap<String, Method>();
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
     private List<String> action_packages = null;
 
 
