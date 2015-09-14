@@ -1,65 +1,50 @@
 @import '../bootstrap/css/bootstrap.css';
-/** HEADER */
-
-#header {
-	margin: 0em 0em 1em 0em;
-	padding: 0em 1em;
-	background-color: #CCCCCC;
+body{
+background:#CCCCCC;
 }
-
-#header h1 {
-	margin: 0em;
-	padding: 0em;
-	color: #FFFFFF;
+.row{
+margin:0 -15px;
 }
-
-#header h2 {
-	margin: 0em;
-	padding: 0em;
-	font-size: 1em;
-	color: #FFFFFF;
+header{
+height:70px;
+background-color:#33CC33;
+color:#FFFFFF;
 }
-
-/** MENU */
-
-#menu {
-	float: left;
-	width: 15%;
-	padding: 1em;
+header > h1 {
+margin:0 10px;
 }
-
-#menu ul {
-	margin: 0em;
-	padding: 0em;
-	list-style: none;
-	text-align: center;
-	line-height: 3em;
+header > h3 {
+margin:0 50px;
 }
-
-#menu li {
+nav{
+height:30px;
+background-color:#FFFFFF;
 }
-
-#menu a {
+nav > ul {
+margin:0;
+list-style:none;
 }
-
-/** CONTENT */
-
-#content {
-	float: left;
-	width: 70%;
+nav > ul > li {
+margin:0;padding:0;
+display:inline-block;
+width:80px;
+height:30px;
 }
-
-/** FOOTER */
-
-#footer {
-	clear: both;
-	padding: 0em 1em;
-	background-color: #CCCCCC;
+nav > ul > li > a{
+text-decoration: none;
+color: black;
+font-size: 14px;
+line-height: 2;
 }
-
-#footer p {
-	margin: 0em;
-	padding: 0em;
-	font-weight: bold;
-	color: #FFFFFF;
+nav > ul > li > a:hover{
+text-decoration: none;
+color: black;
+}
+nav > ul > li > a:visited{
+text-decoration: none;
+color: black;
+}
+nav > ul > li > a:active{
+text-decoration: none;
+color: black;
 }

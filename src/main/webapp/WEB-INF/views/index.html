@@ -4,7 +4,7 @@ page_title :'主頁',
 css:"<link rel='stylesheet' href='assets/js/index.css'>",
 js:"<script src='assets/js/index.js'></script>"
 }){
-for(p in page){
+for(p in page!){
 %>
 ${p.id!} = ${p.title!} = ${p.content!}=${p.createTime,dateFormat="yyyy-MM-dd HH:mm:ss"} <br/>
 <%}

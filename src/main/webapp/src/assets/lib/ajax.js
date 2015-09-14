@@ -17,7 +17,7 @@ throw "params error: url not exist!";
 }
 }
 ajax.getJSON = function(url,success){
-var innerSuccess:function(data){
+var innerSuccess = function(data){
     if(success){
         success(JSON.parse(data));
     }
