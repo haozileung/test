@@ -1,2 +1,1 @@
-require('../css/index.css');
-var ajax = require("../lib/ajax");
+var ajax = require("./lib/ajax");
