@@ -3,7 +3,10 @@ package com.haozileung.infra.mvc;
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
+import com.haozileung.infra.dao.annotation.Tx;
 import com.haozileung.infra.dao.exceptions.DaoException;
+import com.haozileung.infra.dao.transaction.TransactionManager;
+import com.haozileung.infra.utils.DataSourceUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.beetl.ext.servlet.ServletGroupTemplate;
 import org.slf4j.Logger;
@@ -132,21 +135,43 @@ public final class ActionDispatcher implements Filter {
         // 调用Action方法之准备参数
         int arg_c = m_action.getParameterTypes().length;
         Object result = null;
-        switch (arg_c) {
-            case 0:
-                result = m_action.invoke(action);
-                break;
-            case 1:
-                result = m_action.invoke(action, req);
-                break;
-            case 2:
-                result = m_action.invoke(action, req, resp);
-                break;
-            default:
-                req.setAttribute("view", "/errors/404.html");
-                render(HttpServletResponse.SC_NOT_FOUND, req, resp);
-                return false;
+        boolean tx = m_action.isAnnotationPresent(Tx.class);
+        TransactionManager tm = null;
+        if (tx) {
+            tm = DataSourceUtil.getTranManager();
+            tm.beginTransaction();
         }
+        try {
+            switch (arg_c) {
+                case 0:
+                    result = m_action.invoke(action);
+                    break;
+                case 1:
+                    result = m_action.invoke(action, req);
+                    break;
+                case 2:
+                    result = m_action.invoke(action, req, resp);
+                    break;
+                default:
+                    req.setAttribute("view", "/errors/404.html");
+                    render(HttpServletResponse.SC_NOT_FOUND, req, resp);
+                    if (tx && tm != null) {
+                        tm.commitAndClose();
+                    }
+                    return false;
+            }
+            if (tx && tm != null) {
+                tm.commitAndClose();
+            }
+        } catch (Exception e) {
+            if (tx && tm != null) {
+                tm.rollbackAndClose();
+            }
+            logger.info(e.getMessage(), e);
+            req.setAttribute("view", "/errors/500.html");
+            render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, req, resp);
+        }
+
         if (result != null) {
             if (result instanceof String) {
                 String s = (String) result;

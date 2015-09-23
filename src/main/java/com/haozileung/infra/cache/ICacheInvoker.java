@@ -8,6 +8,6 @@ package com.haozileung.infra.cache;
  */
 public interface ICacheInvoker<T> {
 
-	T callback();
+    T callback();
 
 }

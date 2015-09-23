@@ -19,7 +19,7 @@ import java.util.WeakHashMap;
  * <p>
  * <p>
  * 期望的使用方法如下:<br>
- * 
+ * <p>
  * <pre>
  *  public class SomeClass {
  *    private static final ContextClassLoaderLocal global
@@ -27,14 +27,14 @@ import java.util.WeakHashMap;
  *          protected Object initialValue() {
  *              return new String("Initial value");
  *          };
- * 
+ *
  *    public void testGlobal() {
  *      String s = (String) global.get();
  *      System.out.println("global value:" + s);
  *      buf.set("New Value");
  *    }
  * </pre>
- * 
+ * <p>
  * </p>
  * <p>
  * <p>
@@ -57,130 +57,128 @@ import java.util.WeakHashMap;
  */
 public class ContextClassLoaderLocal {
 
-	/**
-	 * 保存实际实例的数据信息
-	 */
-	private Map<ClassLoader, Object> valueByClassLoader = new WeakHashMap<ClassLoader, Object>();
+    /**
+     * 保存实际实例的数据信息
+     */
+    private Map<ClassLoader, Object> valueByClassLoader = new WeakHashMap<ClassLoader, Object>();
 
-	/**
-	 * 全局初始值初始化标记
-	 */
-	private boolean globalValueInitialized = false;
+    /**
+     * 全局初始值初始化标记
+     */
+    private boolean globalValueInitialized = false;
 
-	/**
-	 * 全局初始值
-	 */
-	private Object globalValue;
+    /**
+     * 全局初始值
+     */
+    private Object globalValue;
 
-	/**
-	 * 构造方法
-	 */
-	public ContextClassLoaderLocal() {
-		super();
-	}
+    /**
+     * 构造方法
+     */
+    public ContextClassLoaderLocal() {
+        super();
+    }
 
-	/**
-	 * 返回这个 ContextClassLoaderLocal 的初始值变量 每一次调用该方法的为每一个 ContextClassLoaderLocal
-	 * 的 ContextClassLoader 首次访问为get或set。 如果程序员希望 ContextClassLoaderLocal
-	 * 变量被初始化为null以外的一些值， ContextClassLoaderLocal 必须被继承并且该方法被重写。
-	 * 通常情况下，使用一个匿名的内部类。 initialValue 的典型实现是调用一个适当的构造函数，并且返回新构造的对象。
-	 *
-	 * @return 该ContextClassLoaderLocal的一个初始值，用来作为使用的新的对象
-	 */
-	protected Object initialValue() {
-		return null;
-	}
+    /**
+     * 返回这个 ContextClassLoaderLocal 的初始值变量 每一次调用该方法的为每一个 ContextClassLoaderLocal
+     * 的 ContextClassLoader 首次访问为get或set。 如果程序员希望 ContextClassLoaderLocal
+     * 变量被初始化为null以外的一些值， ContextClassLoaderLocal 必须被继承并且该方法被重写。
+     * 通常情况下，使用一个匿名的内部类。 initialValue 的典型实现是调用一个适当的构造函数，并且返回新构造的对象。
+     *
+     * @return 该ContextClassLoaderLocal的一个初始值，用来作为使用的新的对象
+     */
+    protected Object initialValue() {
+        return null;
+    }
 
-	/**
-	 * 获取实例 这是一个伪单例。 这是一个伪单例 - 每一个线程的ContextClassLoader提供一个单例的实例
-	 * 这种机制提供了在同一个web容器中部署的应用程序之间的隔离
-	 *
-	 * @return 当前线程ContextClassLoader的关联对象
-	 */
-	public synchronized Object get() {
+    /**
+     * 获取实例 这是一个伪单例。 这是一个伪单例 - 每一个线程的ContextClassLoader提供一个单例的实例
+     * 这种机制提供了在同一个web容器中部署的应用程序之间的隔离
+     *
+     * @return 当前线程ContextClassLoader的关联对象
+     */
+    public synchronized Object get() {
 
-		// 同步整个方法会有点慢，
-		// 但是保证不会有微秒的线程问题,并且不需要同步 valueByClassLoader
+        // 同步整个方法会有点慢，
+        // 但是保证不会有微秒的线程问题,并且不需要同步 valueByClassLoader
 
-		// make sure that the map is given a change to purge itself
-		// valueByClassLoader.isEmpty();
-		try {
+        // make sure that the map is given a change to purge itself
+        // valueByClassLoader.isEmpty();
+        try {
 
-			ClassLoader contextClassLoader = Thread.currentThread()
-					.getContextClassLoader();
-			if (contextClassLoader != null) {
+            ClassLoader contextClassLoader = Thread.currentThread()
+                    .getContextClassLoader();
+            if (contextClassLoader != null) {
 
-				Object value = valueByClassLoader.get(contextClassLoader);
-				if ((value == null)
-						&& !valueByClassLoader.containsKey(contextClassLoader)) {
-					value = initialValue();
-					valueByClassLoader.put(contextClassLoader, value);
-				}
-				return value;
+                Object value = valueByClassLoader.get(contextClassLoader);
+                if ((value == null)
+                        && !valueByClassLoader.containsKey(contextClassLoader)) {
+                    value = initialValue();
+                    valueByClassLoader.put(contextClassLoader, value);
+                }
+                return value;
 
-			}
+            }
 
-		} catch (SecurityException e) {
-		}
+        } catch (SecurityException e) {
+        }
 
-		// 出现异常，返回全局变量值
-		if (!globalValueInitialized) {
-			globalValue = initialValue();
-			globalValueInitialized = true;
-		}
-		return globalValue;
-	}
+        // 出现异常，返回全局变量值
+        if (!globalValueInitialized) {
+            globalValue = initialValue();
+            globalValueInitialized = true;
+        }
+        return globalValue;
+    }
 
-	/**
-	 * 设置值 - 一个值提供一个线程的 ContextClassLoader 这种机制提供了在同一个web容器中部署的应用程序之间的隔离
-	 *
-	 * @param value
-	 *            新的线程ContextClassLoader关联的对象
-	 */
-	public synchronized void set(Object value) {
-		// 同步整个方法会有点慢，
-		// 但是保证不会有微秒的线程问题,并且不需要同步 valueByClassLoader
+    /**
+     * 设置值 - 一个值提供一个线程的 ContextClassLoader 这种机制提供了在同一个web容器中部署的应用程序之间的隔离
+     *
+     * @param value 新的线程ContextClassLoader关联的对象
+     */
+    public synchronized void set(Object value) {
+        // 同步整个方法会有点慢，
+        // 但是保证不会有微秒的线程问题,并且不需要同步 valueByClassLoader
 
-		// // make sure that the map is given a change to purge itself
-		// valueByClassLoader.isEmpty();
-		try {
+        // // make sure that the map is given a change to purge itself
+        // valueByClassLoader.isEmpty();
+        try {
 
-			ClassLoader contextClassLoader = Thread.currentThread()
-					.getContextClassLoader();
-			if (contextClassLoader != null) {
-				valueByClassLoader.put(contextClassLoader, value);
-				return;
-			}
+            ClassLoader contextClassLoader = Thread.currentThread()
+                    .getContextClassLoader();
+            if (contextClassLoader != null) {
+                valueByClassLoader.put(contextClassLoader, value);
+                return;
+            }
 
-		} catch (SecurityException e) {
-		}
+        } catch (SecurityException e) {
+        }
 
-		// 如有异常，设置全局值
-		globalValue = value;
-		globalValueInitialized = true;
-	}
+        // 如有异常，设置全局值
+        globalValue = value;
+        globalValueInitialized = true;
+    }
 
-	/**
-	 * 卸载当前线程ContextClassLoader关联的对象
-	 */
-	public synchronized void unset() {
-		try {
+    /**
+     * 卸载当前线程ContextClassLoader关联的对象
+     */
+    public synchronized void unset() {
+        try {
 
-			ClassLoader contextClassLoader = Thread.currentThread()
-					.getContextClassLoader();
-			unset(contextClassLoader);
+            ClassLoader contextClassLoader = Thread.currentThread()
+                    .getContextClassLoader();
+            unset(contextClassLoader);
 
-		} catch (SecurityException e) { /* SWALLOW - should we log this? */
-		}
-	}
+        } catch (SecurityException e) { /* SWALLOW - should we log this? */
+        }
+    }
 
-	/**
-	 * 卸载当前线程ContextClassLoader关联的对象
-	 *
-	 * @param classLoader
-	 *            需要卸载的ClassLoader
-	 */
-	public synchronized void unset(ClassLoader classLoader) {
-		valueByClassLoader.remove(classLoader);
-	}
+    /**
+     * 卸载当前线程ContextClassLoader关联的对象
+     *
+     * @param classLoader 需要卸载的ClassLoader
+     */
+    public synchronized void unset(ClassLoader classLoader) {
+        valueByClassLoader.remove(classLoader);
+    }
 }

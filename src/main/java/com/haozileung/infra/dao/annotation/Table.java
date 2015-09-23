@@ -1,10 +1,6 @@
 package com.haozileung.infra.dao.annotation;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.lang.annotation.*;
 
 /**
  * 用来获取表名
@@ -14,5 +10,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface Table {
 
-	String value() default "";
+    String value() default "";
 }
