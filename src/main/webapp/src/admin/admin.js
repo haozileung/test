@@ -1,4 +1,4 @@
-require("./index.css");
+require("./css/admin.css");
 var $ = require("jquery");
 require("bootstrap");
 require("./lib/metisMenu");
