@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>登入</title>
-    <link href="assets/admin.css" rel="stylesheet" type="text/css">
+    <link href="../assets/admin/login.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="assets/html5shiv.min.js"></script>
     <script src="assets/respond.min.js"></script>
@@ -22,7 +22,7 @@
                     <h3 class="panel-title">请登入</h3>
                 </div>
                 <div class="panel-body">
-                    <form role="form">
+                    <form id="login-form" role="form" action="/login" method="post">
                         <fieldset>
                             <div class="form-group">
                                 <input class="form-control" placeholder="邮箱" name="email" type="email" autofocus>
@@ -35,7 +35,7 @@
                                     <input name="remember" type="checkbox" value="RememberMe">记住我
                                 </label>
                             </div>
-                            <input type="button" class="btn btn-lg btn-success btn-block" value="登入" />
+                            <input type="button" class="btn btn-lg btn-success btn-block" id="login" value="登入" />
                         </fieldset>
                     </form>
                 </div>
@@ -43,6 +43,6 @@
         </div>
     </div>
 </div>
-<script src="assets/admin.js"></script>
+<script src="../assets/admin/login.js"></script>
 </body>
 </html>
