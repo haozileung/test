@@ -1,0 +1,16 @@
+{
+  "spm": {
+    "output": [
+      "*.js"
+    ],
+    "build": {
+      "extractCSS": true
+    },
+    "dependencies": {
+      "moment": "~2.10.6",
+      "jquery": "~1.9.1",
+      "font-awesome": "~4.2.0",
+      "bootstrap": "~3.3.1"
+    }
+  }
+}
