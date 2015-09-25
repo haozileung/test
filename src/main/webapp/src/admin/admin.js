@@ -32,3 +32,19 @@ var element = $('ul.nav a').filter(function() {
 if (element.is('li')) {
 	element.addClass('active');
 }
+$('.ajax').click(function(event){
+$('#page-wrapper').html("<div class='col-md-12 text-center'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>");
+var u = $(this).attr('href');
+$.ajax( {
+    url:u,
+    type:'get',
+    cache:true,
+    success:function(data) {
+        $('#page-wrapper').html(data);
+    },
+    error : function() {
+        alert("网络异常！");
+    }
+ });
+ return false;
+});
