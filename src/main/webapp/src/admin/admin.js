@@ -2,6 +2,7 @@ require("./css/admin.css");
 var $ = require("jquery");
 require("bootstrap");
 require("./lib/metisMenu");
+require('form')($);
 $('#side-menu').metisMenu();
 $(window).bind(
 		"load resize",
@@ -42,6 +43,15 @@ $.ajax( {
     cache:true,
     success:function(data) {
         $('#page-wrapper').html(data);
+        $('#search-form').ajaxForm({
+			dataType:  'json',
+			success:function(data){
+				alert(data)
+			},
+			beforeSubmit:function(arr){
+				alert(arr);
+			}
+        });
     },
     error : function() {
         alert("网络异常！");

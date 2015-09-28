@@ -5,8 +5,7 @@
  * Since 2008 - 2015
  */
 
-package com.haozileung.web.domain.blog;
-
+package com.haozileung.web.domain.system;
 
 import com.haozileung.infra.dao.annotation.Column;
 import com.haozileung.infra.dao.annotation.Table;
@@ -21,22 +20,24 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @since 1.0
  */
 
-@Table("t_catagory")
-public class Catagory implements java.io.Serializable {
+@Table("t_role_resource")
+public class RoleResource implements java.io.Serializable {
 
 
     //columns START
     @Column("id")
     private Long id;
-    @Column("name")
-    private String name;
+    @Column("role_id")
+    private Long roleId;
+    @Column("resource_id")
+    private Long resourceId;
     //columns END
 
 
-    public Catagory() {
+    public RoleResource() {
     }
 
-    public Catagory(Long id) {
+    public RoleResource(Long id) {
         this.id = id;
     }
 
@@ -48,12 +49,20 @@ public class Catagory implements java.io.Serializable {
         this.id = value;
     }
 
-    public String getName() {
-        return this.name;
+    public Long getRoleId() {
+        return this.roleId;
     }
 
-    public void setName(String value) {
-        this.name = value;
+    public void setRoleId(Long value) {
+        this.roleId = value;
+    }
+
+    public Long getResourceId() {
+        return this.resourceId;
+    }
+
+    public void setResourceId(Long value) {
+        this.resourceId = value;
     }
 
 
@@ -70,9 +79,9 @@ public class Catagory implements java.io.Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof Catagory == false) return false;
+        if (obj instanceof RoleResource == false) return false;
         if (this == obj) return true;
-        Catagory other = (Catagory) obj;
+        RoleResource other = (RoleResource) obj;
         return new EqualsBuilder()
                 .append(getId(), other.getId())
                 .isEquals();

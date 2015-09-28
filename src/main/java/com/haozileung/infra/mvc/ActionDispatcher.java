@@ -2,6 +2,7 @@ package com.haozileung.infra.mvc;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.base.Joiner;
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.haozileung.infra.dao.annotation.Tx;
 import com.haozileung.infra.dao.exceptions.DaoException;
@@ -16,6 +17,7 @@ import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
@@ -176,7 +178,9 @@ public final class ActionDispatcher implements Filter {
             if (result instanceof String) {
                 String s = (String) result;
                 if (s.startsWith("redirect:")) {
+                    s = s.replace("redirect:", "");
                     resp.sendRedirect(s);
+                    return true;
                 } else {
                     req.setAttribute("view", result);
                 }
@@ -252,12 +256,16 @@ public final class ActionDispatcher implements Filter {
         resp.setStatus(code);
         if (contentType.indexOf("html") > -1) {
             String view = (String) req.getAttribute("view");
-            ServletGroupTemplate.instance().render(view, req, resp);
+            if (!Strings.isNullOrEmpty(view)) {
+                ServletGroupTemplate.instance().render(view, req, resp);
+            }
         }
         if (contentType.indexOf("json") > -1) {
             Object data = req.getAttribute("data");
             try {
-                resp.getWriter().write(JSON.toJSONString(data));
+                PrintWriter pr = resp.getWriter();
+                pr.print(JSON.toJSONString(data));
+                pr.flush();
             } catch (IOException e) {
                 logger.error(e.getMessage(), e);
             }

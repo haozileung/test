@@ -1,5 +1,6 @@
 package com.haozileung.infra.dao.persistence;
 
+import com.google.common.base.MoreObjects;
 import com.haozileung.infra.dao.exceptions.DaoException;
 import com.haozileung.infra.utils.ClassUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -487,7 +488,7 @@ public class SqlAssembleUtils {
             sb.append(boundSql.getPrimaryKey()).append(" DESC");
         }
         if (criteria != null && criteria.getLimit() != null) {
-            sb.append(" LIMIT ").append(criteria.getLimit());
+            sb.append(" LIMIT ").append(MoreObjects.firstNonNull(criteria.getStart(), 0)).append(",").append(criteria.getLimit());
         }
         boundSql.setSql(boundSql.getSql() + sb.toString());
         return boundSql;

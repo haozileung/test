@@ -5,8 +5,7 @@
  * Since 2008 - 2015
  */
 
-package com.haozileung.web.domain.blog;
-
+package com.haozileung.web.domain.system;
 
 import com.haozileung.infra.dao.annotation.Column;
 import com.haozileung.infra.dao.annotation.Table;
@@ -15,28 +14,31 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
+
 /**
  * @author Haozi
  * @version 1.0
  * @since 1.0
  */
 
-@Table("t_catagory")
-public class Catagory implements java.io.Serializable {
+@Table("t_user_role")
+public class UserRole implements java.io.Serializable {
 
 
     //columns START
     @Column("id")
     private Long id;
-    @Column("name")
-    private String name;
+    @Column("user_id")
+    private Long userId;
+    @Column("role_id")
+    private Long roleId;
     //columns END
 
 
-    public Catagory() {
+    public UserRole() {
     }
 
-    public Catagory(Long id) {
+    public UserRole(Long id) {
         this.id = id;
     }
 
@@ -48,12 +50,20 @@ public class Catagory implements java.io.Serializable {
         this.id = value;
     }
 
-    public String getName() {
-        return this.name;
+    public Long getUserId() {
+        return this.userId;
     }
 
-    public void setName(String value) {
-        this.name = value;
+    public void setUserId(Long value) {
+        this.userId = value;
+    }
+
+    public Long getRoleId() {
+        return this.roleId;
+    }
+
+    public void setRoleId(Long value) {
+        this.roleId = value;
     }
 
 
@@ -70,9 +80,9 @@ public class Catagory implements java.io.Serializable {
     }
 
     public boolean equals(Object obj) {
-        if (obj instanceof Catagory == false) return false;
+        if (obj instanceof UserRole == false) return false;
         if (this == obj) return true;
-        Catagory other = (Catagory) obj;
+        UserRole other = (UserRole) obj;
         return new EqualsBuilder()
                 .append(getId(), other.getId())
                 .isEquals();

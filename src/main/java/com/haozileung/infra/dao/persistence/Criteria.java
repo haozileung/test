@@ -42,6 +42,7 @@ public class Criteria {
     private boolean isWhere = false;
 
     private Integer limit;
+    private Integer start;
 
     /**
      * constructor
@@ -68,6 +69,10 @@ public class Criteria {
         return this.limit;
     }
 
+    public Integer getStart() {
+        return start;
+    }
+
     /**
      * 添加白名单
      *
@@ -83,6 +88,12 @@ public class Criteria {
     }
 
     public Criteria limit(int size) {
+        this.limit = size;
+        return this;
+    }
+
+    public Criteria limit(int start, int size) {
+        this.start = start;
         this.limit = size;
         return this;
     }
