@@ -35,6 +35,7 @@ if (element.is('li')) {
 $('.ajax').click(function(event){
 $('#page-wrapper').html("<div class='col-md-12 text-center'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>");
 var u = $(this).attr('href');
+u = u.replace('#','');
 $.ajax( {
     url:u,
     type:'get',
