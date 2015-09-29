@@ -19,17 +19,25 @@ import java.util.Map;
  */
 public class UserAction {
     public String get(HttpServletRequest request, HttpServletResponse response) {
-        Criteria c = Criteria.create(User.class).exclude("password").limit(0, 10);
-        Pager page = new Pager();
-        page.setItemsPerPage(10);
-        page.setCurPage(1);
-        page.setList(JdbcDaoUtil.getInstance().queryList(c));
-        page.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
         String contentType = request.getHeader("Accept");
         if (!Strings.isNullOrEmpty(contentType) && contentType.contains("json")) {
             response.setContentType("application/json;charset=utf-8");
+            String name = request.getParameter("name");
+            String status = request.getParameter("status");
+            Criteria c = Criteria.create(User.class).exclude("password").limit(0, 10);
+            if (!Strings.isNullOrEmpty(name)) {
+                c = c.and("name", new Object[]{name});
+            }
+            if (!Strings.isNullOrEmpty(status)) {
+                c = c.and("status", new Object[]{status});
+            }
+            Pager page = new Pager();
+            page.setItemsPerPage(10);
+            page.setCurPage(1);
+            page.setList(JdbcDaoUtil.getInstance().queryList(c));
+            page.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
+            request.setAttribute("data", page);
         }
-        request.setAttribute("data", page);
         return "admin/user.html";
     }
 
