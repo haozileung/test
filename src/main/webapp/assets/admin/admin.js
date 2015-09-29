@@ -52,6 +52,18 @@ $(window).bind(
                   		}
                   	}
                 });
+                $('#delete-btn').click(function(){
+                	var ids =$("input[name='selected-id']:checked").map(function() {
+                                 return this.value;
+                             }).get().join(",");
+                     if(ids.length >0){
+                      $.ajax( {
+                                 url:u+"?id="+ids,
+                                 type:'delete',
+                                 success:function(data) {
+                                 $('#search-btn').click();
+                      }});}
+                });
             },
             error : function() {
                 alert("网络异常！");

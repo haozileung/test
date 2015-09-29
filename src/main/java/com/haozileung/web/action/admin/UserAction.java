@@ -1,5 +1,6 @@
 package com.haozileung.web.action.admin;
 
+import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.haozileung.infra.dao.pager.Pager;
@@ -62,13 +63,19 @@ public class UserAction {
 
     public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response) {
         Map<String, Object> data = Maps.newHashMap();
-        User user = RequestUtil.getBean(request, User.class, null);
-        if (RegexUtil.isNull(user.getId())) {
+        String ids = request.getParameter("id");
+        if (Strings.isNullOrEmpty(ids)) {
             data.put("error", "参数错误！");
             return data;
         }
-        user.setStatus(Status.DISABLED.ordinal());
-        JdbcDaoUtil.getInstance().update(user);
+        Splitter.on(",").split(ids).forEach(id -> {
+            Integer i = Integer.valueOf(id);
+            User user = new User();
+            user.setId(i.longValue());
+            user.setStatus(Status.DISABLED.ordinal());
+            JdbcDaoUtil.getInstance().update(user);
+        });
+        data.put("success", "删除成功！");
         return data;
     }
 }
