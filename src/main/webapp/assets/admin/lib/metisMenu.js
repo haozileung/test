@@ -1,4 +1,3 @@
-var $ = require('jquery');
 var pluginName = "metisMenu", defaults = {
 	toggle : true,
 	doubleTapToGo : false

@@ -1,6 +1,4 @@
 require("./css/login.css");
-var $ = require('jquery');
-require('form')($);
 $('#login-form').ajaxForm({
 	beforeSubmit : function(params, fm, options) {
 		$('#login').prop('disabled', true);
