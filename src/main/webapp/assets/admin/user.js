@@ -21,7 +21,7 @@ $('#delete-btn').click(function() {
 	}).get().join(",");
 	if (ids.length > 0) {
 		$.ajax({
-			url : u + "?id=" + ids,
+			url : "/admin/user?id=" + ids,
 			type : 'delete',
 			success : function(data) {
 				$('#search-btn').click();
