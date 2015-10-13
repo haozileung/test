@@ -1,7 +1,7 @@
 {
   "spm": {
     "output": [
-      "*.js"
+      "admin.js"
     ],
     "build": {
       "extractCSS": true

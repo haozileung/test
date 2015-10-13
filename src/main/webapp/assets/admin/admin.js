@@ -29,9 +29,6 @@ $('.ajax')
 					$('#page-wrapper')
 							.html(
 									"<div class='col-md-12 text-center'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>");
-					$('#page-wrapper')
-							.html(
-									"<div class='col-md-12 text-center'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>");
 					var u = $(this).attr('href');
 					$.ajax({
 						url : u,
@@ -39,6 +36,7 @@ $('.ajax')
 						cache : true,
 						success : function(html) {
 							$('#page-wrapper').html(html);
+							load(u);
 						},
 						error : function() {
 							alert("网络异常！");
@@ -53,4 +51,11 @@ var menu = $('ul.nav a').filter(function() {
 var element = menu.addClass('active').parent().parent().addClass('in').parent();
 if (element.is('li')) {
 	element.addClass('active');
+}
+function load(url) {
+	if (url == '/admin/user') {
+		require([ './module/user.js' ], function(M) {
+			M.init(url);
+		});
+	}
 }

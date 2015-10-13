@@ -30,9 +30,10 @@ public class UserAction {
 			String status = request.getParameter("status");
 			String pageNo = request.getParameter("pageNo");
 			int pageSize = 10;
-			int startRow = Strings.isNullOrEmpty(pageNo)
-					|| !StringUtils.isNumeric(pageNo) ? 0 : (Integer
-					.valueOf(pageNo) - 1) * pageSize;
+			int page = Strings.isNullOrEmpty(pageNo)
+					|| !StringUtils.isNumeric(pageNo) ? 0 : Integer
+					.valueOf(pageNo);
+			int startRow = (page - 1) * pageSize;
 			if (startRow < 0) {
 				startRow = 0;
 			}
@@ -46,12 +47,12 @@ public class UserAction {
 			} else {
 				c = c.where("status", "<>", new Object[] { 1 });
 			}
-			Pager page = new Pager();
-			page.setItemsPerPage(10);
-			page.setCurPage(1);
-			page.setList(JdbcDaoUtil.getInstance().queryList(c));
-			page.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
-			request.setAttribute("data", page);
+			Pager p = new Pager();
+			p.setItemsPerPage(pageSize);
+			p.setCurPage(page);
+			p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
+			p.setList(JdbcDaoUtil.getInstance().queryList(c));			
+			request.setAttribute("data", p);
 		}
 		return "admin/user.html";
 	}
