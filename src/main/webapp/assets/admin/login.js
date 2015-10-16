@@ -5,6 +5,9 @@ $('#login-form').ajaxForm({
 	},
 	success : function(data) {
 		if(data.code == '0000'){
+			window.location.href='/admin';
+		}else{
+			alert(data.message);
 		}
 	},
 	error : function(data) {

@@ -4,6 +4,8 @@
       "admin.js"
     ],
     "build": {
+      "dest": "../js/admin",
+      "publicPath": "assets/js/admin/",
       "extractCSS": true
     }
   }
