@@ -22,43 +22,34 @@ import java.util.Map;
  * Created by Haozi on 2015/9/28.
  */
 public class UserAction {
-	public String get(HttpServletRequest request, HttpServletResponse response) {
-		String contentType = request.getHeader("Accept");
-		if (!Strings.isNullOrEmpty(contentType) && contentType.contains("json")) {
-			response.setContentType("application/json;charset=utf-8");
-			String name = request.getParameter("name");
-			String status = request.getParameter("status");
-			String pageNo = request.getParameter("pageNo");
-			int pageSize = 10;
-			int page = Strings.isNullOrEmpty(pageNo)
-					|| !StringUtils.isNumeric(pageNo) ? 0 : Integer
-					.valueOf(pageNo);
-			int startRow = (page - 1) * pageSize;
-			if (startRow < 0) {
-				startRow = 0;
-			}
-			Criteria c = Criteria.create(User.class).exclude("password")
-					.limit(startRow, pageSize);
-			if (!Strings.isNullOrEmpty(name)) {
-				c = c.and("name", new Object[] { name });
-			}
-			if (!Strings.isNullOrEmpty(status)) {
-				c = c.and("status", new Object[] { status });
-			} else {
-				c = c.where("status", "<>", new Object[] { 1 });
-			}
-			Pager p = new Pager();
-			p.setItemsPerPage(pageSize);
-			p.setCurPage(page);
-			p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
-			p.setList(JdbcDaoUtil.getInstance().queryList(c));			
-			request.setAttribute("data", p);
+	public Pager get(HttpServletRequest request, HttpServletResponse response) {
+		String name = request.getParameter("name");
+		String status = request.getParameter("status");
+		String pageNo = request.getParameter("pageNo");
+		int pageSize = 10;
+		int page = Strings.isNullOrEmpty(pageNo) || !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
+		int startRow = (page - 1) * pageSize;
+		if (startRow < 0) {
+			startRow = 0;
 		}
-		return "admin/user.html";
+		Criteria c = Criteria.create(User.class).exclude("password").limit(startRow, pageSize);
+		if (!Strings.isNullOrEmpty(name)) {
+			c = c.and("name", new Object[] { name });
+		}
+		if (!Strings.isNullOrEmpty(status)) {
+			c = c.and("status", new Object[] { status });
+		} else {
+			c = c.where("status", "<>", new Object[] { 1 });
+		}
+		Pager p = new Pager();
+		p.setItemsPerPage(pageSize);
+		p.setCurPage(page);
+		p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
+		p.setList(JdbcDaoUtil.getInstance().queryList(c));
+		return p;
 	}
 
-	public Map<String, Object> post(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> post(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class, null);
 		if (RegexUtil.isNull(user.getId())) {
@@ -69,8 +60,7 @@ public class UserAction {
 		return data;
 	}
 
-	public Map<String, Object> put(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> put(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class, null);
 		user.setStatus(Status.ENABLED.ordinal());
@@ -78,8 +68,7 @@ public class UserAction {
 		return data;
 	}
 
-	public Map<String, Object> delete(HttpServletRequest request,
-			HttpServletResponse response) {
+	public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		String ids = request.getParameter("id");
 		if (Strings.isNullOrEmpty(ids)) {
