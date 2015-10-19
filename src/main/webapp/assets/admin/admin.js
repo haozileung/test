@@ -53,7 +53,7 @@ if (element.is('li')) {
 	element.addClass('active');
 }
 function load(url) {
-	if (url == '/admin/user') {
+	if (url === '/admin/user') {
 		require([ './module/user.js' ], function(M) {
 			M.init(url);
 		});

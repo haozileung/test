@@ -1,17 +1,8 @@
 var User = {}
 User.init = function(url) {
-	$('#search-form').ajaxForm({
-		dataType : 'json',
-		success : function(data) {
-			if (data) {
-				demo.$data = data;
-			}
-		}
-	});
-	var demo = new Vue({
+	var table = new Vue({
 		el : '#data-table',
 		data : {
-			pageNo : 1,
 			firstPage : 0,
 			lastPage : 0,
 			curPage : 0,
@@ -24,9 +15,9 @@ User.init = function(url) {
 			toPage : function(n, e) {
 				e.preventDefault();
 				if (n) {
-					this.pageNo = n;
+					form.$set("pageNo", n);
 				}
-				$('#search-form').submit();
+				$('#search-btn').click();
 			},
 			onDelete : function() {
 				var ids = $("input[name='selected-id']:checked").map(
@@ -45,6 +36,22 @@ User.init = function(url) {
 			}
 		}
 	});
-}
 
+	var form = new Vue({
+		el : '#search-form',
+		data : {
+			pageNo : 1,
+			name : "",
+			status : 0
+		},
+		methods : {
+			search : function() {
+				$.getJSON(url, this.$data, function(data) {
+					table.$data = data;
+					this.pageNo = data.curPage;
+				});
+			}
+		}
+	});
+}
 module.exports = User;
