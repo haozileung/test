@@ -53,9 +53,9 @@ if (element.is('li')) {
 	element.addClass('active');
 }
 function load(url) {
-	if (url === '/admin/user') {
+	if (url === '/admin/user.html') {
 		require([ './module/user.js' ], function(M) {
-			M.init(url);
+			M.init("/admin/user");
 		});
 	}
 }

@@ -1,7 +1,7 @@
 {
   "spm": {
     "output": [
-      "admin.js"
+      "*.js"
     ],
     "build": {
       "dest": "../js/admin",

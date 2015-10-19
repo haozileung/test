@@ -17,7 +17,7 @@ User.init = function(url) {
 				if (n) {
 					form.$set("pageNo", n);
 				}
-				$('#search-btn').click();
+				_search(false);
 			},
 			onDelete : function() {
 				var ids = $("input[name='selected-id']:checked").map(
@@ -29,7 +29,7 @@ User.init = function(url) {
 						url : url + "?id=" + ids,
 						type : 'delete',
 						success : function(data) {
-							$('#search-btn').click();
+							_search(false);
 						}
 					});
 				}
@@ -46,12 +46,20 @@ User.init = function(url) {
 		},
 		methods : {
 			search : function() {
-				$.getJSON(url, this.$data, function(data) {
-					table.$data = data;
-					this.pageNo = data.curPage;
-				});
+				_search(true);
 			}
 		}
 	});
+	
+	function _search(isClick){
+		if(isClick){
+			form.$set("pageNo", 1);
+		}
+		$.getJSON(url, form.$data, function(data) {
+			table.$data = data;
+			form.$set("pageNo", data.curPage);
+		});
+	}
+	$('#search-btn').click();
 }
 module.exports = User;
