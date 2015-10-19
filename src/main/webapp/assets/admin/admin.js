@@ -54,8 +54,23 @@ if (element.is('li')) {
 }
 function load(url) {
 	if (url === '/admin/user.html') {
-		require([ './module/user.js' ], function(M) {
-			M.init("/admin/user");
+		require([ './module/M.js' ], function(M) {
+			M.init("/admin/user", {
+				pageNo : 1,
+				name : "",
+				status : 0
+			});
+		});
+	}
+	if (url === '/admin/dictionary.html') {
+		require([ './module/M.js' ], function(M) {
+			M.init("/admin/dictionary", {
+				pageNo : 1,
+				code : "",
+				value : "",
+				parentId : "",
+				status : 0
+			});
 		});
 	}
 }

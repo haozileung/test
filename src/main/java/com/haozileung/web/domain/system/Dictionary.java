@@ -23,98 +23,95 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 @Table("t_dictionary")
 public class Dictionary implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3122245988991515094L;
+	// columns START
+	@Column("id")
+	private Long id;
+	@Column("code")
+	private String code;
+	@Column("value")
+	private String value;
+	@Column("order_no")
+	private Integer orderNo;
+	@Column("parent_id")
+	private Long parentId;
+	@Column("status")
+	private Integer status;
+	// columns END
 
-    //columns START
-    @Column("id")
-    private Long id;
-    @Column("code")
-    private String code;
-    @Column("value")
-    private String value;
-    @Column("order_no")
-    private Integer orderNo;
-    @Column("parent_id")
-    private Long parentId;
-    @Column("stataus")
-    private Integer stataus;
-    //columns END
+	public Dictionary() {
+	}
 
+	public Dictionary(Long id) {
+		this.id = id;
+	}
 
-    public Dictionary() {
-    }
+	public Long getId() {
+		return this.id;
+	}
 
-    public Dictionary(Long id) {
-        this.id = id;
-    }
+	public void setId(Long value) {
+		this.id = value;
+	}
 
-    public Long getId() {
-        return this.id;
-    }
+	public String getCode() {
+		return this.code;
+	}
 
-    public void setId(Long value) {
-        this.id = value;
-    }
+	public void setCode(String value) {
+		this.code = value;
+	}
 
-    public String getCode() {
-        return this.code;
-    }
+	public String getValue() {
+		return this.value;
+	}
 
-    public void setCode(String value) {
-        this.code = value;
-    }
+	public void setValue(String value) {
+		this.value = value;
+	}
 
-    public String getValue() {
-        return this.value;
-    }
+	public Integer getOrderNo() {
+		return this.orderNo;
+	}
 
-    public void setValue(String value) {
-        this.value = value;
-    }
+	public void setOrderNo(Integer value) {
+		this.orderNo = value;
+	}
 
-    public Integer getOrderNo() {
-        return this.orderNo;
-    }
+	public Long getParentId() {
+		return this.parentId;
+	}
 
-    public void setOrderNo(Integer value) {
-        this.orderNo = value;
-    }
+	public void setParentId(Long value) {
+		this.parentId = value;
+	}
 
-    public Long getParentId() {
-        return this.parentId;
-    }
+	public Integer getStatus() {
+		return this.status;
+	}
 
-    public void setParentId(Long value) {
-        this.parentId = value;
-    }
+	public void setStatus(Integer value) {
+		this.status = value;
+	}
 
-    public Integer getStataus() {
-        return this.stataus;
-    }
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+	}
 
-    public void setStataus(Integer value) {
-        this.stataus = value;
-    }
+	public int hashCode() {
+		return new HashCodeBuilder().append(getId()).toHashCode();
+	}
 
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this,
-                ToStringStyle.MULTI_LINE_STYLE);
-    }
-
-    public int hashCode() {
-        return new HashCodeBuilder()
-                .append(getId())
-                .toHashCode();
-    }
-
-    public boolean equals(Object obj) {
-        if (obj instanceof Dictionary == false) return false;
-        if (this == obj) return true;
-        Dictionary other = (Dictionary) obj;
-        return new EqualsBuilder()
-                .append(getId(), other.getId())
-                .isEquals();
-    }
+	public boolean equals(Object obj) {
+		if (obj instanceof Dictionary == false)
+			return false;
+		if (this == obj)
+			return true;
+		Dictionary other = (Dictionary) obj;
+		return new EqualsBuilder().append(getId(), other.getId()).isEquals();
+	}
 }
-

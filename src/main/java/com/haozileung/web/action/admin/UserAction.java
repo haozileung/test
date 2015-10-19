@@ -26,13 +26,11 @@ public class UserAction {
 		String name = request.getParameter("name");
 		String status = request.getParameter("status");
 		String pageNo = request.getParameter("pageNo");
-		int pageSize = 10;
 		int page = Strings.isNullOrEmpty(pageNo) || !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
-		int startRow = (page - 1) * pageSize;
-		if (startRow < 0) {
-			startRow = 0;
-		}
-		Criteria c = Criteria.create(User.class).exclude("password").limit(startRow, pageSize);
+		Pager p = new Pager();
+		p.setItemsPerPage(1);
+		p.setCurPage(page);
+		Criteria c = Criteria.create(User.class).exclude("password");
 		if (!Strings.isNullOrEmpty(name)) {
 			c = c.and("name", new Object[] { name });
 		}
@@ -41,9 +39,7 @@ public class UserAction {
 		} else {
 			c = c.where("status", "<>", new Object[] { 1 });
 		}
-		Pager p = new Pager();
-		p.setItemsPerPage(pageSize);
-		p.setCurPage(page);
+		c.limit(p.getOffset(), p.getItemsPerPage());
 		p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
 		p.setList(JdbcDaoUtil.getInstance().queryList(c));
 		return p;
@@ -51,7 +47,7 @@ public class UserAction {
 
 	public Map<String, Object> post(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
-		User user = RequestUtil.getBean(request, User.class, null);
+		User user = RequestUtil.getBean(request, User.class);
 		if (RegexUtil.isNull(user.getId())) {
 			data.put("error", "参数错误！");
 			return data;
@@ -62,7 +58,7 @@ public class UserAction {
 
 	public Map<String, Object> put(HttpServletRequest request, HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
-		User user = RequestUtil.getBean(request, User.class, null);
+		User user = RequestUtil.getBean(request, User.class);
 		user.setStatus(Status.ENABLED.ordinal());
 		JdbcDaoUtil.getInstance().save(user);
 		return data;

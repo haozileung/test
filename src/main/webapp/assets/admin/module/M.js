@@ -1,5 +1,5 @@
-var User = {}
-User.init = function(url) {
+var M = {}
+M.init = function(url, searchData) {
 	var table = new Vue({
 		el : '#data-table',
 		data : {
@@ -14,10 +14,7 @@ User.init = function(url) {
 		methods : {
 			toPage : function(n, e) {
 				e.preventDefault();
-				if (n) {
-					form.$set("pageNo", n);
-				}
-				_search(false);
+				_search(n);
 			},
 			onDelete : function() {
 				var ids = $("input[name='selected-id']:checked").map(
@@ -29,7 +26,7 @@ User.init = function(url) {
 						url : url + "?id=" + ids,
 						type : 'delete',
 						success : function(data) {
-							_search(false);
+							_search();
 						}
 					});
 				}
@@ -39,27 +36,32 @@ User.init = function(url) {
 
 	var form = new Vue({
 		el : '#search-form',
-		data : {
-			pageNo : 1,
-			name : "",
-			status : 0
-		},
+		data : searchData,
 		methods : {
 			search : function() {
-				_search(true);
+				_search(1);
 			}
 		}
 	});
-	
-	function _search(isClick){
-		if(isClick){
-			form.$set("pageNo", 1);
+
+	function _search(n) {
+		if (n) {
+			form.$set("pageNo", n);
 		}
-		$.getJSON(url, form.$data, function(data) {
-			table.$data = data;
-			form.$set("pageNo", data.curPage);
+		$.ajax({
+			type : "get",
+			url : url,
+			dataType : 'json',
+			data : form.$data,
+			success : function(data) {
+				table.$data = data;
+				form.$set("pageNo", data.curPage);
+			},
+			error : function() {
+				alert("查询失败！");
+			}
 		});
 	}
 	$('#search-btn').click();
 }
-module.exports = User;
+module.exports = M;

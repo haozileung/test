@@ -80,7 +80,7 @@ public class Pager implements Serializable {
     /**
      * 每页默认的项数
      */
-    public static final int DEFAULT_ITEMS_PER_PAGE = 50;
+    public static final int DEFAULT_ITEMS_PER_PAGE = 15;
     /**
      * 滑动窗口默认的大小
      */

@@ -123,7 +123,7 @@ public final class ActionDispatcher implements Filter {
 			}
 			action_name += StringUtils.capitalize(parts.get(i));
 		} else {
-			action_name += "Index";
+			return false;
 		}
 		Object action = this._LoadAction(action_name);
 		if (action == null) {
@@ -201,10 +201,12 @@ public final class ActionDispatcher implements Filter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String tmp = req.getRequestURI();
-		if (tmp.contains(".")) {
-			chain.doFilter(request, response);
+		if (!tmp.contains(".")) {
+			if (!process(req, res)) {
+				chain.doFilter(request, response);
+			}
 		} else {
-			process(req, res);
+			chain.doFilter(request, response);
 		}
 	}
 
@@ -232,9 +234,9 @@ public final class ActionDispatcher implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected void process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected boolean process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		try {
-			_process(req, resp);
+			return _process(req, resp);
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
 				| InvocationTargetException e) {
 			logger.info(e.getMessage(), e);
@@ -243,6 +245,7 @@ public final class ActionDispatcher implements Filter {
 			logger.info(e.getMessage(), e);
 			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "/errors/500.html", req, resp);
 		}
+		return false;
 	}
 
 	private void render(int code, String view, HttpServletRequest req, HttpServletResponse resp) {
