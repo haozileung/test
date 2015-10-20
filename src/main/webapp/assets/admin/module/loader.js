@@ -5,6 +5,12 @@ Loader.init = function(url) {
 			M.init("/admin/user", {
 				pageNo : 1,
 				name : "",
+				status : ""
+			}, {
+				id : "",
+				name : "",
+				email : "",
+				password : "",
 				status : 0
 			});
 		});

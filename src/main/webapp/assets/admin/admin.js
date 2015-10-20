@@ -23,28 +23,23 @@ $(window).bind(
 				$("#page-wrapper").css("min-height", (height) + "px");
 			}
 		});
-$('.ajax')
-		.click(
-				function(event) {
-					$('#page-wrapper')
-							.html(
-									"<div class='col-md-12 text-center'><span class='glyphicon glyphicon-refresh glyphicon-refresh-animate'></span></div>");
-					var u = $(this).attr('href');
-					$.ajax({
-						url : u,
-						type : 'get',
-						cache : true,
-						success : function(html) {
-							$('#page-wrapper').html(html);
-							var loader = require("./module/loader");
-							loader.init(u);
-						},
-						error : function() {
-							alert("网络异常！");
-						}
-					});
-					return false;
-				});
+$('.ajax').click(function(event) {
+	var u = $(this).attr('href');
+	$.ajax({
+		url : u,
+		type : 'get',
+		cache : true,
+		success : function(html) {
+			$('#page-wrapper').html(html);
+			var loader = require("./module/loader");
+			loader.init(u);
+		},
+		error : function() {
+			alert("网络异常！");
+		}
+	});
+	return false;
+});
 var url = window.location;
 var menu = $('ul.nav a').filter(function() {
 	return this.href == url || url.href.indexOf(this.href) == 0;
@@ -53,3 +48,21 @@ var element = menu.addClass('active').parent().parent().addClass('in').parent();
 if (element.is('li')) {
 	element.addClass('active');
 }
+var loading = require("./module/loading");
+loading.init($('#loading'), {
+	imagePath : '/assets/images/bloading.gif',
+	imagePadding : 4,
+	maskOpacity : .5,
+	fullScreen : true,
+	overlay : {
+		show : true
+	}
+});
+$.ajaxSetup({
+	beforeSend : function() {
+		loading.show();
+	},
+	complete : function() {
+		loading.hide();
+	}
+});

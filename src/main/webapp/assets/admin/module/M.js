@@ -1,6 +1,29 @@
 var M = {}
-M.init = function(url, searchData) {
-	M.table = new Vue({
+M.init = function(url, searchData, editData) {
+	M.editForm = new Vue({
+		el : "#edit-modal",
+		data : $.extend(true, {}, editData),
+		methods : {
+			onSave : function() {
+				$.ajax({
+					url : url,
+					dataType : 'json',
+					type : M.editForm.id ? 'post' : 'put',
+					data : M.editForm.$data,
+					success : function(data) {
+						if (data.code === '0000') {
+							$('#editModal').modal('toggle');
+							M.editForm.$data = $.extend(true, {}, editData);
+							_search();
+						} else {
+							alert(data.msg);
+						}
+					}
+				});
+			}
+		}
+	});
+	M.dataTable = new Vue({
 		el : '#data-table',
 		data : {
 			firstPage : 0,
@@ -32,32 +55,59 @@ M.init = function(url, searchData) {
 						});
 					}
 				}
+			},
+			onNew : function() {
+				M.editForm.$data = $.extend(true, {}, editData);
+				$('#editModal').modal('toggle');
+			},
+			onEdit : function() {
+				var id = $("input[name='selected-id']:checked:first").val();
+				if (id) {
+					$.ajax({
+						type : "get",
+						url : url,
+						dataType : 'json',
+						data : {
+							id : id
+						},
+						success : function(data) {
+							M.editForm.$data = data;
+							$('#editModal').modal('toggle');
+						}
+					});
+
+				} else {
+					alert("请选择数据！");
+				}
 			}
 		}
 	});
 
-	M.form = new Vue({
+	M.searchForm = new Vue({
 		el : '#search-form',
-		data : searchData,
+		data : $.extend(true, {}, searchData),
 		methods : {
 			search : function() {
 				_search(1);
+			},
+			reset : function() {
+				M.searchForm.$data = $.extend(true, {}, searchData);
 			}
 		}
 	});
 
 	function _search(n) {
 		if (n) {
-			M.form.$set("pageNo", n);
+			M.searchForm.$set("pageNo", n);
 		}
 		$.ajax({
 			type : "get",
 			url : url,
 			dataType : 'json',
-			data : M.form.$data,
+			data : M.searchForm.$data,
 			success : function(data) {
-				M.table.$data = data;
-				M.form.$set("pageNo", data.curPage);
+				M.dataTable.$data = data;
+				M.searchForm.$set("pageNo", data.curPage);
 			},
 			error : function() {
 				alert("查询失败！");

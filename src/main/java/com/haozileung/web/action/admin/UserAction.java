@@ -22,29 +22,34 @@ import java.util.Map;
  * Created by Haozi on 2015/9/28.
  */
 public class UserAction {
-	public Pager get(HttpServletRequest request, HttpServletResponse response) {
+	public Object get(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
 		String name = request.getParameter("name");
 		String status = request.getParameter("status");
 		String pageNo = request.getParameter("pageNo");
-		int page = Strings.isNullOrEmpty(pageNo) || !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
-		Pager p = new Pager();
-		p.setCurPage(page);
 		Criteria c = Criteria.create(User.class).exclude("password");
+		if (!Strings.isNullOrEmpty(id)) {
+			c = c.and("id", new Object[] { id });
+			return JdbcDaoUtil.getInstance().querySingleResult(c);
+		}
 		if (!Strings.isNullOrEmpty(name)) {
 			c = c.and("name", new Object[] { name });
 		}
 		if (!Strings.isNullOrEmpty(status)) {
 			c = c.and("status", new Object[] { status });
-		} else {
-			c = c.where("status", "<>", new Object[] { 1 });
 		}
+		int page = Strings.isNullOrEmpty(pageNo)
+				|| !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
+		Pager p = new Pager();
+		p.setCurPage(page);
 		c.limit(p.getOffset(), p.getItemsPerPage());
 		p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
 		p.setList(JdbcDaoUtil.getInstance().queryList(c));
 		return p;
 	}
 
-	public Map<String, Object> post(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> post(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class);
 		if (RegexUtil.isNull(user.getId())) {
@@ -52,18 +57,23 @@ public class UserAction {
 			return data;
 		}
 		JdbcDaoUtil.getInstance().update(user);
+		data.put("code", "0000");
+		data.put("msg", "保存成功！");
 		return data;
 	}
 
-	public Map<String, Object> put(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> put(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class);
-		user.setStatus(Status.ENABLED.ordinal());
 		JdbcDaoUtil.getInstance().save(user);
+		data.put("code", "0000");
+		data.put("msg", "保存成功！");
 		return data;
 	}
 
-	public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> delete(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		String ids = request.getParameter("id");
 		if (Strings.isNullOrEmpty(ids)) {
@@ -77,7 +87,8 @@ public class UserAction {
 			user.setStatus(Status.DISABLED.ordinal());
 			JdbcDaoUtil.getInstance().update(user);
 		});
-		data.put("success", "删除成功！");
+		data.put("code", "0000");
+		data.put("msg", "删除成功！");
 		return data;
 	}
 }
