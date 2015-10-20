@@ -72,8 +72,9 @@
 						<option value="1">禁用</option>
 					</select>
 				</div>
-				<button type="button" class="btn btn-primary" id="search-btn"
-					v-on="click: search">查找</button> <button type="button" class="btn btn-default" id="search-btn"
+				<button type="button" class="btn btn-primary " id="search-btn"
+					v-on="click: search">查找</button>
+				<button type="button" class="btn btn-default " id="search-btn"
 					v-on="click: reset">重置</button>
 			</form>
 		</div>
@@ -82,17 +83,16 @@
 <div class="col-lg-12">
 	<div class="table-responsive" id="data-table">
 		<div class="panel panel-default">
-			<div class="panel-heading">
-				账号列表
+			<div class="panel-heading clearfix">
+				<h4 class="panel-title pull-left">账号列表</h4>
 				<div class="pull-right">
-					<button type="button" class="btn btn-success" id="add-btn"
+					<button type="button" class="btn btn-success " id="add-btn"
 						v-on="click: onNew">添加</button>
-					<button type="button" class="btn btn-warning" id="update-btn"
+					<button type="button" class="btn btn-warning " id="update-btn"
 						v-on="click: onEdit">修改</button>
-					<button type="button" class="btn btn-danger" id="delete-btn"
+					<button type="button" class="btn btn-danger " id="delete-btn"
 						v-on="click: onDelete">删除</button>
 				</div>
-				<div class="clearfix"></div>
 			</div>
 			<table class="table table-hover table-condensed">
 				<thead>

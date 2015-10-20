@@ -286,6 +286,10 @@ table.dataTable thead .sorting:after {
 	border-color: #5cb85c;
 }
 
+.pagination {
+    margin: 0;
+}
+
 .panel-green .panel-heading {
 	border-color: #5cb85c;
 	color: #fff;
