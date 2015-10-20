@@ -7,8 +7,8 @@
 			<form class="form-inline" id="search-form" role="form">
 				<input type="hidden" name="pageNo" v-model="pageNo">
 				<div class="form-group">
-					<label for="parentId">字典类型</label> <select class="form-control"
-						id="parentId" name="parentId" v-model="parentId">
+					<label for="parentCode">字典类型</label> <select class="form-control"
+						id="parentCode" name="parentCode" v-model="parentCode">
 						<option value="">全部</option>
 					</select>
 				</div>
@@ -64,7 +64,7 @@
 						<td><input type="checkbox" value="{{id}}" name="selected-id" /></td>
 						<td>{{code}}</td>
 						<td>{{value}}</td>
-						<td>{{parentId}}</td>
+						<td>{{parentCode}}</td>
 						<td>{{orderNo}}</td>
 						<td>{{status}}</td>
 					</tr>

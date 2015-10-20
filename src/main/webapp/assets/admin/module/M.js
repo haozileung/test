@@ -1,6 +1,6 @@
 var M = {}
 M.init = function(url, searchData) {
-	var table = new Vue({
+	M.table = new Vue({
 		el : '#data-table',
 		data : {
 			firstPage : 0,
@@ -22,19 +22,21 @@ M.init = function(url, searchData) {
 							return this.value;
 						}).get().join(",");
 				if (ids.length > 0) {
-					$.ajax({
-						url : url + "?id=" + ids,
-						type : 'delete',
-						success : function(data) {
-							_search();
-						}
-					});
+					if (window.confirm("确认删除吗？")) {
+						$.ajax({
+							url : url + "?id=" + ids,
+							type : 'delete',
+							success : function(data) {
+								_search();
+							}
+						});
+					}
 				}
 			}
 		}
 	});
 
-	var form = new Vue({
+	M.form = new Vue({
 		el : '#search-form',
 		data : searchData,
 		methods : {
@@ -46,16 +48,16 @@ M.init = function(url, searchData) {
 
 	function _search(n) {
 		if (n) {
-			form.$set("pageNo", n);
+			M.form.$set("pageNo", n);
 		}
 		$.ajax({
 			type : "get",
 			url : url,
 			dataType : 'json',
-			data : form.$data,
+			data : M.form.$data,
 			success : function(data) {
-				table.$data = data;
-				form.$set("pageNo", data.curPage);
+				M.table.$data = data;
+				M.form.$set("pageNo", data.curPage);
 			},
 			error : function() {
 				alert("查询失败！");

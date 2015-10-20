@@ -33,7 +33,8 @@ import com.haozileung.infra.utils.DataSourceUtil;
 
 public final class ActionDispatcher implements Filter {
 
-	private final static Logger logger = LoggerFactory.getLogger(ActionDispatcher.class);
+	private final static Logger logger = LoggerFactory
+			.getLogger(ActionDispatcher.class);
 	private final static HashMap<String, Object> actions = new HashMap<String, Object>();
 	private final static HashMap<String, Method> methods = new HashMap<String, Method>();
 	private List<String> action_packages = null;
@@ -51,7 +52,8 @@ public final class ActionDispatcher implements Filter {
 		if (m != null)
 			return m;
 		for (Method m1 : action.getClass().getMethods()) {
-			if (m1.getModifiers() == Modifier.PUBLIC && m1.getName().equals(method)) {
+			if (m1.getModifiers() == Modifier.PUBLIC
+					&& m1.getName().equals(method)) {
 				synchronized (methods) {
 					methods.put(key, m1);
 				}
@@ -70,7 +72,8 @@ public final class ActionDispatcher implements Filter {
 	 * @throws IllegalAccessException
 	 * @throws ClassNotFoundException
 	 */
-	protected Object _LoadAction(String act_name) throws InstantiationException, IllegalAccessException {
+	protected Object _LoadAction(String act_name)
+			throws InstantiationException, IllegalAccessException {
 		Object action = actions.get(act_name);
 		if (action == null) {
 			for (String pkg : action_packages) {
@@ -108,10 +111,12 @@ public final class ActionDispatcher implements Filter {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	private boolean _process(HttpServletRequest req, HttpServletResponse resp) throws InstantiationException,
-			IllegalAccessException, IOException, IllegalArgumentException, InvocationTargetException {
+	private boolean _process(HttpServletRequest req, HttpServletResponse resp)
+			throws InstantiationException, IllegalAccessException, IOException,
+			IllegalArgumentException, InvocationTargetException {
 		String requestURI = req.getRequestURI();
-		List<String> parts = Lists.newArrayList(StringUtils.split(requestURI, "/"));
+		List<String> parts = Lists.newArrayList(StringUtils.split(requestURI,
+				"/"));
 		// 加载Action类
 		String action_name = ".";
 		String method = req.getMethod().toLowerCase();
@@ -127,12 +132,10 @@ public final class ActionDispatcher implements Filter {
 		}
 		Object action = this._LoadAction(action_name);
 		if (action == null) {
-			render(HttpServletResponse.SC_NOT_FOUND, "/errors/404.html", req, resp);
 			return false;
 		}
 		Method m_action = this._GetActionMethod(action, method);
 		if (m_action == null) {
-			render(HttpServletResponse.SC_NOT_FOUND, "/errors/404.html", req, resp);
 			return false;
 		}
 		// 调用Action方法之准备参数
@@ -156,7 +159,6 @@ public final class ActionDispatcher implements Filter {
 				result = m_action.invoke(action, req, resp);
 				break;
 			default:
-				render(HttpServletResponse.SC_NOT_FOUND, "/errors/404.html", req, resp);
 				if (tx && tm != null) {
 					tm.commitAndClose();
 				}
@@ -170,7 +172,6 @@ public final class ActionDispatcher implements Filter {
 				tm.rollbackAndClose();
 			}
 			logger.info(e.getMessage(), e);
-			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "/errors/500.html", req, resp);
 		}
 
 		if (result != null) {
@@ -196,18 +197,17 @@ public final class ActionDispatcher implements Filter {
 	}
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
 		String tmp = req.getRequestURI();
 		if (!tmp.contains(".")) {
-			if (!process(req, res)) {
-				chain.doFilter(request, response);
+			if (process(req, res)) {
+				return;
 			}
-		} else {
-			chain.doFilter(request, response);
 		}
+		chain.doFilter(request, response);
 	}
 
 	@Override
@@ -217,11 +217,14 @@ public final class ActionDispatcher implements Filter {
 				Method dm = action.getClass().getMethod("destroy");
 				if (dm != null) {
 					dm.invoke(action);
-					logger.info("!!!!!!!!! " + action.getClass().getSimpleName() + " destroy !!!!!!!!!");
+					logger.info("!!!!!!!!! "
+							+ action.getClass().getSimpleName()
+							+ " destroy !!!!!!!!!");
 				}
 			} catch (NoSuchMethodException e) {
 			} catch (Exception e) {
-				logger.info("Unabled to destroy action: " + action.getClass().getSimpleName(), e);
+				logger.info("Unabled to destroy action: "
+						+ action.getClass().getSimpleName(), e);
 			}
 		}
 	}
@@ -234,21 +237,21 @@ public final class ActionDispatcher implements Filter {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	protected boolean process(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected boolean process(HttpServletRequest req, HttpServletResponse resp)
+			throws ServletException, IOException {
 		try {
 			return _process(req, resp);
-		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException e) {
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e) {
 			logger.info(e.getMessage(), e);
-			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "/errors/500.html", req, resp);
 		} catch (DaoException e) {
 			logger.info(e.getMessage(), e);
-			render(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "/errors/500.html", req, resp);
 		}
 		return false;
 	}
 
-	private void render(int code, String view, HttpServletRequest req, HttpServletResponse resp) {
+	private void render(int code, String view, HttpServletRequest req,
+			HttpServletResponse resp) {
 		resp.setContentType("text/html;charset=utf-8");
 		resp.setStatus(code);
 		if (!Strings.isNullOrEmpty(view)) {

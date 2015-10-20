@@ -36,8 +36,8 @@ public class Dictionary implements java.io.Serializable {
 	private String value;
 	@Column("order_no")
 	private Integer orderNo;
-	@Column("parent_id")
-	private Long parentId;
+	@Column("parent_code")
+	private String parentCode;
 	@Column("status")
 	private Integer status;
 	// columns END
@@ -81,12 +81,12 @@ public class Dictionary implements java.io.Serializable {
 		this.orderNo = value;
 	}
 
-	public Long getParentId() {
-		return this.parentId;
+	public String getParentCode() {
+		return this.parentCode;
 	}
 
-	public void setParentId(Long value) {
-		this.parentId = value;
+	public void setParentCode(String value) {
+		this.parentCode = value;
 	}
 
 	public Integer getStatus() {

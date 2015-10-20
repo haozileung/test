@@ -28,7 +28,6 @@ public class UserAction {
 		String pageNo = request.getParameter("pageNo");
 		int page = Strings.isNullOrEmpty(pageNo) || !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
 		Pager p = new Pager();
-		p.setItemsPerPage(1);
 		p.setCurPage(page);
 		Criteria c = Criteria.create(User.class).exclude("password");
 		if (!Strings.isNullOrEmpty(name)) {

@@ -23,15 +23,15 @@ import com.haozileung.web.domain.system.Status;
  */
 public class DictionaryAction {
 	public Object get(HttpServletRequest request, HttpServletResponse response) {
-		String parentId = request.getParameter("parentId");
+		String parentCode = request.getParameter("parentCode");
 		String code = request.getParameter("code");
 		String value = request.getParameter("value");
 		String status = request.getParameter("status");
 		String pageNo = request.getParameter("pageNo");
 		String isAll = request.getParameter("isAll");
 		Criteria c = Criteria.create(Dictionary.class).asc("orderNo");
-		if (!Strings.isNullOrEmpty(parentId)) {
-			c = c.and("parentId", new Object[] { parentId });
+		if (!Strings.isNullOrEmpty(parentCode)) {
+			c = c.and("parentCode", new Object[] { parentCode });
 		}
 		if (!Strings.isNullOrEmpty(code)) {
 			c = c.and("code", new Object[] { code });

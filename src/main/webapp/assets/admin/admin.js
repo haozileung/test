@@ -36,7 +36,8 @@ $('.ajax')
 						cache : true,
 						success : function(html) {
 							$('#page-wrapper').html(html);
-							load(u);
+							var loader = require("./module/loader");
+							loader.init(u);
 						},
 						error : function() {
 							alert("网络异常！");
@@ -51,26 +52,4 @@ var menu = $('ul.nav a').filter(function() {
 var element = menu.addClass('active').parent().parent().addClass('in').parent();
 if (element.is('li')) {
 	element.addClass('active');
-}
-function load(url) {
-	if (url === '/admin/user.html') {
-		require([ './module/M.js' ], function(M) {
-			M.init("/admin/user", {
-				pageNo : 1,
-				name : "",
-				status : 0
-			});
-		});
-	}
-	if (url === '/admin/dictionary.html') {
-		require([ './module/M.js' ], function(M) {
-			M.init("/admin/dictionary", {
-				pageNo : 1,
-				code : "",
-				value : "",
-				parentId : "",
-				status : 0
-			});
-		});
-	}
 }
