@@ -24,21 +24,9 @@ $(window).bind(
 			}
 		});
 $('.ajax').click(function(event) {
-	var u = $(this).attr('href');
-	$.ajax({
-		url : u,
-		type : 'get',
-		cache : true,
-		success : function(html) {
-			$('#page-wrapper').html(html);
-			var loader = require("./module/loader");
-			loader.init(u);
-		},
-		error : function() {
-			alert("网络异常！");
-		}
-	});
-	return false;
+	var url = $(this).attr('href');
+	url = url.replace('#', '');
+	loadModule(url);
 });
 var url = window.location;
 var menu = $('ul.nav a').filter(function() {
@@ -47,6 +35,9 @@ var menu = $('ul.nav a').filter(function() {
 var element = menu.addClass('active').parent().parent().addClass('in').parent();
 if (element.is('li')) {
 	element.addClass('active');
+}
+if (url.hash.length > 0) {
+	loadModule(url.hash);
 }
 var loading = require("./module/loading");
 loading.init($('#loading'), {
@@ -64,5 +55,31 @@ $.ajaxSetup({
 	},
 	complete : function() {
 		loading.hide();
+	}
+});
+function loadModule(url) {
+	url = url.replace('#', '');
+	$.ajax({
+		url : url,
+		type : 'get',
+		cache : true,
+		success : function(html) {
+			$('#page-wrapper').html(html);
+			var loader = require("./module/loader");
+			loader.init(url);
+		},
+		error : function() {
+			alert("网络异常！");
+		}
+	});
+}
+Vue.directive('dic', {
+	update : function(o) {
+		if (o.value == 1) {
+			$(this.el).text("禁用");
+		}
+		if (o.value == 0) {
+			$(this.el).text("启用");
+		}
 	}
 });
