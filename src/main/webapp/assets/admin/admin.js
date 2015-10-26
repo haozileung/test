@@ -74,11 +74,13 @@ function loadModule(url) {
 	});
 }
 Vue.directive('dic', {
-	update : function(o) {
-		if (o.value == 1) {
+	params : [ 'type', 'value' ],
+	update : function() {
+		console.log(this.params.type)
+		if (this.params.value == 1) {
 			$(this.el).text("禁用");
 		}
-		if (o.value == 0) {
+		if (this.params.value == 0) {
 			$(this.el).text("启用");
 		}
 	}

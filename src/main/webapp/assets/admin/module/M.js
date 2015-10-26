@@ -54,6 +54,8 @@ M.init = function(url, searchData, editData) {
 							}
 						});
 					}
+				}else{
+					alert("请选择数据！");
 				}
 			},
 			onNew : function() {

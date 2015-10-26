@@ -48,7 +48,7 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button class="btn btn-primary" v-on="click: onSave">保存</button>
+				<button class="btn btn-primary" v-on:click="onSave">保存</button>
 				<button class="btn btn-default" data-dismiss="modal">关闭</button>
 			</div>
 		</div>
@@ -73,9 +73,9 @@
 					</select>
 				</div>
 				<button type="button" class="btn btn-primary " id="search-btn"
-					v-on="click: search">查找</button>
+					v-on:click="search">查找</button>
 				<button type="button" class="btn btn-default " id="search-btn"
-					v-on="click: reset">重置</button>
+					v-on:click="reset">重置</button>
 			</form>
 		</div>
 	</div>
@@ -87,11 +87,11 @@
 				<h4 class="panel-title pull-left">账号列表</h4>
 				<div class="pull-right">
 					<button type="button" class="btn btn-success " id="add-btn"
-						v-on="click: onNew">添加</button>
+						v-on:click="onNew">添加</button>
 					<button type="button" class="btn btn-warning " id="update-btn"
-						v-on="click: onEdit">修改</button>
+						v-on:click="onEdit">修改</button>
 					<button type="button" class="btn btn-danger " id="delete-btn"
-						v-on="click: onDelete">删除</button>
+						v-on:click="onDelete">删除</button>
 				</div>
 			</div>
 			<table class="table table-hover table-condensed">
@@ -104,24 +104,24 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-repeat="list">
-						<td><input type="checkbox" value="{{id}}" name="selected-id" /></td>
-						<td>{{name}}</td>
-						<td>{{email}}</td>
-						<td v-dic="{type:1,value:status}"></td>
+					<tr v-for="item in list">
+						<td><input type="checkbox" value="{{item.id}}" name="selected-id" /></td>
+						<td>{{item.name}}</td>
+						<td>{{item.email}}</td>
+						<td v-dic type='0' value='{{item.status}}'></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<ul class="pagination">
 			<li v-if="curPage != firstPage"><a href="#"
-				v-on="click: toPage(firstPage,$event)" aria-label="Previous"> <span
+				v-on:click="toPage(firstPage,$event)" aria-label="Previous"> <span
 					aria-hidden="true">&laquo;</span>
 			</a></li>
-			<li v-repeat="i in slider" v-class="active : curPage == i"><a
-				href="#" v-on="click: toPage(i,$event)">{{i}}</a></li>
+			<li v-for="i in slider" v-bind:class="{'active' : curPage == i}"><a
+				href="#" v-on:click="toPage(i,$event)">{{i}}</a></li>
 			<li v-if="curPage != lastPage"><a href="#"
-				v-on="click: toPage(lastPage,$event)" aria-label="Next"> <span
+				v-on:click="toPage(lastPage,$event)" aria-label="Next"> <span
 					aria-hidden="true">&raquo;</span>
 			</a></li>
 		</ul>
