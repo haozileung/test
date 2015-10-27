@@ -18,9 +18,9 @@ public class DataSourceUtil {
     private static DruidDataSource druidDataSource;
 
     private static boolean show_sql = true;
-
-    public final static Connection getConnection() throws SQLException {
-        if (null == druidDataSource) {
+    
+    public final static void init(){
+    	if (null == druidDataSource) {
             druidDataSource = new DruidDataSource();
             druidDataSource.setUrl(PropertiesUtil.getProperties().getProperty("db.url"));
             druidDataSource.setUsername(PropertiesUtil.getProperties().getProperty("db.username"));
@@ -49,6 +49,9 @@ public class DataSourceUtil {
             String show_sql_prop = PropertiesUtil.getProperties().getProperty("show_sql");
             show_sql = ((show_sql_prop != null) && show_sql_prop.equalsIgnoreCase("true"));
         }
+    }
+
+    public final static Connection getConnection() throws SQLException {
         Connection conn = conns.get();
         if (conn == null || conn.isClosed()) {
             conn = druidDataSource.getConnection();
