@@ -1,0 +1,10 @@
+{
+  "spm": {
+    "output": [
+      "*.js"
+    ],
+    "build": {
+      "extractCSS": true
+    }
+  }
+}
