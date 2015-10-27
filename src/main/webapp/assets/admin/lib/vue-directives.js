@@ -6,12 +6,14 @@ Vue.directive('select', {
 		var types = dic.getList(this.params.type);
 		var self = this;
 		var data = new Array();
-		Object.keys(types).forEach(function(k) {
-			data.push({
-				id : k,
-				text : types[k]
+		if (types) {
+			Object.keys(types).forEach(function(k) {
+				data.push({
+					id : k,
+					text : types[k]
+				});
 			});
-		});
+		}
 		$(self.el).select2({
 			data : data
 		}).on('change', function() {

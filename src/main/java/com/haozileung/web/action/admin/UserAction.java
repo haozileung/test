@@ -2,6 +2,7 @@ package com.haozileung.web.action.admin;
 
 import java.util.Map;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.haozileung.infra.dao.pager.Pager;
 import com.haozileung.infra.dao.persistence.Criteria;
 import com.haozileung.infra.dao.persistence.JdbcDaoUtil;
+import com.haozileung.infra.mvc.JsonServlet;
 import com.haozileung.infra.utils.RegexUtil;
 import com.haozileung.infra.utils.RequestUtil;
 import com.haozileung.web.domain.system.User;
@@ -20,7 +22,13 @@ import com.haozileung.web.domain.system.User;
 /**
  * Created by Haozi on 2015/9/28.
  */
-public class UserAction {
+@WebServlet(urlPatterns = "/admin/user")
+public class UserAction extends JsonServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5603114013534642891L;
+
 	public Object get(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String name = request.getParameter("name");

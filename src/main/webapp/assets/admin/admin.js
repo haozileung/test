@@ -3,8 +3,6 @@ require("./lib/metisMenu");
 require("./lib/loading");
 require("./lib/vue-directives");
 var loader = require("./module/loader");
-var dic = require("./module/dictionary");
-dic.init();
 $('#side-menu').metisMenu();
 $(window).bind(
 		"load resize",
@@ -45,17 +43,20 @@ $('.ajax').click(function(event) {
 	loadModule(url);
 });
 function loadModule(url) {
-	url = url.replace('#', '');
-	$.ajax({
-		url : url,
-		type : 'get',
-		cache : true,
-		success : function(html) {
-			$('#page-wrapper').html(html);
-			loader.init(url);
-		},
-		error : function() {
-			alert("网络异常！");
-		}
+	var dic = require("./module/dictionary");
+	dic.init(function() {
+		url = url.replace('#', '');
+		$.ajax({
+			url : url,
+			type : 'get',
+			cache : true,
+			success : function(html) {
+				$('#page-wrapper').html(html);
+				loader.init(url);
+			},
+			error : function() {
+				alert("网络异常！");
+			}
+		});
 	});
 }

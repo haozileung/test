@@ -2,6 +2,7 @@ package com.haozileung.web.action.admin;
 
 import java.util.Map;
 
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,6 +14,7 @@ import com.google.common.collect.Maps;
 import com.haozileung.infra.dao.pager.Pager;
 import com.haozileung.infra.dao.persistence.Criteria;
 import com.haozileung.infra.dao.persistence.JdbcDaoUtil;
+import com.haozileung.infra.mvc.JsonServlet;
 import com.haozileung.infra.utils.RegexUtil;
 import com.haozileung.infra.utils.RequestUtil;
 import com.haozileung.web.domain.system.Dictionary;
@@ -20,7 +22,13 @@ import com.haozileung.web.domain.system.Dictionary;
 /**
  * Created by Haozi on 2015/9/28.
  */
-public class DictionaryAction {
+@WebServlet(urlPatterns = "/admin/dictionary")
+public class DictionaryAction extends JsonServlet {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 164410558750491509L;
+
 	public Object get(HttpServletRequest request, HttpServletResponse response) {
 		String id = request.getParameter("id");
 		String parentCode = request.getParameter("parentCode");
@@ -70,6 +78,17 @@ public class DictionaryAction {
 			data.put("error", "参数错误！");
 			return data;
 		}
+		Long count = JdbcDaoUtil.getInstance()
+				.queryCount(
+						Criteria.create(Dictionary.class)
+								.where("code", new Object[] { dic.getCode() })
+								.and("parentCode",
+										new Object[] { dic.getParentCode() }));
+		if (count != null && count > 0) {
+			data.put("code", "0001");
+			data.put("error", "字典编码重复！");
+			return data;
+		}
 		JdbcDaoUtil.getInstance().update(dic);
 		data.put("code", "0000");
 		data.put("msg", "修改成功！");
@@ -80,6 +99,17 @@ public class DictionaryAction {
 			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		Dictionary dic = RequestUtil.getBean(request, Dictionary.class);
+		Long count = JdbcDaoUtil.getInstance()
+				.queryCount(
+						Criteria.create(Dictionary.class)
+								.where("code", new Object[] { dic.getCode() })
+								.and("parentCode",
+										new Object[] { dic.getParentCode() }));
+		if (count != null && count > 0) {
+			data.put("code", "0001");
+			data.put("error", "字典编码重复！");
+			return data;
+		}
 		dic.setStatus(100);
 		JdbcDaoUtil.getInstance().save(dic);
 		data.put("code", "0000");

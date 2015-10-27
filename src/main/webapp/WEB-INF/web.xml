@@ -11,18 +11,10 @@
 		<servlet-name>DruidStatView</servlet-name>
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
-	<filter>
-		<filter-name>ActionDispatcher</filter-name>
-		<filter-class>com.haozileung.infra.mvc.ActionDispatcher</filter-class>
-		<init-param>
-			<param-name>packages</param-name>
-			<param-value>com.haozileung.web.action</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>ActionDispatcher</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
+	<!-- <filter> <filter-name>ActionDispatcher</filter-name> <filter-class>com.haozileung.infra.mvc.ActionDispatcher</filter-class> 
+		<init-param> <param-name>packages</param-name> <param-value>com.haozileung.web.action</param-value> 
+		</init-param> </filter> <filter-mapping> <filter-name>ActionDispatcher</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
 	<filter>
 		<filter-name>DruidWebStatFilter</filter-name>
 		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
