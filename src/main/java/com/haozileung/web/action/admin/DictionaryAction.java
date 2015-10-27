@@ -16,13 +16,13 @@ import com.haozileung.infra.dao.persistence.JdbcDaoUtil;
 import com.haozileung.infra.utils.RegexUtil;
 import com.haozileung.infra.utils.RequestUtil;
 import com.haozileung.web.domain.system.Dictionary;
-import com.haozileung.web.domain.system.Status;
 
 /**
  * Created by Haozi on 2015/9/28.
  */
 public class DictionaryAction {
 	public Object get(HttpServletRequest request, HttpServletResponse response) {
+		String id = request.getParameter("id");
 		String parentCode = request.getParameter("parentCode");
 		String code = request.getParameter("code");
 		String value = request.getParameter("value");
@@ -30,6 +30,10 @@ public class DictionaryAction {
 		String pageNo = request.getParameter("pageNo");
 		String isAll = request.getParameter("isAll");
 		Criteria c = Criteria.create(Dictionary.class).asc("orderNo");
+		if (!Strings.isNullOrEmpty(id)) {
+			c = c.and("id", new Object[] { id });
+			return JdbcDaoUtil.getInstance().querySingleResult(c);
+		}
 		if (!Strings.isNullOrEmpty(parentCode)) {
 			c = c.and("parentCode", new Object[] { parentCode });
 		}
@@ -41,11 +45,11 @@ public class DictionaryAction {
 		}
 		if (!Strings.isNullOrEmpty(status)) {
 			c = c.and("status", new Object[] { status });
-		} else {
-			c = c.where("status", new Object[] { 0 });
 		}
 		if (!"true".equalsIgnoreCase(isAll)) {
-			int page = Strings.isNullOrEmpty(pageNo) || !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
+			int page = Strings.isNullOrEmpty(pageNo)
+					|| !StringUtils.isNumeric(pageNo) ? 0 : Integer
+					.valueOf(pageNo);
 			Pager p = new Pager();
 			p.setCurPage(page);
 			c.limit(p.getOffset(), p.getItemsPerPage());
@@ -58,7 +62,8 @@ public class DictionaryAction {
 
 	}
 
-	public Map<String, Object> post(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> post(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		Dictionary dic = RequestUtil.getBean(request, Dictionary.class);
 		if (RegexUtil.isNull(dic.getId())) {
@@ -66,18 +71,24 @@ public class DictionaryAction {
 			return data;
 		}
 		JdbcDaoUtil.getInstance().update(dic);
+		data.put("code", "0000");
+		data.put("msg", "修改成功！");
 		return data;
 	}
 
-	public Map<String, Object> put(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> put(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		Dictionary dic = RequestUtil.getBean(request, Dictionary.class);
-		dic.setStatus(Status.ENABLED.ordinal());
+		dic.setStatus(100);
 		JdbcDaoUtil.getInstance().save(dic);
+		data.put("code", "0000");
+		data.put("msg", "添加成功！");
 		return data;
 	}
 
-	public Map<String, Object> delete(HttpServletRequest request, HttpServletResponse response) {
+	public Map<String, Object> delete(HttpServletRequest request,
+			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		String ids = request.getParameter("id");
 		if (Strings.isNullOrEmpty(ids)) {
@@ -88,10 +99,11 @@ public class DictionaryAction {
 			Integer i = Integer.valueOf(id);
 			Dictionary dic = new Dictionary();
 			dic.setId(i.longValue());
-			dic.setStatus(Status.DISABLED.ordinal());
+			dic.setStatus(101);
 			JdbcDaoUtil.getInstance().update(dic);
 		});
-		data.put("success", "删除成功！");
+		data.put("code", "0000");
+		data.put("msg", "删除成功！");
 		return data;
 	}
 }

@@ -1,5 +1,12 @@
 package com.haozileung.web.action.admin;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.lang3.StringUtils;
+
 import com.google.common.base.Splitter;
 import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
@@ -8,15 +15,7 @@ import com.haozileung.infra.dao.persistence.Criteria;
 import com.haozileung.infra.dao.persistence.JdbcDaoUtil;
 import com.haozileung.infra.utils.RegexUtil;
 import com.haozileung.infra.utils.RequestUtil;
-import com.haozileung.web.domain.system.Status;
 import com.haozileung.web.domain.system.User;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.StringUtils;
-
-import java.util.Map;
 
 /**
  * Created by Haozi on 2015/9/28.
@@ -66,6 +65,7 @@ public class UserAction {
 			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class);
+		user.setStatus(100);
 		JdbcDaoUtil.getInstance().save(user);
 		data.put("code", "0000");
 		data.put("msg", "保存成功！");
@@ -84,7 +84,7 @@ public class UserAction {
 			Integer i = Integer.valueOf(id);
 			User user = new User();
 			user.setId(i.longValue());
-			user.setStatus(Status.DISABLED.ordinal());
+			user.setStatus(101);
 			JdbcDaoUtil.getInstance().update(user);
 		});
 		data.put("code", "0000");

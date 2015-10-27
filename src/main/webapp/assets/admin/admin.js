@@ -1,5 +1,10 @@
 require("./css/admin.css");
 require("./lib/metisMenu");
+require("./lib/loading");
+require("./lib/vue-directives");
+var loader = require("./module/loader");
+var dic = require("./module/dictionary");
+dic.init();
 $('#side-menu').metisMenu();
 $(window).bind(
 		"load resize",
@@ -23,11 +28,6 @@ $(window).bind(
 				$("#page-wrapper").css("min-height", (height) + "px");
 			}
 		});
-$('.ajax').click(function(event) {
-	var url = $(this).attr('href');
-	url = url.replace('#', '');
-	loadModule(url);
-});
 var url = window.location;
 var menu = $('ul.nav a').filter(function() {
 	return this.href == url || url.href.indexOf(this.href) == 0;
@@ -39,23 +39,10 @@ if (element.is('li')) {
 if (url.hash.length > 0) {
 	loadModule(url.hash);
 }
-var loading = require("./module/loading");
-loading.init($('#loading'), {
-	imagePath : '/assets/images/bloading.gif',
-	imagePadding : 4,
-	maskOpacity : .5,
-	fullScreen : true,
-	overlay : {
-		show : true
-	}
-});
-$.ajaxSetup({
-	beforeSend : function() {
-		loading.show();
-	},
-	complete : function() {
-		loading.hide();
-	}
+$('.ajax').click(function(event) {
+	var url = $(this).attr('href');
+	url = url.replace('#', '');
+	loadModule(url);
 });
 function loadModule(url) {
 	url = url.replace('#', '');
@@ -65,7 +52,6 @@ function loadModule(url) {
 		cache : true,
 		success : function(html) {
 			$('#page-wrapper').html(html);
-			var loader = require("./module/loader");
 			loader.init(url);
 		},
 		error : function() {
@@ -73,15 +59,3 @@ function loadModule(url) {
 		}
 	});
 }
-Vue.directive('dic', {
-	params : [ 'type', 'value' ],
-	update : function() {
-		console.log(this.params.type)
-		if (this.params.value == 1) {
-			$(this.el).text("禁用");
-		}
-		if (this.params.value == 0) {
-			$(this.el).text("启用");
-		}
-	}
-});

@@ -37,11 +37,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<div class="col-sm-offset-2 col-sm-10">
-							<select class="form-control" id="status" name="status"
-								v-model="status">
-								<option value="0">启用</option>
-								<option value="1">禁用</option>
+						<label for="inputStatus" class="col-sm-2 control-label">状态</label>
+						<div class="col-sm-10">
+							<select class="form-control" v-select="status" type="001"
+								id="inputStatus" name="status">
 							</select>
 						</div>
 					</div>
@@ -66,10 +65,7 @@
 				</div>
 				<div class="form-group">
 					<label for="status">状态</label> <select class="form-control"
-						id="status" name="status" v-model="status">
-						<option value="">全部</option>
-						<option value="0">启用</option>
-						<option value="1">禁用</option>
+						v-select="status" type="001" id="status" name="status">
 					</select>
 				</div>
 				<button type="button" class="btn btn-primary " id="search-btn"
@@ -105,10 +101,11 @@
 				</thead>
 				<tbody>
 					<tr v-for="item in list">
-						<td><input type="checkbox" value="{{item.id}}" name="selected-id" /></td>
+						<td><input type="checkbox" value="{{item.id}}"
+							name="selected-id" /></td>
 						<td>{{item.name}}</td>
 						<td>{{item.email}}</td>
-						<td v-dic type='0' value='{{item.status}}'></td>
+						<td v-dic type='001' value='{{item.status}}'></td>
 					</tr>
 				</tbody>
 			</table>

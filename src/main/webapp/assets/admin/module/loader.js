@@ -1,7 +1,7 @@
 var Loader = {}
 Loader.init = function(url) {
 	if (url === '/admin/user.html') {
-		require([ './M.js' ], function(M) {
+		require([ '../lib/M.js' ], function(M) {
 			M.init("/admin/user", {
 				pageNo : 1,
 				name : "",
@@ -11,18 +11,24 @@ Loader.init = function(url) {
 				name : "",
 				email : "",
 				password : "",
-				status : 0
+				status : 100
 			});
 		});
 	}
 	if (url === '/admin/dictionary.html') {
-		require([ './M.js' ], function(M) {
+		require([ '../lib/M.js' ], function(M) {
 			M.init("/admin/dictionary", {
 				pageNo : 1,
 				code : "",
 				value : "",
 				parentCode : "",
-				status : 0
+				status : 100
+			}, {
+				id : "",
+				code : "",
+				value : "",
+				parentCode : 000,
+				status : 100
 			});
 		});
 	}

@@ -114,4 +114,20 @@ var bload = {
 			this.$overlay.remove();
 	}
 };
-module.exports = bload;
+bload.init($('#loading'), {
+	imagePath : '/assets/images/bloading.gif',
+	imagePadding : 4,
+	maskOpacity : .5,
+	fullScreen : true,
+	overlay : {
+		show : true
+	}
+});
+$.ajaxSetup({
+	beforeSend : function() {
+		bload.show();
+	},
+	complete : function() {
+		bload.hide();
+	}
+});

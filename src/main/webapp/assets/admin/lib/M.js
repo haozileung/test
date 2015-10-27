@@ -16,7 +16,7 @@ M.init = function(url, searchData, editData) {
 							M.editForm.$data = $.extend(true, {}, editData);
 							_search();
 						} else {
-							alert(data.msg);
+							alert(data.error);
 						}
 					}
 				});
