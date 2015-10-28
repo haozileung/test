@@ -109,7 +109,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="item in list">
+					<tr v-for="item in list" v-on:click="onSelect($event)">
 						<td><input type="checkbox" value="{{item.id}}"
 							name="selected-id" /></td>
 						<td>{{item.name}}</td>

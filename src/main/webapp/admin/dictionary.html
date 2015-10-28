@@ -123,7 +123,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="item in list">
+					<tr v-for="item in list" v-on:click="onSelect($event)">
 						<td><input type="checkbox" value="{{item.id}}"
 							name="selected-id" /></td>
 						<td>{{item.code}}</td>
@@ -132,7 +132,7 @@
 						<td>{{item.orderNo}}</td>
 						<td v-dic type='001' value='{{item.status}}'></td>
 						<td><a href="javascript:;"
-							v-on:click="changeStatus(item.id,item.status)"><div
+							v-on:click="changeStatus(item.id,item.status,$event)"><div
 									v-show="item.status == 1">禁用</div>
 								<div v-show="item.status == 0">启用</div></a></td>
 					</tr>

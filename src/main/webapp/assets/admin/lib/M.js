@@ -35,7 +35,13 @@ M.init = function(url, searchData, editData) {
 			list : []
 		},
 		methods : {
-			changeStatus : function(id, status) {
+			onSelect : function(e) {
+				var input = $(e.target).parent().children().first().children()
+						.first();
+				input.prop("checked", input.prop('checked') ? false : true);
+				return false;
+			},
+			changeStatus : function(id, status, e) {
 				status = status == 1 ? 0 : 1;
 				$.ajax({
 					url : url,
@@ -48,6 +54,7 @@ M.init = function(url, searchData, editData) {
 						_search();
 					}
 				});
+				e.stopPropagation();
 			},
 			toPage : function(n, e) {
 				if ($(e.target).parent().hasClass("disabled")) {
