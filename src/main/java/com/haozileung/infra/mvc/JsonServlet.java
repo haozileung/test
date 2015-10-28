@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.haozileung.infra.dao.transaction.TransactionManager;
 import com.haozileung.infra.utils.DataSourceUtil;
 
 /**
@@ -52,29 +53,53 @@ public abstract class JsonServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = post(req, resp);
+		TransactionManager tm = DataSourceUtil.getTranManager();
+		tm.beginTransaction();
+		Object obj = null;
+		try {
+			obj = post(req, resp);
+			tm.commitAndClose();
+		} catch (RuntimeException re) {
+			logger.error(re.getMessage());
+			tm.rollbackAndClose();
+		}
 		if (obj != null) {
 			renderJSON(obj, resp);
 		}
-		DataSourceUtil.closeConnection();
 	}
 
 	@Override
 	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = put(req, resp);
+		TransactionManager tm = DataSourceUtil.getTranManager();
+		tm.beginTransaction();
+		Object obj = null;
+		try {
+			obj = put(req, resp);
+			tm.commitAndClose();
+		} catch (RuntimeException re) {
+			logger.error(re.getMessage());
+			tm.rollbackAndClose();
+		}
 		if (obj != null) {
 			renderJSON(obj, resp);
 		}
-		DataSourceUtil.closeConnection();
 	}
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = delete(req, resp);
+		TransactionManager tm = DataSourceUtil.getTranManager();
+		tm.beginTransaction();
+		Object obj = null;
+		try {
+			obj = delete(req, resp);
+			tm.commitAndClose();
+		} catch (RuntimeException re) {
+			logger.error(re.getMessage());
+			tm.rollbackAndClose();
+		}
 		if (obj != null) {
 			renderJSON(obj, resp);
 		}
-		DataSourceUtil.closeConnection();
 	}
 
 	public Object get(HttpServletRequest req, HttpServletResponse resp) {
