@@ -111,7 +111,6 @@ public class DictionaryAction extends JsonServlet {
 			data.put("error", "字典编码重复！");
 			return data;
 		}
-		dic.setStatus(100);
 		JdbcDaoUtil.getInstance().save(dic);
 		data.put("code", "0000");
 		data.put("msg", "添加成功！");

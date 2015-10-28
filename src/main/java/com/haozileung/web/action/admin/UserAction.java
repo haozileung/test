@@ -73,7 +73,6 @@ public class UserAction extends JsonServlet {
 			HttpServletResponse response) {
 		Map<String, Object> data = Maps.newHashMap();
 		User user = RequestUtil.getBean(request, User.class);
-		user.setStatus(100);
 		JdbcDaoUtil.getInstance().save(user);
 		data.put("code", "0000");
 		data.put("msg", "保存成功！");

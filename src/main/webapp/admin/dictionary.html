@@ -123,9 +123,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr v-for="item in list" v-on:click="onSelect($event)">
+					<tr v-for="item in list" v-on:click="onSelect(item.id)">
 						<td><input type="checkbox" value="{{item.id}}"
-							name="selected-id" /></td>
+							name="selected-id" v-model="item.selected" /></td>
 						<td>{{item.code}}</td>
 						<td>{{item.value}}</td>
 						<td v-dic type='000' value='{{item.parentCode}}'></td>

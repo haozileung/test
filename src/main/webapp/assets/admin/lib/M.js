@@ -35,10 +35,19 @@ M.init = function(url, searchData, editData) {
 			list : []
 		},
 		methods : {
-			onSelect : function(e) {
-				var input = $(e.target).parent().children().first().children()
-						.first();
-				input.prop("checked", input.prop('checked') ? false : true);
+			onSelect : function(id) {
+				var e = this.list.find(function(element) {
+					if (element.id == id) {
+						return true;
+					} else {
+						return false;
+					}
+				});
+				if (e.selected) {
+					e.selected = false;
+				} else {
+					e.selected = true;
+				}
 				return false;
 			},
 			changeStatus : function(id, status, e) {
@@ -63,10 +72,13 @@ M.init = function(url, searchData, editData) {
 				_search(n);
 			},
 			onDelete : function() {
-				var ids = $("input[name='selected-id']:checked").map(
-						function() {
-							return this.value;
-						}).get().join(",");
+				var id = [];
+				this.list.forEach(function(e) {
+					if (e.selected) {
+						id.push(e.id);
+					}
+				});
+				var ids = id.join(",");
 				if (ids.length > 0) {
 					if (window.confirm("确认删除吗？")) {
 						$.ajax({
@@ -86,14 +98,19 @@ M.init = function(url, searchData, editData) {
 				$('#editModal').modal('toggle');
 			},
 			onEdit : function() {
-				var id = $("input[name='selected-id']:checked:first").val();
-				if (id) {
+				var id = [];
+				this.list.forEach(function(e) {
+					if (e.selected) {
+						id.push(e.id);
+					}
+				});
+				if (id.length > 0) {
 					$.ajax({
 						type : "get",
 						url : url,
 						dataType : 'json',
 						data : {
-							id : id
+							id : id[0]
 						},
 						success : function(data) {
 							M.editForm.$data = data;
@@ -131,6 +148,9 @@ M.init = function(url, searchData, editData) {
 			dataType : 'json',
 			data : M.searchForm.$data,
 			success : function(data) {
+				data.list.forEach(function(e) {
+					e.selected = false;
+				});
 				M.dataTable.$data = data;
 				M.searchForm.$set("pageNo", data.curPage);
 			},
