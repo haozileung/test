@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
+import com.haozileung.infra.utils.DataSourceUtil;
 
 /**
  * @author Haozi
@@ -27,8 +28,7 @@ public abstract class JsonServlet extends HttpServlet {
 	 * 
 	 */
 	private static final long serialVersionUID = 7514613990641762954L;
-	private final static Logger logger = LoggerFactory
-			.getLogger(JsonServlet.class);
+	private final static Logger logger = LoggerFactory.getLogger(JsonServlet.class);
 
 	private void renderJSON(Object data, HttpServletResponse resp) {
 		resp.setContentType("application/json;charset=utf-8");
@@ -42,35 +42,54 @@ public abstract class JsonServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		renderJSON(get(req, resp), resp);
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Object obj = get(req, resp);
+		if (obj != null) {
+			renderJSON(obj, resp);
+		}
+		DataSourceUtil.closeConnection();
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		renderJSON(post(req, resp), resp);
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Object obj = post(req, resp);
+		if (obj != null) {
+			renderJSON(obj, resp);
+		}
+		DataSourceUtil.closeConnection();
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		renderJSON(put(req, resp), resp);
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Object obj = put(req, resp);
+		if (obj != null) {
+			renderJSON(obj, resp);
+		}
+		DataSourceUtil.closeConnection();
 	}
 
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp)
-			throws ServletException, IOException {
-		renderJSON(delete(req, resp), resp);
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		Object obj = delete(req, resp);
+		if (obj != null) {
+			renderJSON(obj, resp);
+		}
+		DataSourceUtil.closeConnection();
 	}
 
-	public abstract Object get(HttpServletRequest req, HttpServletResponse resp);
+	public Object get(HttpServletRequest req, HttpServletResponse resp) {
+		return null;
+	};
 
-	public abstract Object post(HttpServletRequest req, HttpServletResponse resp);
+	public Object post(HttpServletRequest req, HttpServletResponse resp) {
+		return null;
+	};
 
-	public abstract Object put(HttpServletRequest req, HttpServletResponse resp);
+	public Object put(HttpServletRequest req, HttpServletResponse resp) {
+		return null;
+	};
 
-	public abstract Object delete(HttpServletRequest req,
-			HttpServletResponse resp);
+	public Object delete(HttpServletRequest req, HttpServletResponse resp) {
+		return null;
+	};
 }

@@ -3,7 +3,6 @@ Loader.init = function(url) {
 	if (url === '/admin/user.html') {
 		require([ '../lib/M.js' ], function(M) {
 			M.init("/admin/user", {
-				pageNo : 1,
 				name : "",
 				status : 1
 			}, {
@@ -13,12 +12,12 @@ Loader.init = function(url) {
 				password : "",
 				status : 1
 			});
+			$('#search-btn').click();
 		});
 	}
 	if (url === '/admin/dictionary.html') {
 		require([ '../lib/M.js' ], function(M) {
 			M.init("/admin/dictionary", {
-				pageNo : 1,
 				code : "",
 				value : "",
 				parentCode : "000",
@@ -30,6 +29,7 @@ Loader.init = function(url) {
 				parentCode : "000",
 				status : 1
 			});
+			$('#search-btn').click();
 		});
 	}
 }
