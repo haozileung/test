@@ -2,7 +2,7 @@ Vue.directive('select', {
 	twoWay : true,
 	params : [ 'type' ],
 	bind : function() {
-		var dic = require('../module/dictionary');
+		var dic = require('./dictionary');
 		var types = dic.getList(this.params.type);
 		var self = this;
 		var data = new Array();
@@ -30,7 +30,10 @@ Vue.directive('select', {
 Vue.directive('dic', {
 	params : [ 'type', 'value' ],
 	update : function() {
-		var dic = require("../module/dictionary");
-		$(this.el).text(dic.get(this.params.type, this.params.value));
+		var dic = require("./dictionary");
+		var value = dic.get(this.params.type, this.params.value);
+		if (value) {
+			$(this.el).text(value);
+		}
 	}
 });

@@ -92,8 +92,7 @@ public class UserAction extends JsonServlet {
 			Integer i = Integer.valueOf(id);
 			User user = new User();
 			user.setId(i.longValue());
-			user.setStatus(101);
-			JdbcDaoUtil.getInstance().update(user);
+			JdbcDaoUtil.getInstance().delete(user);
 		});
 		data.put("code", "0000");
 		data.put("msg", "删除成功！");

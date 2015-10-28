@@ -361,3 +361,7 @@ table.dataTable thead .sorting:after {
     from { -moz-transform: rotate(0deg);}
     to { -moz-transform: rotate(360deg);}
 }
+
+.dropdown-menu{
+	min-width: 0px;
+}

@@ -35,8 +35,24 @@ M.init = function(url, searchData, editData) {
 			list : []
 		},
 		methods : {
+			changeStatus : function(id, status) {
+				status = status == 1 ? 0 : 1;
+				$.ajax({
+					url : url,
+					type : 'post',
+					data : {
+						id : id,
+						status : status
+					},
+					success : function(data) {
+						_search();
+					}
+				});
+			},
 			toPage : function(n, e) {
-				e.preventDefault();
+				if ($(e.target).parent().hasClass("disabled")) {
+					return false;
+				}
 				_search(n);
 			},
 			onDelete : function() {
@@ -54,7 +70,7 @@ M.init = function(url, searchData, editData) {
 							}
 						});
 					}
-				}else{
+				} else {
 					alert("请选择数据！");
 				}
 			},

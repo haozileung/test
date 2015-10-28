@@ -5,13 +5,13 @@ Loader.init = function(url) {
 			M.init("/admin/user", {
 				pageNo : 1,
 				name : "",
-				status : ""
+				status : 1
 			}, {
 				id : "",
 				name : "",
 				email : "",
 				password : "",
-				status : 100
+				status : 1
 			});
 		});
 	}
@@ -21,14 +21,14 @@ Loader.init = function(url) {
 				pageNo : 1,
 				code : "",
 				value : "",
-				parentCode : "",
-				status : 100
+				parentCode : "000",
+				status : 1
 			}, {
 				id : "",
 				code : "",
 				value : "",
-				parentCode : 000,
-				status : 100
+				parentCode : "000",
+				status : 1
 			});
 		});
 	}

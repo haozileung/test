@@ -43,7 +43,7 @@ $('.ajax').click(function(event) {
 	loadModule(url);
 });
 function loadModule(url) {
-	var dic = require("./module/dictionary");
+	var dic = require("./lib/dictionary");
 	dic.init(function() {
 		url = url.replace('#', '');
 		$.ajax({

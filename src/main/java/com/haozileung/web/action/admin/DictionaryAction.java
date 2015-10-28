@@ -83,7 +83,8 @@ public class DictionaryAction extends JsonServlet {
 						Criteria.create(Dictionary.class)
 								.where("code", new Object[] { dic.getCode() })
 								.and("parentCode",
-										new Object[] { dic.getParentCode() }));
+										new Object[] { dic.getParentCode() })
+								.and("id", "<>", new Object[] { dic.getId() }));
 		if (count != null && count > 0) {
 			data.put("code", "0001");
 			data.put("error", "字典编码重复！");
@@ -129,8 +130,7 @@ public class DictionaryAction extends JsonServlet {
 			Integer i = Integer.valueOf(id);
 			Dictionary dic = new Dictionary();
 			dic.setId(i.longValue());
-			dic.setStatus(101);
-			JdbcDaoUtil.getInstance().update(dic);
+			JdbcDaoUtil.getInstance().delete(dic);
 		});
 		data.put("code", "0000");
 		data.put("msg", "删除成功！");

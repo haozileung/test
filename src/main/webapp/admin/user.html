@@ -82,12 +82,20 @@
 			<div class="panel-heading clearfix">
 				<h4 class="panel-title pull-left">账号列表</h4>
 				<div class="pull-right">
-					<button type="button" class="btn btn-success " id="add-btn"
-						v-on:click="onNew">添加</button>
-					<button type="button" class="btn btn-warning " id="update-btn"
-						v-on:click="onEdit">修改</button>
-					<button type="button" class="btn btn-danger " id="delete-btn"
-						v-on:click="onDelete">删除</button>
+					<div class="dropdown">
+						<button class="btn btn-default dropdown-toggle" type="button"
+							id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="true">
+							操作 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+							<li><a href="javascript:;" id="add-btn" v-on:click="onNew">添加</a></li>
+							<li><a href="javascript:;" id="update-btn"
+								v-on:click="onEdit">修改</a></li>
+							<li><a href="javascript:;" id="delete-btn"
+								v-on:click="onDelete">删除</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<table class="table table-hover table-condensed">
@@ -97,6 +105,7 @@
 						<th>姓名</th>
 						<th>邮箱</th>
 						<th>状态</th>
+						<th>快速操作</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -106,21 +115,25 @@
 						<td>{{item.name}}</td>
 						<td>{{item.email}}</td>
 						<td v-dic type='001' value='{{item.status}}'></td>
+						<td><a href="javascript:;"
+							v-on:click="changeStatus(item.id,item.status)"><div
+									v-show="item.status == 1">禁用</div>
+								<div v-show="item.status == 0">启用</div></a></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 		<ul class="pagination">
-			<li v-if="curPage != firstPage"><a href="#"
-				v-on:click="toPage(firstPage,$event)" aria-label="Previous"> <span
-					aria-hidden="true">&laquo;</span>
-			</a></li>
+			<li v-bind:class="{'disabled' : curPage == firstPage}"><a
+				href="javascript:;" v-on:click="toPage(firstPage,$event)">«</a></li>
+			<li v-bind:class="{'disabled' : curPage == previousPage}"><a
+				href="javascript:;" v-on:click="toPage(previousPage,$event)">‹</a></li>
 			<li v-for="i in slider" v-bind:class="{'active' : curPage == i}"><a
-				href="#" v-on:click="toPage(i,$event)">{{i}}</a></li>
-			<li v-if="curPage != lastPage"><a href="#"
-				v-on:click="toPage(lastPage,$event)" aria-label="Next"> <span
-					aria-hidden="true">&raquo;</span>
-			</a></li>
+				href="javascript:;" v-on:click="toPage(i,$event)">{{i}}</a></li>
+			<li v-bind:class="{'disabled' : curPage == nextPage}"><a
+				href="javascript:;" v-on:click="toPage(nextPage,$event)">›</a></li>
+			<li v-bind:class="{'disabled' : curPage == lastPage}"><a
+				href="javascript:;" v-on:click="toPage(lastPage,$event)">»</a></li>
 		</ul>
 	</div>
 </div>

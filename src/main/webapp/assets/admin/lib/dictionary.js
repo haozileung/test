@@ -38,7 +38,6 @@ Dictionary.get = function(type, value) {
 	if (dic && dic[type] && dic[type][value]) {
 		return dic[type][value];
 	}
-	return {};
 }
 Dictionary.getList = function(type) {
 	if (dic && dic[type]) {
