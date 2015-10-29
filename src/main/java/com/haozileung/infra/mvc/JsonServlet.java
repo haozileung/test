@@ -45,10 +45,10 @@ public abstract class JsonServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		Object obj = get(req, resp);
+		DataSourceUtil.closeConnection();
 		if (obj != null) {
 			renderJSON(obj, resp);
 		}
-		DataSourceUtil.closeConnection();
 	}
 
 	@Override
