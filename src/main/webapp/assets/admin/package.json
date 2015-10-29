@@ -1,11 +1,15 @@
 {
   "spm": {
     "output": [
-      "*.js"
+      "admin.js"
     ],
+    "autoprefixer": true,
     "build": {
       "publicPath": "/assets/admin/dist/",
-      "extractCSS": true
+      "extractCSS": true,      
+      "loader": {
+        ".js": "+./moduleGen"
+      }
     }
   }
 }
