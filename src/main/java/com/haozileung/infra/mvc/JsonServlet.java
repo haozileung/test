@@ -33,6 +33,7 @@ public abstract class JsonServlet extends HttpServlet {
 
 	private void renderJSON(Object data, HttpServletResponse resp) {
 		resp.setContentType("application/json;charset=utf-8");
+		resp.setHeader("Access-Control-Allow-Origin", "*");
 		try {
 			PrintWriter pr = resp.getWriter();
 			pr.print(JSON.toJSONString(data));
