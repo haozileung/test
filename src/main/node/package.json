@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "spm build -c && set NODE_ENV=production && node ./bin/www"
+    "start": "spm build -c && set NODE_ENV=production && forever start ./bin/www"
   },
   "spm": {
     "output": [
