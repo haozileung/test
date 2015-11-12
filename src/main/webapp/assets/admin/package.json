@@ -1,0 +1,14 @@
+{
+  "spm": {
+    "output": [
+      "*.js"
+    ],
+    "build": {
+      "publicPath": "http://localhost:8000/",
+      "extractCSS": true,
+      "loader": {
+        ".js": "+./lib/moduleGen"
+      }
+    }
+  }
+}

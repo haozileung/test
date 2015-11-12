@@ -1,0 +1,157 @@
+<div class="col-lg-12">
+	<h1 class="page-header">字典管理</h1>
+</div>
+<div id="module">
+	<div class="modal fade" id="editModal" tabindex="-1" role="dialog"
+		aria-labelledby="editModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content" id="edit-modal">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="editModalLabel">详细</h4>
+				</div>
+				<div class="modal-body" id="editModalBody">
+					<form class="form-horizontal">
+						<input type="hidden" id="inputId" v-model="id">
+						<div class="form-group">
+							<label for="inputCode" class="col-sm-2 control-label">编码</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputCode"
+									v-model="editData.code" placeholder="Code">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputValue" class="col-sm-2 control-label">名称</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="inputValue"
+									v-model="editData.value" placeholder="Value">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputParentCode" class="col-sm-2 control-label">类型</label>
+							<div class="col-sm-10">
+								<select class="form-control" v-select="editData.parentCode"
+									type="000" id="inputParentCode" name="status">
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inputStatus" class="col-sm-2 control-label">状态</label>
+							<div class="col-sm-10">
+								<select class="form-control" v-select="editData.status"
+									type="001" id="inputStatus" name="status">
+								</select>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary" v-on:click="onSave">保存</button>
+					<button class="btn btn-default" data-dismiss="modal">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form class="form-inline" id="search-form" role="form">
+					<input type="hidden" name="pageNo" v-model="searchData.pageNo">
+					<div class="form-group">
+						<label for="searchCode">编码</label> <input type="text"
+							class="form-control" id="searchCode" name="searchCode"
+							v-model="searchData.code" placeholder="Code">
+					</div>
+					<div class="form-group">
+						<label for="searchValue">名称</label> <input type="text"
+							class="form-control" id="searchValue" name="searchValue"
+							v-model="searchData.value" placeholder="Value">
+					</div>
+					<div class="form-group">
+						<label for="searchParentCode">类型</label> <select
+							class="form-control" v-select="searchData.parentCode" type="000"
+							id="searchParentCode" name="status">
+						</select>
+					</div>
+					<div class="form-group">
+						<label for="status">状态</label> <select class="form-control"
+							v-select="searchData.status" type="001" id="status" name="status">
+						</select>
+					</div>
+					<button type="button" class="btn btn-primary " id="search-btn"
+						v-on:click="search">查找</button>
+					<button type="button" class="btn btn-default " id="search-btn"
+						v-on:click="reset">重置</button>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="col-lg-12">
+		<div class="table-responsive" id="data-table">
+			<div class="panel panel-default">
+				<div class="panel-heading clearfix">
+					<h4 class="panel-title pull-left">字典列表</h4>
+					<div class="pull-right">
+						<div class="dropdown">
+							<button class="btn btn-default dropdown-toggle" type="button"
+								id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+								aria-expanded="true">
+								操作 <span class="caret"></span>
+							</button>
+							<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+								<li><a href="javascript:;" id="add-btn" v-on:click="onNew">添加</a></li>
+								<li><a href="javascript:;" id="update-btn"
+									v-on:click="onEdit">修改</a></li>
+								<li><a href="javascript:;" id="delete-btn"
+									v-on:click="onDelete">删除</a></li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<table class="table table-hover table-condensed">
+					<thead>
+						<tr>
+							<th>#</th>
+							<th>编码</th>
+							<th>名称</th>
+							<th>类型</th>
+							<th>顺序</th>
+							<th>状态</th>
+							<th>快速操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="item in list" v-on:click="onSelect(item.id)">
+							<td><input type="checkbox" value="{{item.id}}"
+								name="selected-id" v-model="item.selected" /></td>
+							<td>{{item.code}}</td>
+							<td>{{item.value}}</td>
+							<td v-dic type='000' value='{{item.parentCode}}'></td>
+							<td>{{item.orderNo}}</td>
+							<td v-dic type='001' value='{{item.status}}'></td>
+							<td><a href="javascript:;"
+								v-on:click="changeStatus(item.id,item.status,$event)"><div
+										v-show="item.status == 1">禁用</div>
+									<div v-show="item.status == 0">启用</div></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<ul class="pagination">
+				<li v-bind:class="{'disabled' : curPage == firstPage}"><a
+					href="javascript:;" v-on:click="toPage(firstPage,$event)">«</a></li>
+				<li v-bind:class="{'disabled' : curPage == previousPage}"><a
+					href="javascript:;" v-on:click="toPage(previousPage,$event)">‹</a></li>
+				<li v-for="i in slider" v-bind:class="{'active' : curPage == i}"><a
+					href="javascript:;" v-on:click="toPage(i,$event)">{{i}}</a></li>
+				<li v-bind:class="{'disabled' : curPage == nextPage}"><a
+					href="javascript:;" v-on:click="toPage(nextPage,$event)">›</a></li>
+				<li v-bind:class="{'disabled' : curPage == lastPage}"><a
+					href="javascript:;" v-on:click="toPage(lastPage,$event)">»</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
