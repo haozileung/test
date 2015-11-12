@@ -118,14 +118,15 @@ M.init = function(url, searchData, editData) {
 				});
 				var ids = id.join(",");
 				if (ids.length > 0) {
+					var self = this;
 					layer.confirm("确认删除吗？", {
 					    btn: ['确认','取消'] //按钮
-					}, function(){
-						var self = this;
+					}, function(c){
 						$.ajax({
 							url : url + "?id=" + ids,
 							type : 'delete',
 							success : function(data) {
+								layer.close(c);
 								self.search();
 							}
 						});
