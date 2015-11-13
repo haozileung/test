@@ -19,7 +19,7 @@ var m = [ {
 	search : {
 		code : "",
 		value : "",
-		parentCode : "000",
+		parentCode : "",
 		status : 1
 	},
 	edit : {
@@ -27,6 +27,26 @@ var m = [ {
 		code : "",
 		value : "",
 		parentCode : "000",
+		status : 1
+	}
+}, {
+	html : '/admin/resource.html',
+	url : "http://localhost:8080/admin/resource",
+	search : {
+		code : "",
+		name : "",
+		groupId : "",
+		type : "",
+		status : 1
+	},
+	edit : {
+		id : "",
+		code : "",
+		name : "",
+		url : "",
+		orderNo : "",
+		groupId : "0",
+		type : 0,
 		status : 1
 	}
 } ];

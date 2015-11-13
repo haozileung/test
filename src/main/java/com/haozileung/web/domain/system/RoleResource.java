@@ -24,7 +24,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class RoleResource implements java.io.Serializable {
 
 
-    //columns START
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -1888456074615720289L;
+	//columns START
     @Column("id")
     private Long id;
     @Column("role_id")

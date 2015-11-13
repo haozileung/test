@@ -28,7 +28,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class User implements java.io.Serializable {
 
 
-    //columns START
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -3342962114510568997L;
+	//columns START
     @Column("id")
     private Long id;
     @Column("name")

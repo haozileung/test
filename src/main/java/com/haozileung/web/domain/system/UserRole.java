@@ -25,7 +25,11 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 public class UserRole implements java.io.Serializable {
 
 
-    //columns START
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -5583261588376609132L;
+	//columns START
     @Column("id")
     private Long id;
     @Column("user_id")
