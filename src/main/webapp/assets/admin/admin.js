@@ -42,8 +42,9 @@ $.ajaxSetup({
 			break;
 		case (401):
 			layer.confirm('未登陆', {
-			    btn: ['登陆'] //按钮
-			}, function(){
+				btn : [ '登陆' ]
+			// 按钮
+			}, function() {
 				window.location.href = 'login.html';
 			});
 			break;
@@ -82,21 +83,17 @@ if (url.hash.length > 0) {
 }
 $('.ajax').click(function(event) {
 	var url = $(this).attr('href');
-	url = url.replace('#', '');
 	loadModule(url);
 });
 function loadModule(url) {
-	var dic = require("./lib/dictionary");
-	dic.init(function() {
-		url = url.replace('#', '');
-		$.ajax({
-			url : url,
-			type : 'get',
-			cache : true,
-			success : function(html) {
-				$('#page-wrapper').html(html);
-				loader.init(url);
-			}
-		});
+	url = url.replace('#', '');
+	$.ajax({
+		url : url,
+		type : 'get',
+		cache : true,
+		success : function(html) {
+			$('#page-wrapper').html(html);
+			loader.init(url);
+		}
 	});
 }

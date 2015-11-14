@@ -1,59 +1,52 @@
 var Dictionary = {};
 var dic = {};
-var flag = true;
-Dictionary.init = function(callback) {
-	if (flag) {
+Dictionary.get = function(type, value, callback) {
+	Dictionary.getList(type, function(data) {
+		if (isFunction(callback)) {
+			callback(data[value]);
+		}
+	});
+}
+Dictionary.getList = function(type, callback) {
+	if (dic && dic[type]) {
+		console.debug("i");
+		if (isFunction(callback)) {
+			callback(dic[type]);
+		}
+	} else {
+		console.debug("j");
 		$.ajax({
-			url : "http://localhost:8080/admin/dictionary",
+			url : "/admin/dictionary",
 			dataType : 'json',
 			data : {
+				parentCode : type,
 				isAll : true
 			},
 			success : function(data) {
 				if (data) {
 					data.forEach(function(d) {
-						if (d.parentCode === '000' && !(d.code in dic)) {
-							if (!('000' in dic)) {
-								dic['000'] = {};
-							}
-							dic['000'][d.code] = d.value;
-							dic[d.code] = {};
-						} else {
-							if (!(d.parentCode in dic)) {
-								dic[d.parentCode] = {};
-							}
-							dic[d.parentCode][d.code] = d.value;
+						if (!(d.parentCode in dic)) {
+							dic[d.parentCode] = {};
 						}
+						dic[d.parentCode][d.code] = d.value;
 					});
 				}
-				flag = false;
-				callback();
+				if (isFunction(callback)) {
+					callback(dic[type]);
+				}
 			}
 		});
-	} else {
-		callback();
 	}
 }
-Dictionary.get = function(type, value) {
-	if (dic && dic[type] && dic[type][value]) {
-		return dic[type][value];
-	}
-}
-Dictionary.getList = function(type) {
-	if (dic && dic[type]) {
-		return dic[type];
-	}
-	return {};
-}
-Dictionary.getType = function() {
-	if (dic && dic['000']) {
-		return dic['000'];
-	}
-	return {};
+Dictionary.getType = function(callback) {
+	return Dictionary.getList('000', callback);
 }
 Dictionary.refresh = function() {
 	dic = {};
-	flag = true;
-	Dictionary.init();
+}
+function isFunction(functionToCheck) {
+	var getType = {};
+	return functionToCheck
+			&& getType.toString.call(functionToCheck) === '[object Function]';
 }
 module.exports = Dictionary;
