@@ -1,8 +1,8 @@
+var dic = require("./dictionary");
 Vue.directive('select', {
 	twoWay : true,
 	params : [ 'type' ],
 	bind : function() {
-		var dic = require('./dictionary');
 		var self = this;
 		dic.getList(this.params.type, function(types) {
 			var data = new Array();
@@ -31,7 +31,6 @@ Vue.directive('select', {
 Vue.directive('dic', {
 	params : [ 'type', 'value' ],
 	update : function() {
-		var dic = require("./dictionary");
 		var self = this;
 		dic.get(self.params.type, self.params.value, function(value) {
 			if (value) {

@@ -9,12 +9,10 @@ Dictionary.get = function(type, value, callback) {
 }
 Dictionary.getList = function(type, callback) {
 	if (dic && dic[type]) {
-		console.debug("i");
 		if (isFunction(callback)) {
 			callback(dic[type]);
 		}
 	} else {
-		console.debug("j");
 		$.ajax({
 			url : "/admin/dictionary",
 			dataType : 'json',
