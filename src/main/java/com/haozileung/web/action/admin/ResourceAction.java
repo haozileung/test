@@ -38,6 +38,7 @@ public class ResourceAction extends JsonServlet {
 		String name = request.getParameter("name");
 		String status = request.getParameter("status");
 		String pageNo = request.getParameter("pageNo");
+		String isAll = request.getParameter("isAll");
 		Criteria c = Criteria.create(Resource.class).asc("orderNo");
 		if (!Strings.isNullOrEmpty(id)) {
 			c = c.and("id", new Object[] { id });
@@ -58,14 +59,19 @@ public class ResourceAction extends JsonServlet {
 		if (!Strings.isNullOrEmpty(status)) {
 			c = c.and("status", new Object[] { status });
 		}
-		int page = Strings.isNullOrEmpty(pageNo)
-				|| !StringUtils.isNumeric(pageNo) ? 0 : Integer.valueOf(pageNo);
-		Pager p = new Pager();
-		p.setCurPage(page);
-		c.limit(p.getOffset(), p.getItemsPerPage());
-		p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
-		p.setList(JdbcDaoUtil.getInstance().queryList(c));
-		return p;
+		if ("true".equalsIgnoreCase(isAll)) {
+			return JdbcDaoUtil.getInstance().queryList(c);
+		} else {
+			int page = Strings.isNullOrEmpty(pageNo)
+					|| !StringUtils.isNumeric(pageNo) ? 0 : Integer
+					.valueOf(pageNo);
+			Pager p = new Pager();
+			p.setCurPage(page);
+			c.limit(p.getOffset(), p.getItemsPerPage());
+			p.setItemsTotal(JdbcDaoUtil.getInstance().queryCount(c));
+			p.setList(JdbcDaoUtil.getInstance().queryList(c));
+			return p;
+		}
 	}
 
 	public Map<String, Object> post(HttpServletRequest request,

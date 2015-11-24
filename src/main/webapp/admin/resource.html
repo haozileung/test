@@ -48,7 +48,7 @@
 							<label for="inputGroupId" class="col-sm-2 control-label">资源组</label>
 							<div class="col-sm-10">
 								<select class="form-control" v-select="editData.groupId"
-									type="003" id="inputGroupId" name="groupId">
+									type="resource" id="inputGroupId" name="groupId">
 								</select>
 							</div>
 						</div>
@@ -94,7 +94,7 @@
 					</div>
 					<div class="form-group">
 						<label for="searchGroupId">资源组</label> <select
-							class="form-control" v-select="searchData.groupId" type="003"
+							class="form-control" v-select="searchData.groupId" type="resource"
 							id="searchGroupId" name="groupId">
 						</select>
 					</div>
@@ -159,9 +159,9 @@
 								name="selected-id" v-model="item.selected" /></td>
 							<td>{{item.code}}</td>
 							<td>{{item.name}}</td><td>{{item.icon}}</td><td>{{item.url}}</td>
-							<td v-dic type='002' value='{{item.type}}'></td>
-							<td v-dic type='003' value='{{item.groupId}}'></td>
-							<td v-dic type='001' value='{{item.status}}'></td>
+							<td v-dic="{ type:'002', value:item.type }"></td>
+							<td v-dic="{ type:'resource', value:item.groupId }"></td>
+							<td v-dic="{ type:'001',value:item.status }"></td>
 							<td><a href="javascript:;"
 								v-on:click="changeStatus(item.id,item.status,$event)"><div
 										v-show="item.status == 1">禁用</div>

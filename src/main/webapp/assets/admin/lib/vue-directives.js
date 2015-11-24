@@ -28,14 +28,11 @@ Vue.directive('select', {
 		$(this.el).off().select2('destroy')
 	}
 });
-Vue.directive('dic', {
-	params : [ 'type', 'value' ],
-	update : function() {
-		var self = this;
-		dic.get(self.params.type, self.params.value, function(value) {
-			if (value) {
-				$(self.el).text(value);
-			}
-		});
-	}
+Vue.directive('dic', function(value) {
+	var self = this;
+	dic.get(value.type, value.value, function(v) {
+		if (v) {
+			$(self.el).text(v);
+		}
+	});
 });

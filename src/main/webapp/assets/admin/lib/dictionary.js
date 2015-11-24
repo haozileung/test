@@ -13,27 +13,49 @@ Dictionary.getList = function(type, callback) {
 			callback(dic[type]);
 		}
 	} else {
-		$.ajax({
-			url : "/admin/dictionary",
-			dataType : 'json',
-			data : {
-				parentCode : type,
-				isAll : true
-			},
-			success : function(data) {
-				if (data) {
-					data.forEach(function(d) {
-						if (!(d.parentCode in dic)) {
-							dic[d.parentCode] = {};
-						}
-						dic[d.parentCode][d.code] = d.value;
-					});
+		if ( type === "resource") {
+			$.ajax({
+				url : "/admin/resource",
+				dataType : 'json',
+				data : {
+					isAll : true
+				},
+				success : function(data) {
+					dic[type] = {};
+					dic[type][0] = "全部分组";
+					if (data) {
+						data.forEach(function(d) {
+							dic[type][d.id] = d.name;
+						});
+					}
+					if (isFunction(callback)) {
+						callback(dic[type]);
+					}
 				}
-				if (isFunction(callback)) {
-					callback(dic[type]);
+			});
+		} else {
+			$.ajax({
+				url : "/admin/dictionary",
+				dataType : 'json',
+				data : {
+					parentCode : type,
+					isAll : true
+				},
+				success : function(data) {
+					if (data) {
+						data.forEach(function(d) {
+							if (!(d.parentCode in dic)) {
+								dic[d.parentCode] = {};
+							}
+							dic[d.parentCode][d.code] = d.value;
+						});
+					}
+					if (isFunction(callback)) {
+						callback(dic[type]);
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 }
 Dictionary.getType = function(callback) {

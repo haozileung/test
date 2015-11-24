@@ -129,9 +129,9 @@
 								name="selected-id" v-model="item.selected" /></td>
 							<td>{{item.code}}</td>
 							<td>{{item.value}}</td>
-							<td v-dic type='000' value='{{item.parentCode}}'></td>
+							<td v-dic="{type:'000', value:item.parentCode}"></td>
 							<td>{{item.orderNo}}</td>
-							<td v-dic type='001' value='{{item.status}}'></td>
+							<td v-dic="{type:'001', value:item.status}"></td>
 							<td><a href="javascript:;"
 								v-on:click="changeStatus(item.id,item.status,$event)"><div
 										v-show="item.status == 1">禁用</div>

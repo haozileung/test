@@ -115,7 +115,7 @@
 								name="selected-id" v-model="item.selected" /></td>
 							<td>{{item.name}}</td>
 							<td>{{item.email}}</td>
-							<td v-dic type='001' value='{{item.status}}'></td>
+							<td v-dic="{ type:'001',value:item.status }"></td>
 							<td><a href="javascript:;"
 								v-on:click="changeStatus(item.id,item.status,$event)"><div
 										v-show="item.status == 1">禁用</div>

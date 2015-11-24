@@ -35,7 +35,7 @@ var m = [ {
 	search : {
 		code : "",
 		name : "",
-		groupId : "",
+		groupId : 0,
 		type : "",
 		status : 1
 	},
@@ -45,7 +45,7 @@ var m = [ {
 		name : "",
 		url : "",
 		orderNo : "",
-		groupId : "0",
+		groupId : 0,
 		type : 0,
 		status : 1
 	}
