@@ -1,0 +1,10 @@
+[package]
+name = "rs"
+version = "0.1.0"
+authors = ["HaoziLeung <yamchaleung@gmail.com>"]
+
+[dependencies]
+libc = "*"
+
+[lib]
+crate-type = ["dylib"]
