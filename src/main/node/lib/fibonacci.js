@@ -1,8 +1,9 @@
 var ffi = require('ffi');
 var path = require('path');
 
-var lib = ffi.Library(path.join(__dirname, 'rs'), {
-	fibonacci : [ 'int', [ 'int' ] ]
+var lib = ffi.Library(path.join(__dirname, '../../rust/target/release/rs'), {
+	fibonacci : [ 'int', [ 'int' ] ],
+	process : [ 'string', [ 'string' ] ]
 });
 
 function fibonacci(n) {
@@ -14,6 +15,7 @@ function fibonacci(n) {
 }
 
 module.exports = {
+	string : lib.process,
 	js : fibonacci,
 	rust : lib.fibonacci
 };
