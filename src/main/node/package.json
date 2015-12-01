@@ -6,20 +6,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "spm build -c && node ./bin/www"
-  },
-  "spm": {
-    "output": [
-      "./admin/*.js"
-    ],
-    "build": {
-      "dest": "./public/assets/dist",
-      "publicPath": "http://localhost:8000/",
-      "extractCSS": true,
-      "loader": {
-        ".js": "+./admin/lib/moduleGen"
-      }
-    }
+    "start": "node app.js"
   },
   "dependencies": {
     "ffi": "*",

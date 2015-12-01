@@ -13,7 +13,4 @@ render(app, {
 var index = require('./routes/index');
 app.use(compressor())
 app.use(index.routes());
-app.listen(3000, function() {
-	console.log('started on 3000');
-});
 module.exports = app;

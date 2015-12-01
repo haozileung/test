@@ -15,8 +15,7 @@ function run (lang) {
 
   return timeTaken;
 }
-var a = {};
-console.log(f['string']("test"));
-console.log('js  ', run('js'));
-console.log('rust', run('rust'));
-console.log(f['string']("hahahah"));
+console.log(f.string("test"));
+//console.log('js  ', run('js'));
+//console.log('rust', run('rust'));
+console.log(f.string("hahahah"));
