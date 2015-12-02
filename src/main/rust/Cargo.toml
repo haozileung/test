@@ -5,6 +5,7 @@ authors = ["HaoziLeung <yamchaleung@gmail.com>"]
 
 [dependencies]
 libc = "*"
+chrono = "*"
 
 [lib]
 crate-type = ["dylib"]

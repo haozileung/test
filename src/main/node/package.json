@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "koa-cluster app.js"
   },
   "dependencies": {
     "ffi": "*",

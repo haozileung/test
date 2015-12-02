@@ -4,7 +4,7 @@ router.get("/",function *(next) {
     this.body = "Hello ";
     yield next;
   },function *(next) {
-    this.body= this.body+"World! "+f['rust'](40);
+    this.body= this.body+"World! "+f['string']("test");
   });
 router.get("/login",function* (next) {
     this.body = "xixi"

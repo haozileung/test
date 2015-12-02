@@ -13,4 +13,24 @@ render(app, {
 var index = require('./routes/index');
 app.use(compressor())
 app.use(index.routes());
+app.use(function *(next){
+	  yield next;
+	  if (404 != this.status) return;
+	  this.status = 404;
+	  switch (this.accepts('html', 'json')) {
+	    case 'html':
+	    	yield this.render('404');
+	      break;
+	    case 'json':
+	      this.body = {
+	        message: 'Page Not Found'
+	      };
+	      break;
+	    default:
+	      this.type = 'text';
+	      this.body = 'Page Not Found';
+	  }
+	});
+app.port = 3000;
+app.name="test";
 module.exports = app;
