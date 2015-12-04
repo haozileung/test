@@ -15,7 +15,7 @@ app.use(compressor())
 app.use(index.routes());
 app.use(function *(next){
 	  yield next;
-	  if (404 != this.status) return;
+	  if (404 != this.status) {return;}
 	  this.status = 404;
 	  switch (this.accepts('html', 'json')) {
 	    case 'html':
@@ -32,5 +32,4 @@ app.use(function *(next){
 	  }
 	});
 app.port = 3000;
-app.name="test";
 module.exports = app;
