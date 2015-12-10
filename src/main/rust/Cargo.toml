@@ -3,6 +3,9 @@ name = "rs"
 version = "0.1.0"
 authors = ["HaoziLeung <yamchaleung@gmail.com>"]
 
+[profile.release]
+lto = true
+
 [dependencies]
 libc = "*"
 chrono = "*"

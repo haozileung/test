@@ -10,10 +10,11 @@
   },
   "dependencies": {
     "ffi": "*",
-    "path": "*",
     "koa": "*",
     "koa-compressor": "*",
     "koa-ejs2x": "*",
-    "koa-router": "*"    
+    "koa-router": "*",
+    "node-cache": "*",
+    "path": "*"
   }
 }

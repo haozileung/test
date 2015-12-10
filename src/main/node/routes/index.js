@@ -1,12 +1,19 @@
-var router      = require('koa-router')();
+var router = require('koa-router')();
 var f = require("../lib/fibonacci");
-router.get("/",function *(next) {
-    this.body = "Hello ";
-    yield next;
-  },function *(next) {
-    this.body= this.body+"World! "+f['string']("test");
-  });
-router.get("/login",function* (next) {
-    this.body = "xixi"
+var c = require("../lib/cache");
+router.get("/", function* (next) {
+	this.body = "Hello ";
+	yield next;
+}, function* (next) {
+	var ctx = this;
+	c.get("fibonacci", function(err, value) {
+		if (!err) {
+			if (value == undefined) {
+				value = f.fibonacci(40);
+				c.set("fibonacci", value);
+			}
+			ctx.body = ctx.body + "World! " + value;
+		}
+	});
 });
 module.exports = router;
