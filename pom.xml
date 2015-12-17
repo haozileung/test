@@ -168,7 +168,7 @@
 					<reload>manual</reload>
 					<webAppSourceDirectory>src\main\webapp</webAppSourceDirectory>
 					<webApp>
-						<defaultsDescriptor>other/webdefault.xml</defaultsDescriptor>
+						<defaultsDescriptor>conf/webdefault.xml</defaultsDescriptor>
 					</webApp>
 					<systemProperties>
 						<systemProperty>
