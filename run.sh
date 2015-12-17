@@ -1,1 +1,1 @@
-docker run -d -p 8080:8080 --name test yamchaleung/test
+docker run -d -p 8080:8080 --name test -e JAVA_OPTS='-server -Xms1024m -Xmx1024m' yamchaleung/test
