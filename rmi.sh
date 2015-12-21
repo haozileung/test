@@ -1,2 +1,2 @@
 ./rmc.sh
-docker rmi test-data
+docker rmi test-data-img

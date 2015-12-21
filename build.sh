@@ -1,1 +1,1 @@
-docker build -t test-data .
+docker build -t test-data-img .
