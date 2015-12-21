@@ -8,23 +8,16 @@
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
-	<!--日志异步到数据库 -->
-	<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
-		<!--日志异步到数据库 -->
-		<connectionSource
-			class="ch.qos.logback.core.db.DriverManagerConnectionSource">
-			<!--连接池 -->
-			<dataSource class="com.alibaba.druid.pool.DruidDataSource">
-				<driverClass>com.mysql.jdbc.Driver</driverClass>
-				<url>jdbc:mysql://127.0.0.1:3306/test</url>
-				<user>root</user>
-				<password>root</password>
-			</dataSource>
-		</connectionSource>
+	<appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">
+		<file>${catalina.base}/logs/tomcat.log</file>
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%level{5}] [%thread] %logger{36} - %msg%n</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
 	</appender>
 	<logger name="com.haozileung" level="TRACE" />
 	<root level="INFO">
-		<appender-ref ref="DB" />
+		<appender-ref ref="LOGFILE" />
 		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

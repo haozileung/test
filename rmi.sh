@@ -1,2 +1,2 @@
 ./rmc.sh
-docker rmi yamchaleung/test
+docker rmi test-data

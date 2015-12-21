@@ -1,1 +1,1 @@
-docker build -t yamchaleung/test .
+docker build -t test-data .
