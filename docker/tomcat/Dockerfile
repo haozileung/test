@@ -3,18 +3,14 @@ MAINTAINER yamchaleung <yamchaleung@gmail.com>
 
 ENV CATALINA_HOME /usr/local/tomcat
 
-RUN echo "@testing http://nl.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && \
-  apk add --update tomcat-native@testing && \
-  cd /tmp && \
+RUN cd /tmp && \
   curl --silent --location --retry 3 --cacert /etc/ssl/certs/ca-certificates.crt "https://archive.apache.org/dist/tomcat/tomcat-8/v8.0.30/bin/apache-tomcat-8.0.30.tar.gz" | gunzip -c - | tar x -C /tmp/ && \
   mv /tmp/apache-tomcat* ${CATALINA_HOME} && \
   rm -rf ${CATALINA_HOME}/webapps/* && \
   rm ${CATALINA_HOME}/bin/*.bat && \
   mkdir ${CATALINA_HOME}/webapps/ROOT && \
-  (cd /usr/lib/ && ln -s libssl.so.1.0.0 libssl.so.10 && ln -s libcrypto.so.1.0.0 libcrypto.so.10) && \
   rm -rf /tmp/* /var/cache/apk/*
 
-ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib/:/lib/
 ENV PATH ${PATH}:${CATALINA_HOME}/bin
   
 EXPOSE 8080

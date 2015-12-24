@@ -1,4 +1,4 @@
-FROM yamchaleung/tomcat
+FROM alpine
 MAINTAINER HaoziLeung <yamchaleung@gmail.com>
 
 ADD target/test /usr/local/tomcat/webapps/ROOT
