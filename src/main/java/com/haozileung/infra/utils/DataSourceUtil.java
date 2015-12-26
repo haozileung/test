@@ -1,16 +1,16 @@
 package com.haozileung.infra.utils;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.haozileung.infra.dao.transaction.TransactionManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.sql.Connection;
 import java.sql.SQLException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.alibaba.druid.pool.DruidDataSource;
 
 public class DataSourceUtil {
     private static final Logger logger = LoggerFactory.getLogger(DataSourceUtil.class);
@@ -58,20 +58,6 @@ public class DataSourceUtil {
             conns.set(conn);
         }
         return (show_sql && !Proxy.isProxyClass(conn.getClass())) ? new _DebugConnection(conn).getConnection() : conn;
-    }
-
-    /**
-     * 获取事务管理器
-     *
-     * @return 事务管理实例
-     */
-    public static synchronized TransactionManager getTranManager() {
-        try {
-            return new TransactionManager(getConnection());
-        } catch (SQLException e) {
-            logger.error(e.getMessage(), e);
-            return null;
-        }
     }
 
     /**
