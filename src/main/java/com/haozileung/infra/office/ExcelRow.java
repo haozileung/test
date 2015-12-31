@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * sheet中的一行数据
  *
- * Created by liyd on 7/28/14.
+ * Created by yamcha on 7/28/14.
  */
 public class ExcelRow {
 

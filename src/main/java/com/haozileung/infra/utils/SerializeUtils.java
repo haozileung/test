@@ -15,8 +15,6 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * 序列化辅助类
  *
@@ -51,7 +49,7 @@ public final class SerializeUtils {
             return Base64.encodeBase64String(baops.toByteArray());
 
         } catch (IOException e) {
-            throw new InfraException("将对象序列化成字符串失败", e);
+            throw new RuntimeException("将对象序列化成字符串失败", e);
         } finally {
             IOUtils.closeQuietly(baops);
             IOUtils.closeQuietly(oos);
@@ -79,7 +77,7 @@ public final class SerializeUtils {
             Object obj = ois.readObject();
             return obj;
         } catch (Exception e) {
-            throw new InfraException("将字符串反序列化成对象失败", e);
+            throw new RuntimeException("将字符串反序列化成对象失败", e);
         } finally {
             IOUtils.closeQuietly(ois);
         }

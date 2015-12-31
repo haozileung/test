@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * 具体的sql、参数信息对象
  * <p/>
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public interface BoundSql {
 

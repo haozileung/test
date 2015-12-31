@@ -5,7 +5,7 @@ import com.haozileung.infra.enums.IEnum;
 /**
  * IEnum到String转换器
  * 
- * Created by liyd on 8/10/14.
+ * Created by yamcha on 8/10/14.
  */
 public class EnumStringConverter extends AbstractTypeConverter {
 

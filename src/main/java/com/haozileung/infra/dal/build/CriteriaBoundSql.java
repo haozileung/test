@@ -5,7 +5,7 @@ import java.util.List;
 import com.haozileung.infra.dal.BoundSql;
 
 /**
- * Created by liyd on 2015-12-7.
+ * Created by yamcha on 2015-12-7.
  */
 public class CriteriaBoundSql implements BoundSql {
 

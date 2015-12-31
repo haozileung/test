@@ -1,7 +1,7 @@
 package com.haozileung.infra.dal.build;
 
 /**
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public enum AutoFieldType {
     INSERT,

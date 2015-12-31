@@ -12,7 +12,7 @@ import com.haozileung.infra.dal.handler.NameHandler;
 import com.haozileung.infra.utils.ClassUtil;
 
 /**
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public class SelectBuilder extends AbstractSqlBuilder {
 
@@ -82,7 +82,8 @@ public class SelectBuilder extends AbstractSqlBuilder {
                     continue;
                 }
                 String columnName = nameHandler.getColumnName(clazz, columnField);
-                sb.append(applyColumnAlias(columnName));
+                sb.append(applyColumnAlias(columnName)+" ");
+                sb.append(columnField);
                 sb.append(",");
             }
         }

@@ -24,8 +24,6 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.util.IOUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * excel解析工具，兼容03,07以上格式
  *
@@ -205,7 +203,7 @@ public class ExcelReadTools {
             is = new ByteArrayInputStream(bytes);
             workbook = WorkbookFactory.create(is);
         } catch (Exception e) {
-            throw new InfraException("初始化Workbook失败", e);
+            throw new RuntimeException("初始化Workbook失败", e);
         } finally {
             IOUtils.closeQuietly(is);
         }
@@ -223,7 +221,7 @@ public class ExcelReadTools {
             byte[] bytes = FileUtils.readFileToByteArray(file);
             return bytes;
         } catch (IOException e) {
-            throw new InfraException("将文件转换成byte数组失败", e);
+            throw new RuntimeException("将文件转换成byte数组失败", e);
         }
     }
 

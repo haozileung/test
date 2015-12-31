@@ -12,13 +12,8 @@ import java.util.WeakHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * JavaBean信息缓存
- * <p/>
- * User: liyd Date: 13-5-8 下午6:36 version $Id: IntrospectionCache.java, v 0.1
- * Exp $
  */
 public class IntrospectionCache {
 
@@ -72,7 +67,7 @@ public class IntrospectionCache {
 			}
 
 		} catch (IntrospectionException ex) {
-			throw new InfraException("初始化缓存bean信息时出现异常", ex);
+			throw new RuntimeException("初始化缓存bean信息时出现异常", ex);
 		}
 	}
 

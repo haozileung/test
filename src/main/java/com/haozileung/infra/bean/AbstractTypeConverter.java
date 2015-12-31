@@ -1,7 +1,7 @@
 package com.haozileung.infra.bean;
 
 /**
- * Created by liyd on 2015-7-31.
+ * Created by yamcha on 2015-7-31.
  */
 public abstract class AbstractTypeConverter implements TypeConverter {
 

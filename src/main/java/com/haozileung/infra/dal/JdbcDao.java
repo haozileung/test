@@ -8,7 +8,7 @@ import com.haozileung.infra.dal.build.Criteria;
 /**
  * jdbc操作dao
  *
- * Created by liyd on 3/3/15.
+ * Created by yamcha on 3/3/15.
  */
 public interface JdbcDao {
 

@@ -3,7 +3,7 @@ package com.haozileung.infra.dal.handler;
 /**
  * 不作任务特殊处理的nameHandler。解析{}符号
  * 
- * Created by liyd on 2015-12-9.
+ * Created by yamcha on 2015-12-9.
  */
 public class NoneNameHandler implements NameHandler {
 

@@ -6,7 +6,7 @@ import java.util.Arrays;
 import com.haozileung.infra.dal.build.CriteriaBoundSql;
 
 /**
- * Created by liyd on 2015-12-9.
+ * Created by yamcha on 2015-12-9.
  */
 public class SimpleSqlFactory implements SqlFactory {
 

@@ -3,7 +3,7 @@ package com.haozileung.infra.office;
 /**
  * row中的一列数据
  *
- * Created by liyd on 7/28/14.
+ * Created by yamcha on 7/28/14.
  */
 public class ExcelCell {
 

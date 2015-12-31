@@ -5,7 +5,7 @@ import java.util.Random;
 /**
  * 本类来源于apache-commons-lang > RandomUtils
  *
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public class RandomUtils {
 

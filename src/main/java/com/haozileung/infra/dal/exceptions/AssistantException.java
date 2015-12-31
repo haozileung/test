@@ -3,7 +3,7 @@ package com.haozileung.infra.dal.exceptions;
 /**
  * Assistant 自定义异常类
  * <p/>
- * Created by liyd on 6/27/14.
+ * Created by yamcha on 6/27/14.
  */
 public class AssistantException extends RuntimeException {
 

@@ -11,12 +11,10 @@ import org.apache.commons.io.IOUtils;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * excel写工具类
  * 
- * Created by liyd on 7/28/14.
+ * Created by yamcha on 7/28/14.
  */
 public class ExcelWriteTools {
 
@@ -62,7 +60,7 @@ public class ExcelWriteTools {
             // 导出
             workbook.write(out);
         } catch (Exception e) {
-            throw new InfraException("添加一个Sheet失败", e);
+            throw new RuntimeException("添加一个Sheet失败", e);
         } finally {
             IOUtils.closeQuietly(out);
         }
@@ -110,7 +108,7 @@ public class ExcelWriteTools {
             os = new FileOutputStream(file);
             workbook.write(os);
         } catch (Exception e) {
-            throw new InfraException("Excel导出失败", e);
+            throw new RuntimeException("Excel导出失败", e);
         } finally {
             IOUtils.closeQuietly(os);
         }

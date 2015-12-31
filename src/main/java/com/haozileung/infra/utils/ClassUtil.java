@@ -13,8 +13,6 @@ import java.util.WeakHashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * 类辅助
  * <p/>
@@ -60,7 +58,7 @@ public class ClassUtil {
 			}
 			return beanInfo;
 		} catch (IntrospectionException e) {
-			throw new InfraException("获取BeanInfo失败", e);
+			throw new RuntimeException("获取BeanInfo失败", e);
 		}
 	}
 
@@ -144,7 +142,7 @@ public class ClassUtil {
 		try {
 			method.invoke(bean, value);
 		} catch (Exception e) {
-			throw new InfraException("执行invokeMethod失败:" + (method == null ? "null" : method.getName()), e);
+			throw new RuntimeException("执行invokeMethod失败:" + (method == null ? "null" : method.getName()), e);
 		}
 	}
 
@@ -161,7 +159,7 @@ public class ClassUtil {
 			}
 			return method.invoke(bean);
 		} catch (Exception e) {
-			throw new InfraException("执行invokeMethod失败:" + (method == null ? "null" : method.getName()), e);
+			throw new RuntimeException("执行invokeMethod失败:" + (method == null ? "null" : method.getName()), e);
 		}
 	}
 
@@ -175,7 +173,7 @@ public class ClassUtil {
 		try {
 			return clazz.newInstance();
 		} catch (Exception e) {
-			throw new InfraException("根据class创建实例失败:" + (clazz == null ? "null" : clazz.getName()), e);
+			throw new RuntimeException("根据class创建实例失败:" + (clazz == null ? "null" : clazz.getName()), e);
 		}
 	}
 
@@ -191,7 +189,7 @@ public class ClassUtil {
 			Class<?> loadClass = getDefaultClassLoader().loadClass(clazz);
 			return loadClass.newInstance();
 		} catch (Exception e) {
-			throw new InfraException("根据class创建实例失败:" + clazz, e);
+			throw new RuntimeException("根据class创建实例失败:" + clazz, e);
 		}
 	}
 
@@ -206,7 +204,7 @@ public class ClassUtil {
 			Class<?> loadClass = getDefaultClassLoader().loadClass(clazz);
 			return loadClass;
 		} catch (Exception e) {
-			throw new InfraException("根据class名称加载class失败:" + clazz, e);
+			throw new RuntimeException("根据class名称加载class失败:" + clazz, e);
 		}
 	}
 

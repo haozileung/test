@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 组装sql时的列信息
  * <p/>
- * Created by liyd on 7/7/14.
+ * Created by yamcha on 7/7/14.
  */
 public class AutoField {
 

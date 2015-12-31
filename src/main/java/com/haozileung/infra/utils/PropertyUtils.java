@@ -12,8 +12,6 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * 属性文件操作辅助类
  * <p/>
@@ -52,7 +50,7 @@ public final class PropertyUtils {
                 return new FileInputStream(configFile);
             }
         } catch (FileNotFoundException e) {
-            throw new InfraException("加载xml文件失败:" + resourceName, e);
+            throw new RuntimeException("加载xml文件失败:" + resourceName, e);
         }
     }
 
@@ -77,7 +75,7 @@ public final class PropertyUtils {
             //为配置文件加入一个属性，用以判断该配置文件已加载过
             propMap.put(resourceName, "true");
         } catch (IOException e) {
-            throw new InfraException("加载配置文件失败:" + resourceName, e);
+            throw new RuntimeException("加载配置文件失败:" + resourceName, e);
         }
     }
 

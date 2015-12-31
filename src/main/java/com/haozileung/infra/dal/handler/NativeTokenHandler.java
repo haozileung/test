@@ -5,7 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 解析[]符号
  * 
- * Created by liyd on 2015-12-8.
+ * Created by yamcha on 2015-12-8.
  */
 public class NativeTokenHandler implements TokenHandler {
 

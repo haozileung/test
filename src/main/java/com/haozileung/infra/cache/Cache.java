@@ -8,49 +8,48 @@ import java.util.List;
  */
 public interface Cache {
 
-    /**
-     * Get an item from the cache, nontransactionally
-     *
-     * @param key
-     * @return the cached object or <tt>null</tt>
-     * @throws CacheException
-     */
-    Object get(Object key) throws CacheException;
+	/**
+	 * Get an item from the cache, nontransactionally
+	 *
+	 * @param key
+	 * @return the cached object or <tt>null</tt>
+	 * @throws CacheException
+	 */
+	<T> T get(Object key) throws CacheException;
 
-    /**
-     * Add an item to the cache, nontransactionally, with failfast semantics
-     *
-     * @param key
-     * @param value
-     * @throws CacheException
-     */
-    void put(Object key, Object value) throws CacheException;
+	/**
+	 * Add an item to the cache, nontransactionally, with failfast semantics
+	 *
+	 * @param key
+	 * @param value
+	 * @throws CacheException
+	 */
+	<T> void put(Object key, T value) throws CacheException;
 
-    /**
-     * Add an item to the cache
-     *
-     * @param key
-     * @param value
-     * @throws CacheException
-     */
-    void update(Object key, Object value) throws CacheException;
+	/**
+	 * Add an item to the cache
+	 *
+	 * @param key
+	 * @param value
+	 * @throws CacheException
+	 */
+	void update(Object key, Object value) throws CacheException;
 
-    @SuppressWarnings("rawtypes")
-    List keys() throws CacheException;
+	<T> List<T> keys() throws CacheException;
 
-    /**
-     * Remove an item from the cache
-     */
-    void remove(Object key) throws CacheException;
+	/**
+	 * Remove an item from the cache
+	 */
+	void remove(Object key) throws CacheException;
 
-    /**
-     * Clear the cache
-     */
-    void clear() throws CacheException;
+	/**
+	 * Clear the cache
+	 */
+	void clear() throws CacheException;
 
-    /**
-     * Clean up
-     */
-    void destroy() throws CacheException;
+	/**
+	 * Clean up
+	 */
+	void destroy() throws CacheException;
 
 }

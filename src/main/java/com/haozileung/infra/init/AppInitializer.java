@@ -17,9 +17,9 @@ public class AppInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		logger.info("项目已启动...");
 		DataSourceUtil.init();
 		CacheHelper.init();
+		logger.info("项目已启动...");
 	}
 
 	@Override

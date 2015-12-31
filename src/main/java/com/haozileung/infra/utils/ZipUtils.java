@@ -9,8 +9,6 @@ import java.util.zip.ZipOutputStream;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * zip包压缩工具类 jdk原生实现，不支持中文
  */
@@ -32,7 +30,7 @@ public class ZipUtils {
             File srcFile = new File(srcFileName);
             zip(zos, srcFile, srcFile.getName(), bos);
         } catch (Exception e) {
-            throw new InfraException("压缩打包文件成zip包失败:" + srcFileName, e);
+            throw new RuntimeException("压缩打包文件成zip包失败:" + srcFileName, e);
         } finally {
             IOUtils.closeQuietly(bos);
             IOUtils.closeQuietly(zos);

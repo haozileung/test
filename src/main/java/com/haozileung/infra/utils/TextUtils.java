@@ -5,13 +5,11 @@ import java.io.UnsupportedEncodingException;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * 字符文本操作
  * 太多的StringUtils了，命名为TextUtils
  * <p/>
- * Created by liyd on 2015-8-14.
+ * Created by yamcha on 2015-8-14.
  */
 public class TextUtils {
 
@@ -102,7 +100,7 @@ public class TextUtils {
             }
             return contentName;
         } catch (UnsupportedEncodingException e) {
-            throw new InfraException("根据byte截取字符串失败", e);
+            throw new RuntimeException("根据byte截取字符串失败", e);
         }
     }
 }

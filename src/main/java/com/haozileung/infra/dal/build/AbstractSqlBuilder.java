@@ -20,7 +20,7 @@ import com.haozileung.infra.dal.handler.TokenHandler;
 import com.haozileung.infra.utils.ClassUtil;
 
 /**
- * Created by liyd on 2015-12-7.
+ * Created by yamcha on 2015-12-7.
  */
 public abstract class AbstractSqlBuilder implements SqlBuilder {
 

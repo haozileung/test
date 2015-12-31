@@ -3,7 +3,7 @@ package com.haozileung.infra.utils;
 import java.util.UUID;
 
 /**
- * Created by liyd on 9/10/14.
+ * Created by yamcha on 9/10/14.
  */
 public class UUIDUtils {
 

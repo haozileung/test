@@ -6,7 +6,7 @@ import com.haozileung.infra.dal.handler.NameHandler;
 /**
  * sql操作Criteria
  * <p/>
- * Created by liyd on 3/3/15.
+ * Created by yamcha on 3/3/15.
  */
 public class Criteria {
 

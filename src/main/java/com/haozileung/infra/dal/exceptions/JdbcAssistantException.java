@@ -2,7 +2,7 @@ package com.haozileung.infra.dal.exceptions;
 
 /**
  * dal 异常
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public class JdbcAssistantException extends AssistantException {
 

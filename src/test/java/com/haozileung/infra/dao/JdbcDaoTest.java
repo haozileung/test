@@ -1,29 +1,56 @@
-package test;
+package com.haozileung.infra.dao;
 
 import static org.junit.Assert.fail;
 
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.haozileung.infra.dal.JdbcDao;
-import com.haozileung.infra.dao.JdbcDaoDbUtilsImpl;
+import com.haozileung.infra.dal.build.Criteria;
+import com.haozileung.web.domain.User;
 
 public class JdbcDaoTest {
 
-	JdbcDao dao = new JdbcDaoDbUtilsImpl();
+	private static JdbcDao dao;
+
+	@BeforeClass
+	public static void setUp() {
+		dao = new JdbcDaoDbUtilsImpl();
+	}
 
 	@Test
 	public void testInsertObject() {
-		fail("Not yet implemented");
+		User u = new User();
+		u.setUserName("test");
+		u.setEmail("yamchaleung@gmail.com");
+		u.setPassword("test");
+		u.setStatus(1);
+		Long id = dao.insert(u);
+		Assert.assertTrue(id != null && id != 0);
 	}
 
 	@Test
+	@Ignore
 	public void testInsertCriteria() {
-		fail("Not yet implemented");
+		Criteria c = Criteria.insert(User.class).into("name", "test2").into("email", "t").into("password", "t")
+				.into("status", 1);
+		Long id = dao.insert(c);
+		Assert.assertTrue(id != null && id != 0);
 	}
 
 	@Test
+	@Ignore
 	public void testSaveObject() {
-		fail("Not yet implemented");
+		User u = new User();
+		u.setUserName("test");
+		u.setEmail("yamchaleung@gmail.com");
+		u.setPassword("test");
+		u.setStatus(1);
+		dao.save(u);
 	}
 
 	@Test
@@ -67,8 +94,12 @@ public class JdbcDaoTest {
 	}
 
 	@Test
+	@Ignore
 	public void testQueryListCriteria() {
-		fail("Not yet implemented");
+		List<User> users = dao.queryList(Criteria.select(User.class).tableAlias("t").addSelectFunc("id+1 id"));
+		users.forEach(u -> {
+			System.out.println(u);
+		});
 	}
 
 	@Test

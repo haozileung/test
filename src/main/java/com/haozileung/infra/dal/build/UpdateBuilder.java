@@ -8,7 +8,7 @@ import com.haozileung.infra.dal.BoundSql;
 import com.haozileung.infra.dal.handler.NameHandler;
 
 /**
- * Created by liyd on 2015-12-4.
+ * Created by yamcha on 2015-12-4.
  */
 public class UpdateBuilder extends AbstractSqlBuilder {
 

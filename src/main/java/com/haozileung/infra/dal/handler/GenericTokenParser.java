@@ -1,7 +1,7 @@
 package com.haozileung.infra.dal.handler;
 
 /**
- * Created by liyd on 2015-11-24.
+ * Created by yamcha on 2015-11-24.
  */
 public class GenericTokenParser {
 

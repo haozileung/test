@@ -26,8 +26,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.haozileung.infra.exceptions.InfraException;
-
 /**
  * 图片工具
  * <p/>
@@ -145,7 +143,7 @@ public final class ImageUtils {
 			String suffix = fo.getName().substring(fo.getName().lastIndexOf(".") + 1);
 			ImageIO.write(bufferedImage, suffix, fo);
 		} catch (Exception e) {
-			throw new InfraException("给图片添加水印出现错误", e);
+			throw new RuntimeException("给图片添加水印出现错误", e);
 		} finally {
 			IOUtils.closeQuietly(srcImage);
 			IOUtils.closeQuietly(waterImage);
@@ -297,7 +295,7 @@ public final class ImageUtils {
 			return new int[] { width, height };
 
 		} catch (Exception e) {
-			throw new InfraException("读取图片长宽出现异常", e);
+			throw new RuntimeException("读取图片长宽出现异常", e);
 		} finally {
 			IOUtils.closeQuietly(is);
 		}
@@ -565,7 +563,7 @@ public final class ImageUtils {
 			String suffix = imageFile.getName().substring(imageFile.getName().lastIndexOf(".") + 1);
 			return bufferedImageToByte(image, suffix);
 		} catch (IOException e) {
-			throw new InfraException("读取图片失败", e);
+			throw new RuntimeException("读取图片失败", e);
 		}
 	}
 
@@ -609,7 +607,7 @@ public final class ImageUtils {
 
 			return data;
 		} catch (IOException e) {
-			throw new InfraException("将BufferedImage转换成byte数组失败", e);
+			throw new RuntimeException("将BufferedImage转换成byte数组失败", e);
 		} finally {
 			IOUtils.closeQuietly(bos);
 		}
@@ -626,7 +624,7 @@ public final class ImageUtils {
 			byte[] bytes = FileUtils.readFileToByteArray(srcFile);
 			return bytes;
 		} catch (IOException e) {
-			throw new InfraException("将图片文件转换成byte数组失败", e);
+			throw new RuntimeException("将图片文件转换成byte数组失败", e);
 		}
 	}
 
@@ -642,7 +640,7 @@ public final class ImageUtils {
 			BufferedImage image = ImageIO.read(new ByteArrayInputStream(bytes));
 			return image;
 		} catch (IOException e) {
-			throw new InfraException("将byte数组转换成BufferedImage对象失败", e);
+			throw new RuntimeException("将byte数组转换成BufferedImage对象失败", e);
 		}
 	}
 
@@ -660,7 +658,7 @@ public final class ImageUtils {
 			}
 			ImageIO.write(bufferedImage, formatName, targetFile);
 		} catch (IOException e) {
-			throw new InfraException("图片写入失败", e);
+			throw new RuntimeException("图片写入失败", e);
 		}
 	}
 
@@ -824,7 +822,7 @@ public final class ImageUtils {
 			// Return the format name
 			return reader.getFormatName();
 		} catch (IOException e) {
-			throw new InfraException("获取图片格式失败", e);
+			throw new RuntimeException("获取图片格式失败", e);
 		} finally {
 			try {
 				iis.close();

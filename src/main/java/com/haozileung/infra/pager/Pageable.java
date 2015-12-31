@@ -7,7 +7,7 @@ import com.haozileung.infra.bean.BeanConverter;
 /**
  * 分页等常用信息存储
  * <p/>
- * Created by liyd on 6/26/14.
+ * Created by yamcha on 6/26/14.
  */
 public class Pageable implements Serializable {
 
