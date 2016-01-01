@@ -7,8 +7,6 @@ import java.util.concurrent.TimeUnit;
 /**
  * 线程执行工厂类
  * 
- * @author liyd
- * 
  */
 public class ThreadExecutionUtils {
 
@@ -37,7 +35,6 @@ public class ThreadExecutionUtils {
                 new ThreadPoolExecutor.AbortPolicy());
         }
         threadPoolExecutor.execute(runnable);
-//        shutdown();
     }
 
     /**

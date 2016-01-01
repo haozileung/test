@@ -1,35 +1,38 @@
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.ehcache;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.haozileung.infra.cache.Cache;
+import com.haozileung.infra.cache.CacheManager;
+import com.haozileung.infra.cache.CacheProvider;
+
 /**
  * 缓存助手
  */
-public class RedisCacheManager {
+public class EhCacheManager implements CacheManager {
 
-	private final static Logger logger = LoggerFactory
-			.getLogger(RedisCacheManager.class);
-	private static CacheProvider provider;
+	private final static Logger logger = LoggerFactory.getLogger(EhCacheManager.class);
+	private CacheProvider provider;
 
-	public static void init() {
+	public void init() {
 		if (provider == null) {
-			provider = new RedisCacheProvider();
+			provider = new EhCacheProvider();
 			provider.start();
-			logger.info("RedisCacheManager started...");
+			logger.info("EhCacheManager started...");
 		}
 	}
 
-	public static void destroy() {
+	public void destroy() {
 		if (provider != null) {
 			provider.stop();
 			provider = null;
+			logger.info("EhCacheManager stopped...");
 		}
-		logger.info("RedisCacheManager stopped...");
+
 	}
 
-	private final static Cache _GetCache(String cache_name) {
-
+	private Cache _GetCache(String cache_name) {
 		return provider.buildCache(cache_name);
 	}
 
@@ -40,7 +43,7 @@ public class RedisCacheManager {
 	 * @param key
 	 * @return
 	 */
-	public final static Object get(String name, Object key) {
+	public <T> T get(String name, String key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
 		return null;
@@ -55,10 +58,9 @@ public class RedisCacheManager {
 	 * @param key
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public final static <T> T get(Class<T> resultClass, String name, Object key) {
+	public <T> T get(Class<T> resultClass, String name, String key) {
 		if (name != null && key != null)
-			return (T) _GetCache(name).get(key);
+			return _GetCache(name).get(key);
 		return null;
 	}
 
@@ -69,7 +71,7 @@ public class RedisCacheManager {
 	 * @param key
 	 * @param value
 	 */
-	public final static void set(String name, Object key, Object value) {
+	public <T> void set(String name, String key, T value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
 	}
@@ -80,7 +82,7 @@ public class RedisCacheManager {
 	 * @param name
 	 * @param key
 	 */
-	public final static void evict(String name, Object key) {
+	public void evict(String name, String key) {
 		if (name != null && key != null)
 			_GetCache(name).remove(key);
 	}

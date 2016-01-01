@@ -1,8 +1,5 @@
 package com.haozileung.infra.cache;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.Serializable;
 import java.util.List;
 import java.util.Vector;
@@ -10,23 +7,44 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.haozileung.infra.cache.ehcache.EhCacheManager;
+import com.haozileung.infra.cache.memcache.MemcacheManager;
+import com.haozileung.infra.cache.redis.RedisCacheManager;
+import com.haozileung.infra.utils.PropertiesUtil;
+
 /**
  * 自动缓存数据重加载
  */
 public class CacheHelper {
 
 	private final static CacheUpdater g_ThreadPool = new CacheUpdater();
-	private static final Logger logger = LoggerFactory
-			.getLogger(CacheHelper.class);
+	private static final Logger logger = LoggerFactory.getLogger(CacheHelper.class);
+
+	private static CacheManager l1cache;
+	private static CacheManager l2cache;
 
 	public static void init() {
-		EhCacheManager.init();
-		MemcacheManager.init();
+		String cacheOne = PropertiesUtil.getProperties().getProperty("cache.one", "ehcache");
+		String cacheTwo = PropertiesUtil.getProperties().getProperty("cache.two", "memcache");
+		if ("ehcache".equalsIgnoreCase(cacheOne)) {
+			l1cache = new EhCacheManager();
+		}
+		if ("memcache".equalsIgnoreCase(cacheTwo)) {
+			l2cache = new MemcacheManager();
+		}
+		if ("redis".equalsIgnoreCase(cacheTwo)) {
+			l2cache = new RedisCacheManager();
+		}
+		l1cache.init();
+		l2cache.init();
 	}
 
 	public static void destroy() {
-		EhCacheManager.destroy();
-		MemcacheManager.destroy();
+		l1cache.destroy();
+		l2cache.destroy();
 	}
 
 	/**
@@ -40,33 +58,29 @@ public class CacheHelper {
 	 *            回调方法
 	 * @return 返回对应类型的数据
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T get(final String region, final Object key,
-			final ICacheInvoker<T> invoker) {
+	public static <T> T get(final String region, final String key, final ICacheInvoker<T> invoker) {
 		// 1. 从正常缓存中获取数据
-		T data = (T) EhCacheManager.get(region, key);
+		T data = l1cache.get(region, key);
 		if (data == null) {
 			logger.debug("在L1缓存中未找到内容！{} - {}", region, key);
 			// 2. 从全局二级缓存中获取数据,执行自动更新数据策略，结果直接返回
-			data = (T) MemcacheManager.get(region, String.valueOf(key));
+			data = l2cache.get(region, key);
 			if (invoker != null) {
 				if (data == null) {
 					logger.debug("在L2缓存中未找到内容！{} - {}", region, key);
 					data = invoker.callback();
-					EhCacheManager.set(region, key, data);
-					MemcacheManager.set(region, String.valueOf(key), data);
+					l2cache.set(region, key, data);
+					l2cache.set(region, key, data);
 				} else {
 					logger.debug("执行自动更新数据策略{} - {}", region, key);
-					String thread_name = String.format("CacheUpdater-%s-%s",
-							region, key);
+					String thread_name = String.format("CacheUpdater-%s-%s", region, key);
 					g_ThreadPool.execute(new Thread(thread_name) {
 						@Override
 						public void run() {
 							Object result = invoker.callback();
 							if (result != null) {
-								EhCacheManager.set(region, key, result);
-								MemcacheManager.set(region,
-										String.valueOf(key), result);
+								l2cache.set(region, key, result);
+								l2cache.set(region, key, result);
 							}
 						}
 					});
@@ -76,19 +90,18 @@ public class CacheHelper {
 		return data;
 	}
 
-	public static void update(final String region, final Object key) {
-		EhCacheManager.evict(region, key);
+	public static void update(final String region, final String key) {
+		l2cache.evict(region, key);
 	}
 
-	public static void evict(final String region, final Object key) {
-		EhCacheManager.evict(region, key);
-		MemcacheManager.evict(region, String.valueOf(key));
+	public static void evict(final String region, final String key) {
+		l2cache.evict(region, key);
+		l2cache.evict(region, String.valueOf(key));
 	}
 
-	public static void updateNow(final String region, final Object key,
-			final Serializable value) {
-		MemcacheManager.set(region, String.valueOf(key), value);
-		EhCacheManager.set(region, key, value);
+	public static void updateNow(final String region, final String key, final Serializable value) {
+		l2cache.set(region, String.valueOf(key), value);
+		l2cache.set(region, key, value);
 	}
 
 	static class CacheUpdater extends ThreadPoolExecutor {
@@ -102,8 +115,7 @@ public class CacheHelper {
 
 		public void execute(Thread command) {
 			if (runningThreadNames.contains(command.getName())) {
-				logger.warn("{} ===================> Running.",
-						command.getName());
+				logger.warn("{} ===================> Running.", command.getName());
 				return;
 			}
 			logger.debug("{} ===================> Started.", command.getName());

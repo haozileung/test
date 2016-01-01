@@ -15,8 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 类辅助
- * <p/>
- * User: liyd Date: 2/12/14 Time: 10:08 PM
  */
 public class ClassUtil {
 

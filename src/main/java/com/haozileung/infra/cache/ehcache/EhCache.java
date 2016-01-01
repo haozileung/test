@@ -14,12 +14,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.ehcache;
 
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
 import java.util.List;
+
+import com.haozileung.infra.cache.Cache;
+import com.haozileung.infra.cache.CacheException;
 
 /**
  * EHCache

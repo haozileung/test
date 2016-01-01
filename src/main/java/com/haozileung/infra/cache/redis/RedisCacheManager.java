@@ -1,34 +1,38 @@
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.redis;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.haozileung.infra.cache.Cache;
+import com.haozileung.infra.cache.CacheManager;
+import com.haozileung.infra.cache.CacheProvider;
+
 /**
  * 缓存助手
  */
-public class MemcacheManager {
+public class RedisCacheManager implements CacheManager {
 
-	private final static Logger logger = LoggerFactory
-			.getLogger(MemcacheManager.class);
-	private static CacheProvider provider;
+	private final static Logger logger = LoggerFactory.getLogger(RedisCacheManager.class);
+	private CacheProvider provider;
 
-	public static void init() {
+	public void init() {
 		if (provider == null) {
-			provider = new MemcachedProvider();
+			provider = new RedisCacheProvider();
 			provider.start();
-			logger.info("MemcacheManager started...");
+			logger.info("RedisCacheManager started...");
 		}
 	}
 
-	public static void destroy() {
+	public void destroy() {
 		if (provider != null) {
 			provider.stop();
 			provider = null;
 		}
-		logger.info("MemcacheManager stopped...");
+		logger.info("RedisCacheManager stopped...");
 	}
 
-	private final static Cache _GetCache(String cache_name) {
+	private final Cache _GetCache(String cache_name) {
+
 		return provider.buildCache(cache_name);
 	}
 
@@ -39,7 +43,7 @@ public class MemcacheManager {
 	 * @param key
 	 * @return
 	 */
-	public final static Object get(String name, String key) {
+	public final <T> T get(String name, String key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
 		return null;
@@ -54,10 +58,9 @@ public class MemcacheManager {
 	 * @param key
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public final static <T> T get(Class<T> resultClass, String name, String key) {
+	public final <T> T get(Class<T> resultClass, String name, String key) {
 		if (name != null && key != null)
-			return (T) _GetCache(name).get(key);
+			return _GetCache(name).get(key);
 		return null;
 	}
 
@@ -68,7 +71,7 @@ public class MemcacheManager {
 	 * @param key
 	 * @param value
 	 */
-	public final static void set(String name, String key, Object value) {
+	public final <T> void set(String name, String key, T value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
 	}
@@ -79,7 +82,7 @@ public class MemcacheManager {
 	 * @param name
 	 * @param key
 	 */
-	public final static void evict(String name, String key) {
+	public final void evict(String name, String key) {
 		if (name != null && key != null)
 			_GetCache(name).remove(key);
 	}

@@ -1,8 +1,11 @@
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.memcache;
 
 import java.util.Calendar;
 import java.util.List;
 
+import com.haozileung.infra.cache.Cache;
+import com.haozileung.infra.cache.CacheException;
+import com.haozileung.infra.cache.ehcache.EhCacheManager;
 import com.whalin.MemCached.MemCachedClient;
 
 /**

@@ -8,8 +8,6 @@ import com.haozileung.infra.utils.ClassUtil;
 
 /**
  * 枚举辅助类
- * 
- * User: liyd Date: 14-1-25 Time: 上午10:17
  */
 public final class EnumUtils {
 

@@ -14,11 +14,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.ehcache;
 
 import net.sf.ehcache.CacheManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.haozileung.infra.cache.CacheException;
+import com.haozileung.infra.cache.CacheProvider;
 
 import java.util.Hashtable;
 

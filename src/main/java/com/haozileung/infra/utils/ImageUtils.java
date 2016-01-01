@@ -28,8 +28,6 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * 图片工具
- * <p/>
- * User: liyd Date: 13-10-31 下午5:07 version $Id: ImageTools.java, v 0.1 Exp $
  */
 public final class ImageUtils {
 

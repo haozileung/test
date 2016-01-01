@@ -1,7 +1,11 @@
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.redis;
 
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
+import com.haozileung.infra.cache.Cache;
+import com.haozileung.infra.cache.CacheException;
+import com.haozileung.infra.cache.CacheProvider;
+
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -14,7 +18,6 @@ import java.util.Properties;
 /**
  * Redis 缓存实现
  *
- * @author Winter Lau
  */
 public class RedisCacheProvider implements CacheProvider {
 
@@ -25,22 +28,6 @@ public class RedisCacheProvider implements CacheProvider {
     private static int database;
 
     private static JedisPool pool;
-
-    /**
-     * 释放资源
-     *
-     * @param jedis            jedis instance
-     * @param isBrokenResource resource is ok or not
-     */
-    public static void returnResource(Jedis jedis, boolean isBrokenResource) {
-        if (null == jedis)
-            return;
-        if (isBrokenResource) {
-            pool.returnResourceObject(jedis);
-            jedis = null;
-        } else
-            pool.returnResourceObject(jedis);
-    }
 
     public static Jedis getResource() {
         return pool.getResource();

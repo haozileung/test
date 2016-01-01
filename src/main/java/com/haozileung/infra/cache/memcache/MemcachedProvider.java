@@ -1,7 +1,9 @@
-package com.haozileung.infra.cache;
+package com.haozileung.infra.cache.memcache;
 
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
+import com.haozileung.infra.cache.CacheException;
+import com.haozileung.infra.cache.CacheProvider;
 import com.whalin.MemCached.SockIOPool;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.lang3.StringUtils;

@@ -27,7 +27,6 @@ import org.apache.poi.util.IOUtils;
 /**
  * excel解析工具，兼容03,07以上格式
  *
- * @author liyd
  */
 public class ExcelReadTools {
 

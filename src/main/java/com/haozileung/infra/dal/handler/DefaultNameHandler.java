@@ -6,8 +6,6 @@ import com.haozileung.infra.utils.NameUtil;
 
 /**
  * 默认名称处理handler
- * <p/>
- * User: liyd Date: 2/12/14 Time: 4:51 PM
  */
 public class DefaultNameHandler implements NameHandler {
 

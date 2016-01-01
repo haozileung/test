@@ -2,8 +2,10 @@ package com.haozileung.infra.dao;
 
 import static org.junit.Assert.fail;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -11,6 +13,7 @@ import org.junit.Test;
 
 import com.haozileung.infra.dal.JdbcDao;
 import com.haozileung.infra.dal.build.Criteria;
+import com.haozileung.infra.utils.DataSourceUtil;
 import com.haozileung.web.domain.User;
 
 public class JdbcDaoTest {
@@ -20,6 +23,17 @@ public class JdbcDaoTest {
 	@BeforeClass
 	public static void setUp() {
 		dao = new JdbcDaoDbUtilsImpl();
+	}
+	
+	@AfterClass
+	public static void finished(){
+		try {
+			DataSourceUtil.getConnection().rollback();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DataSourceUtil.closeConnection();
 	}
 
 	@Test

@@ -2,8 +2,6 @@ package com.haozileung.infra.dal.handler;
 
 /**
  * 名称处理接口
- * <p/>
- * User: liyd Date: 2/12/14 Time: 4:51 PM
  */
 public interface NameHandler {
 

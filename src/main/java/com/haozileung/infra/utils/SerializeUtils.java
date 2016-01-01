@@ -18,8 +18,6 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * 序列化辅助类
  *
- * @author liyd
- * @version $Id: SerializerUtil.java, v 0.1 2012-8-16 下午4:11:08 liyd Exp $
  */
 public final class SerializeUtils {
 
