@@ -2,22 +2,16 @@
 <!DOCTYPE configuration>
 <configuration>
 	<statusListener class="ch.qos.logback.core.status.NopStatusListener" />
-	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%level{5}] [%thread] %logger{36} - %msg%n</pattern>
-			<charset>UTF-8</charset>
-		</encoder>
-	</appender>
 	<appender name="LOGFILE" class="ch.qos.logback.core.FileAppender">
-		<file>${catalina.base}/logs/tomcat.log</file>
+		<file>logs/app.log</file>
 		<encoder>
-			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%level{5}] [%thread] %logger{36} - %msg%n</pattern>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss} [%level{5}] [%thread] %logger{36} -
+				%msg%n</pattern>
 			<charset>UTF-8</charset>
 		</encoder>
 	</appender>
 	<logger name="com.haozileung" level="TRACE" />
 	<root level="INFO">
 		<appender-ref ref="LOGFILE" />
-		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>
