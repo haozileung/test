@@ -12,22 +12,13 @@
 		<url-pattern>/druid/*</url-pattern>
 	</servlet-mapping>
 	<filter>
-		<filter-name>guiceFilter</filter-name>
-		<filter-class>com.google.inject.servlet.GuiceFilter</filter-class>
+		<filter-name>DruidWebStatFilter</filter-name>
+		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
 	</filter>
-
 	<filter-mapping>
-		<filter-name>guiceFilter</filter-name>
+		<filter-name>DruidWebStatFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	<!-- <filter> <filter-name>ActionDispatcher</filter-name> <filter-class>com.haozileung.infra.mvc.ActionDispatcher</filter-class> 
-		<init-param> <param-name>packages</param-name> <param-value>com.haozileung.web.action</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>ActionDispatcher</filter-name> 
-		<url-pattern>/*</url-pattern> </filter-mapping> -->
-	<!-- <filter> <filter-name>DruidWebStatFilter</filter-name> <filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class> 
-		<init-param> <param-name>exclusions</param-name> <param-value>/assets*,/druid*</param-value> 
-		</init-param> </filter> <filter-mapping> <filter-name>DruidWebStatFilter</filter-name> 
-		<url-pattern>/*</url-pattern> </filter-mapping> -->
 	<welcome-file-list>
 		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>

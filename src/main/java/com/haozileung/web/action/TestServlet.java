@@ -3,21 +3,20 @@
  */
 package com.haozileung.web.action;
 
-import java.io.IOException;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.inject.Inject;
+import com.haozileung.infra.servlet.BaseServlet;
+import com.haozileung.web.init.AppInitializer;
 import com.haozileung.web.service.IMyService;
 
 /**
  * @author Haozi
  *
  */
-public class TestServlet extends HttpServlet {
+@WebServlet(urlPatterns = "/test")
+public class TestServlet extends BaseServlet {
 
 	/**
 	 * 
@@ -26,17 +25,14 @@ public class TestServlet extends HttpServlet {
 
 	private IMyService service;
 
+	public void init() {
+		this.service = AppInitializer.getInjector().getInstance(IMyService.class);
+	}
+
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-	}
-
-	public IMyService getService() {
-		return service;
-	}
-
-	@Inject
-	public void setService(IMyService service) {
-		this.service = service;
+	public Object get(HttpServletRequest req, HttpServletResponse resp) {
+		req.setAttribute("num", service.add(1, 4));
+		return "num.html";
 	}
 
 }
