@@ -11,14 +11,24 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import com.haozileung.infra.dal.JdbcDao;
 import com.haozileung.infra.dal.build.Criteria;
 import com.haozileung.infra.utils.DataSourceUtil;
 import com.haozileung.web.domain.User;
+import com.haozileung.web.service.IMyService;
 
 public class JdbcDaoTest {
 
 	private static JdbcDao dao;
+	
+	@Test
+	public void testGuiceIOC() {
+		Injector injector = Guice.createInjector();
+	    IMyService myService = injector.getInstance(IMyService.class);
+	    System.out.println(myService.add(-0, 2));
+	}
 
 	@BeforeClass
 	public static void setUp() {
