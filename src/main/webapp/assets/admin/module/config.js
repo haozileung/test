@@ -1,7 +1,7 @@
 'use strict';
 var m = [ {
 	html : '/admin/user.html',
-	url : "http://localhost:8080/admin/user",
+	url : "admin/user",
 	search : {
 		name : "",
 		status : 1
@@ -15,7 +15,7 @@ var m = [ {
 	}
 }, {
 	html : '/admin/dictionary.html',
-	url : "http://localhost:8080/admin/dictionary",
+	url : "admin/dictionary",
 	search : {
 		code : "",
 		value : "",
@@ -31,7 +31,7 @@ var m = [ {
 	}
 }, {
 	html : '/admin/resource.html',
-	url : "http://localhost:8080/admin/resource",
+	url : "admin/resource",
 	search : {
 		code : "",
 		name : "",

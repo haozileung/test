@@ -4,7 +4,7 @@
       "*.js"
     ],
     "build": {
-      "publicPath": "http://localhost:8000/",
+      "publicPath": "assets/admin/dist/",
       "extractCSS": true,
       "loader": {
         ".js": "+./lib/moduleGen"

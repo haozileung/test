@@ -6,7 +6,6 @@ package com.haozileung.infra.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -30,7 +29,7 @@ public abstract class BaseServlet extends HttpServlet {
 	private static final long serialVersionUID = 7514613990641762954L;
 	private final static Logger logger = LoggerFactory.getLogger(BaseServlet.class);
 
-	private void renderView(int code, String view, HttpServletRequest req, HttpServletResponse resp) {
+	protected void renderView(int code, String view, HttpServletRequest req, HttpServletResponse resp) {
 		resp.setContentType("text/html;charset=utf-8");
 		resp.setStatus(code);
 		if (!Strings.isNullOrEmpty(view)) {
@@ -38,7 +37,7 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 	}
 
-	private void renderJSON(int code, Object data, HttpServletResponse resp) {
+	protected void renderJSON(int code, Object data, HttpServletResponse resp) {
 		resp.setContentType("application/json;charset=utf-8");
 		resp.setStatus(code);
 		try {
@@ -50,13 +49,17 @@ public abstract class BaseServlet extends HttpServlet {
 		}
 	}
 
-	private void render(Object result, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+	protected void render(Object result, HttpServletRequest req, HttpServletResponse resp) {
 		if (result != null) {
 			if (result instanceof String) {
 				String s = (String) result;
 				if (s.startsWith("redirect:")) {
 					s = s.replace("redirect:", "");
-					resp.sendRedirect(s);
+					try {
+						resp.sendRedirect(s);
+					} catch (IOException e) {
+						logger.error(e.getMessage(), e);
+					}
 				}
 				renderView(HttpServletResponse.SC_OK, s, req, resp);
 			} else {
@@ -66,26 +69,26 @@ public abstract class BaseServlet extends HttpServlet {
 	}
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
 		Object obj = get(req, resp);
 		render(obj, req, resp);
 	}
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = null;
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) {
+		Object obj = post(req, resp);
 		render(obj, req, resp);
 	}
 
 	@Override
-	protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = null;
+	protected void doPut(HttpServletRequest req, HttpServletResponse resp) {
+		Object obj = put(req, resp);
 		render(obj, req, resp);
 	}
 
 	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		Object obj = null;
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) {
+		Object obj = delete(req, resp);
 		render(obj, req, resp);
 	}
 
