@@ -17,17 +17,17 @@ import java.util.*;
 
 public class MemcachedProvider implements CacheProvider {
 
-    private static final Logger log = LoggerFactory
+	private static final Logger log = LoggerFactory
             .getLogger(MemcachedProvider.class);
 
-    private final static String DEFAULT_REGION_NAME = "____DEFAULT_CACHE_REGION";
-    private final static String CACHE_IDENT = "cache.";
-    private final static String SERVERS_CONF = "servers";
-    private static boolean started = true;
+    private final  String DEFAULT_REGION_NAME = "____DEFAULT_CACHE_REGION";
+    private final  String CACHE_IDENT = "cache.";
+    private final  String SERVERS_CONF = "servers";
+    private  boolean started = true;
     private Hashtable<String, MemCache> cacheManager;
     private Properties _cache_properties = new Properties();
 
-    private static int _GetSeconds(String str) {
+    private  int _GetSeconds(String str) {
         try {
             switch (str.charAt(str.length() - 1)) {
                 case 's':

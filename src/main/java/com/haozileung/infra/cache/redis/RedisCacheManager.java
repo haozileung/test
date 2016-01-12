@@ -3,6 +3,8 @@ package com.haozileung.infra.cache.redis;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheManager;
 import com.haozileung.infra.cache.CacheProvider;
@@ -15,9 +17,10 @@ public class RedisCacheManager implements CacheManager {
 	private final static Logger logger = LoggerFactory.getLogger(RedisCacheManager.class);
 	private CacheProvider provider;
 
-	public void init() {
-		if (provider == null) {
-			provider = new RedisCacheProvider();
+	@Inject
+	public void init(@Named("redisCacheProvider") CacheProvider provider) {
+		if (provider != null) {
+			this.provider = provider;
 			provider.start();
 			logger.info("RedisCacheManager started...");
 		}

@@ -9,56 +9,47 @@ import com.haozileung.infra.dal.annotation.Table;
 @Table("t_user")
 public class User {
 
+	private Integer age;
 	private Integer id;
+	private Integer status;
 	@Column("name")
 	private String userName;
-	private String email;
-	private String password;
-	private Integer status;
+
+	public Integer getAge() {
+		return age;
+	}
 
 	public Integer getId() {
 		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
 	}
 
 	public Integer getStatus() {
 		return status;
 	}
 
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setAge(Integer age) {
+		this.age = age;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public void setStatus(Integer status) {
 		this.status = status;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
 	}
 
 }

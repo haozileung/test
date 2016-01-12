@@ -3,6 +3,8 @@ package com.haozileung.infra.cache.memcache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheManager;
 import com.haozileung.infra.cache.CacheProvider;
@@ -15,9 +17,10 @@ public class MemcacheManager implements CacheManager {
 	private final static Logger logger = LoggerFactory.getLogger(MemcacheManager.class);
 	private CacheProvider provider;
 
-	public void init() {
-		if (provider == null) {
-			provider = new MemcachedProvider();
+	@Inject
+	public void init(@Named("memcachedProvider") CacheProvider provider) {
+		if (provider != null) {
+			this.provider = provider;
 			provider.start();
 			logger.info("MemcacheManager started...");
 		}
@@ -29,7 +32,7 @@ public class MemcacheManager implements CacheManager {
 			provider = null;
 			logger.info("MemcacheManager stopped...");
 		}
-		
+
 	}
 
 	private final Cache _GetCache(String cache_name) {

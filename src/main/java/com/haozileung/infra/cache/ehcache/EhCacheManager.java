@@ -3,6 +3,8 @@ package com.haozileung.infra.cache.ehcache;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheManager;
 import com.haozileung.infra.cache.CacheProvider;
@@ -13,11 +15,13 @@ import com.haozileung.infra.cache.CacheProvider;
 public class EhCacheManager implements CacheManager {
 
 	private final static Logger logger = LoggerFactory.getLogger(EhCacheManager.class);
+
 	private CacheProvider provider;
 
-	public void init() {
-		if (provider == null) {
-			provider = new EhCacheProvider();
+	@Inject
+	public void init(@Named("ehcacheProvider") CacheProvider provider) {
+		if (provider != null) {
+			this.provider = provider;
 			provider.start();
 			logger.info("EhCacheManager started...");
 		}

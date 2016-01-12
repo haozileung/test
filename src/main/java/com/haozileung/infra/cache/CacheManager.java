@@ -2,7 +2,7 @@ package com.haozileung.infra.cache;
 
 public interface CacheManager {
 
-	void init();
+	void init(CacheProvider provider);
 
 	void destroy();
 

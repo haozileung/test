@@ -17,9 +17,12 @@ import redis.clients.jedis.Jedis;
 public class RedisCache implements Cache {
 
 	private final static Logger log = LoggerFactory.getLogger(RedisCache.class);
-	private final String region;
+	private final RedisCacheProvider provider;
 
-	public RedisCache(String region) {
+	private String region;
+
+	public RedisCache(RedisCacheProvider provider, String region) {
+		this.provider = provider;
 		this.region = region;
 	}
 
@@ -46,7 +49,7 @@ public class RedisCache implements Cache {
 	@Override
 	public <T> T get(Object key) throws CacheException {
 		T obj = null;
-		Jedis cache = RedisCacheProvider.getResource();
+		Jedis cache = provider.getResource();
 		try {
 			if (null == key)
 				return null;
@@ -68,7 +71,7 @@ public class RedisCache implements Cache {
 		if (value == null)
 			remove(key);
 		else {
-			Jedis cache = RedisCacheProvider.getResource();
+			Jedis cache = provider.getResource();
 			try {
 				cache.set(getKeyName(key).getBytes(), SerializationUtils.serialize((Serializable) value));
 			} catch (Exception e) {
@@ -86,7 +89,7 @@ public class RedisCache implements Cache {
 
 	@Override
 	public void remove(Object key) throws CacheException {
-		Jedis cache = RedisCacheProvider.getResource();
+		Jedis cache = provider.getResource();
 		try {
 			cache.del(getKeyName(key));
 		} catch (Exception e) {
@@ -99,7 +102,7 @@ public class RedisCache implements Cache {
 	@Override
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public List keys() throws CacheException {
-		Jedis cache = RedisCacheProvider.getResource();
+		Jedis cache = provider.getResource();
 		try {
 			List<String> keys = new ArrayList<String>();
 			keys.addAll(cache.keys(region + ":*"));
@@ -116,7 +119,7 @@ public class RedisCache implements Cache {
 
 	@Override
 	public void clear() throws CacheException {
-		Jedis cache = RedisCacheProvider.getResource();
+		Jedis cache = provider.getResource();
 		try {
 			cache.del(region + ":*");
 		} catch (Exception e) {
