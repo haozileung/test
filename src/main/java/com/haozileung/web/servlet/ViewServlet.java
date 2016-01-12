@@ -13,7 +13,7 @@ import com.haozileung.infra.servlet.BaseServlet;
  * @author Haozi
  *
  */
-@WebServlet(urlPatterns = "*.html")
+@WebServlet(urlPatterns = "*.html", loadOnStartup = 1)
 public class ViewServlet extends BaseServlet {
 	/**
 	 * 

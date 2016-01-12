@@ -61,9 +61,9 @@ public abstract class BaseServlet extends HttpServlet {
 						logger.error(e.getMessage(), e);
 					}
 				}
-				renderView(HttpServletResponse.SC_OK, s, req, resp);
+				renderView(resp.getStatus(), s, req, resp);
 			} else {
-				renderJSON(HttpServletResponse.SC_OK, result, resp);
+				renderJSON(resp.getStatus(), result, resp);
 			}
 		}
 	}
