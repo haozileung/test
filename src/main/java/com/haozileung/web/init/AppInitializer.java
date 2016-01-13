@@ -46,7 +46,7 @@ public class AppInitializer implements ServletContextListener {
 	public void contextDestroyed(ServletContextEvent sce) {
 		injector.getInstance(CacheHelper.class).close();
 		injector.getInstance(ThreadExecution.class).shutdown();
-		((DruidDataSource)injector.getInstance(DataSource.class)).close();
+		((DruidDataSource) injector.getInstance(DataSource.class)).close();
 		ServletGroupTemplate.instance().getGroupTemplate().close();
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
 		Driver d = null;
@@ -54,16 +54,15 @@ public class AppInitializer implements ServletContextListener {
 			try {
 				d = drivers.nextElement();
 				DriverManager.deregisterDriver(d);
-				logger.warn(String.format("Driver %s deregistered", d));
+				logger.warn("Driver {} deregistered", d);
 			} catch (SQLException ex) {
-				logger.warn(String.format("Error deregistering driver %s", d), ex);
+				logger.warn("Error deregistering driver {} Message: {}", d, ex.getMessage());
 			}
 		}
 		try {
 			AbandonedConnectionCleanupThread.shutdown();
 		} catch (InterruptedException e) {
-			logger.warn("SEVERE problem cleaning up: " + e.getMessage());
-			e.printStackTrace();
+			logger.warn("SEVERE problem cleaning up: {}", e.getMessage());
 		}
 		logger.info("项目已停止...");
 	}

@@ -1,5 +1,6 @@
 package com.haozileung.infra.dal;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -100,6 +101,7 @@ public interface JdbcDao {
      * @param <T>  the type parameter
      * @param criteria the criteria
      * @return list
+     * @throws SQLException 
      */
     <T> List<T> queryList(Criteria criteria);
 

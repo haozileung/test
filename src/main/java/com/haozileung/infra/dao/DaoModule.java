@@ -13,9 +13,13 @@ import org.slf4j.LoggerFactory;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.inject.AbstractModule;
+import com.google.inject.matcher.Matchers;
+import com.haozileung.infra.dal.ConnectionManager;
 import com.haozileung.infra.dal.JdbcDao;
 import com.haozileung.infra.dal.SimpleSqlFactory;
 import com.haozileung.infra.dal.SqlFactory;
+import com.haozileung.infra.dal.TxManager;
+import com.haozileung.infra.dal.annotation.Tx;
 import com.haozileung.infra.dal.handler.AnnotationNameHandler;
 import com.haozileung.infra.dal.handler.NameHandler;
 import com.haozileung.infra.utils.PropertiesUtil;
@@ -61,9 +65,14 @@ public class DaoModule extends AbstractModule {
 		}
 		bind(JdbcDao.class).to(JdbcDaoDbUtilsImpl.class);
 		bind(NameHandler.class).to(AnnotationNameHandler.class);
-		bind(QueryRunner.class).toInstance(new QueryRunner(ds));
+		bind(QueryRunner.class).toInstance(new QueryRunner());
 		bind(SqlFactory.class).to(SimpleSqlFactory.class);
 		bind(DataSource.class).toInstance(ds);
+		bind(ConnectionManager.class).toInstance(new ConnectionManager());
+		TxManager txm = new TxManager();
+		requestInjection(txm);
+		bindInterceptor(Matchers.any(), Matchers.annotatedWith(Tx.class), txm);
+		bindInterceptor(Matchers.annotatedWith(Tx.class), Matchers.any(), txm);
 	}
 
 }
