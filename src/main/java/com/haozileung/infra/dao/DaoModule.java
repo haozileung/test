@@ -65,7 +65,7 @@ public class DaoModule extends AbstractModule {
 		}
 		bind(JdbcDao.class).to(JdbcDaoDbUtilsImpl.class);
 		bind(NameHandler.class).to(AnnotationNameHandler.class);
-		bind(QueryRunner.class).toInstance(new QueryRunner());
+		bind(QueryRunner.class).toInstance(new QueryRunner(ds));
 		bind(SqlFactory.class).to(SimpleSqlFactory.class);
 		bind(DataSource.class).toInstance(ds);
 		bind(ConnectionManager.class).toInstance(new ConnectionManager());
