@@ -6,7 +6,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import com.haozileung.infra.dal.annotation.Column;
 import com.haozileung.infra.dal.annotation.Table;
 
-@Table("t_user")
+@Table("test")
 public class User {
 
 	private Integer age;

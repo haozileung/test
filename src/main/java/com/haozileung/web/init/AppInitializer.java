@@ -8,18 +8,21 @@ import java.util.Enumeration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
+import javax.sql.DataSource;
 
 import org.beetl.ext.servlet.ServletGroupTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Stage;
 import com.haozileung.infra.cache.CacheHelper;
 import com.haozileung.infra.cache.CacheModule;
 import com.haozileung.infra.dao.DaoModule;
-import com.haozileung.infra.dao.DataSourceManager;
+import com.haozileung.infra.utils.ThreadExecution;
+import com.haozileung.infra.utils.UtilModule;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 
 @WebListener
@@ -35,14 +38,15 @@ public class AppInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		injector = Guice.createInjector(Stage.PRODUCTION, new CacheModule(), new DaoModule());
+		injector = Guice.createInjector(Stage.PRODUCTION, new UtilModule(), new CacheModule(), new DaoModule());
 		logger.info("项目已启动...");
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		injector.getInstance(CacheHelper.class).close();
-		injector.getInstance(DataSourceManager.class).destroy();
+		injector.getInstance(ThreadExecution.class).shutdown();
+		((DruidDataSource)injector.getInstance(DataSource.class)).close();
 		ServletGroupTemplate.instance().getGroupTemplate().close();
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
 		Driver d = null;

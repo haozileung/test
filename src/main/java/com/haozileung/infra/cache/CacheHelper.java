@@ -1,32 +1,29 @@
 package com.haozileung.infra.cache;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import com.haozileung.infra.utils.ThreadExecution;
 
 /**
  * 自动缓存数据重加载
  */
 public class CacheHelper {
 
-	private final CacheUpdater threadPool = new CacheUpdater();
 	private static final Logger logger = LoggerFactory.getLogger(CacheHelper.class);
 
 	@Inject
 	@Named("ecache")
 	private CacheManager l1cache;
 	@Inject
-	@Named("redisCache")
+	@Named("memcached")
 	private CacheManager l2cache;
+	@Inject
+	private ThreadExecution excutor;
 
 	/**
 	 * 获取缓存数据
@@ -55,7 +52,7 @@ public class CacheHelper {
 				} else {
 					logger.debug("执行自动更新数据策略{} - {}", region, key);
 					String thread_name = String.format("CacheUpdater-%s-%s", region, key);
-					threadPool.execute(new Thread(thread_name) {
+					excutor.addTask(new Thread(thread_name) {
 						@Override
 						public void run() {
 							Object result = invoker.callback();
@@ -85,36 +82,8 @@ public class CacheHelper {
 		l2cache.set(region, key, value);
 	}
 
-	class CacheUpdater extends ThreadPoolExecutor {
-
-		private List<String> runningThreadNames = new Vector<>();
-
-		public CacheUpdater() {
-			super(2, 20, 10, TimeUnit.SECONDS, new ArrayBlockingQueue<>(20),
-					new ThreadPoolExecutor.DiscardOldestPolicy());
-		}
-
-		public void execute(Thread command) {
-			if (runningThreadNames.contains(command.getName())) {
-				logger.warn("{} ===================> Running.", command.getName());
-				return;
-			}
-			logger.debug("{} ===================> Started.", command.getName());
-			super.execute(command);
-		}
-
-		@Override
-		protected void afterExecute(Runnable r, Throwable t) {
-			super.afterExecute(r, t);
-			Thread thread = (Thread) r;
-			runningThreadNames.remove(thread.getName());
-			logger.debug("{} ===================> Finished.", thread.getName());
-		}
-	}
-	
-	public void close(){
+	public void close() {
 		l1cache.destroy();
 		l2cache.destroy();
-		threadPool.shutdown();
 	}
 }

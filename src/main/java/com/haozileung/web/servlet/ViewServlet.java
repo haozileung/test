@@ -22,6 +22,9 @@ public class ViewServlet extends BaseServlet {
 
 	@Override
 	public String get(HttpServletRequest req, HttpServletResponse resp) {
+		if (req.getRequestURI().endsWith("/")) {
+			return req.getRequestURI() + "index.html";
+		}
 		return req.getRequestURI();
 	}
 

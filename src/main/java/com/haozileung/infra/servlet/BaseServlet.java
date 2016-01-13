@@ -40,7 +40,16 @@ public abstract class BaseServlet extends HttpServlet {
 		resp.setContentType("text/html;charset=utf-8");
 		resp.setStatus(code);
 		if (!Strings.isNullOrEmpty(view)) {
-			ServletGroupTemplate.instance().render(view, req, resp);
+			try {
+				ServletGroupTemplate.instance().render(view, req, resp);
+			} catch (Exception e) {
+				logger.error(e.getMessage(), e);
+				try {
+					resp.sendError(HttpServletResponse.SC_NOT_FOUND);
+				} catch (IOException e1) {
+					logger.error(e1.getMessage(), e1);
+				}
+			}
 		}
 	}
 
