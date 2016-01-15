@@ -1,0 +1,24 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "del": "*",
+    "gulp": "*",
+    "jshint": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-cache": "*",
+    "gulp-rimraf": "*",
+    "gulp-concat": "*",
+    "gulp-imagemin": "*",
+    "gulp-jshint": "*",
+    "gulp-livereload": "*",
+    "gulp-cssnano": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "webpack-stream": "*"
+  }
+}
