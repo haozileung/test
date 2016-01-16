@@ -18,7 +18,7 @@ module.exports = {
 	},
 	externals : {
 		'moment' : true,
-		'jquery' : 'jQuery',
+		'jquery' : true,
 		'bootstrap' : true
 	},
 	module : {
