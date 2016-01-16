@@ -1,14 +1,20 @@
-/**
- * learning-gulp - webpack.config.js
- * Created by mengdesen on 15/4/14.
- */
-
-'use strict';
-
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
-  entry: "./src/js",
-  output: {
-    path: __dirname + "/dist",
-    filename: "app.js"
-  }
+	entry : {
+		app : './src/js/index.js',
+	},
+	output : {
+		filename : '[name].js',
+		publicPath : "assets/admin/dist/"
+	},
+	plugins : [ new ExtractTextPlugin('[name].css') ],
+	resolve : {
+		modulesDirectories : [ 'src', 'node_modules' ]
+	},
+	module : {
+		loaders : [ {
+			test : /\.css$/,
+			loader : ExtractTextPlugin.extract('style-loader', 'css-loader')
+		} ]
+	},
 };

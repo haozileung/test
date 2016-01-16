@@ -1,9 +1,4 @@
-/**
- * learning-gulp - index.js
- * Created by mengdesen on 15/4/14.
- */
-
 'use strict';
-
+require('../css/main.css');
 var plus = require('./plus');
 console.log(plus(2, 9));

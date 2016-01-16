@@ -6,19 +6,21 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
+    "autoprefixer-loader": "*",
+    "css-loader": "*",
     "del": "*",
+    "extract-text-webpack-plugin": "*",
     "gulp": "*",
-    "jshint": "*",
     "gulp-autoprefixer": "*",
-    "gulp-cache": "*",
     "gulp-rimraf": "*",
-    "gulp-concat": "*",
-    "gulp-imagemin": "*",
+    "gulp-cssnano": "*",
+    "gulp-filter": "*",
     "gulp-jshint": "*",
     "gulp-livereload": "*",
-    "gulp-cssnano": "*",
     "gulp-rename": "*",
     "gulp-uglify": "*",
+    "jshint": "*",
+    "style-loader": "*",
     "webpack-stream": "*"
   }
 }
