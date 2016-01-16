@@ -1,1 +1,8 @@
-body{background-color:teal}.view{background-color:#fff}
+.example {
+    display: flex;
+    transition: all .5s;
+    user-select: none;
+    background: linear-gradient(to bottom, white, black);
+}body{
+    background-color: #008080;
+}

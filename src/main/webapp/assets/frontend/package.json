@@ -3,24 +3,34 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "gulp clean | gulp dev | gulp watch",
+    "build": "gulp"
   },
   "devDependencies": {
     "autoprefixer-loader": "*",
+    "babel-core": "*",
+    "babel-loader": "*",
     "css-loader": "*",
     "del": "*",
     "extract-text-webpack-plugin": "*",
     "gulp": "*",
     "gulp-autoprefixer": "*",
-    "gulp-rimraf": "*",
     "gulp-cssnano": "*",
     "gulp-filter": "*",
     "gulp-jshint": "*",
     "gulp-livereload": "*",
     "gulp-rename": "*",
+    "gulp-rimraf": "*",
     "gulp-uglify": "*",
     "jshint": "*",
+    "jsx-loader": "*",
     "style-loader": "*",
     "webpack-stream": "*"
+  },
+  "dependencies": {
+    "jquery": "*",
+    "moment": "*",
+    "react": "*",
+    "react-dom": "*"
   }
 }

@@ -16,8 +16,8 @@ gulp.task('build', function() {
 	var cssFilter = filter('**/*.css', {
 		restore : true
 	});
-	return gulp.src('src/js/**/*.js').pipe(jshint('.jshintrc')).pipe(
-			jshint.reporter('default')).pipe(webpack(config)).pipe(rename({
+	// .pipe(jshint('.jshintrc')).pipe(jshint.reporter('default'))
+	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(rename({
 		suffix : '.min'
 	})).pipe(jsFilter).pipe(uglify()).pipe(jsFilter.restore).pipe(cssFilter)
 			.pipe(
@@ -28,36 +28,9 @@ gulp.task('build', function() {
 });
 
 gulp.task('dev', function() {
-	var jsFilter = filter('**/*.js', {
-		restore : true
-	});
-	var cssFilter = filter('**/*.css', {
-		restore : true
-	});
-	return gulp.src('src/js/**/*.js').pipe(jshint('.jshintrc')).pipe(
-			jshint.reporter('default')).pipe(
-			webpack({
-				entry : {
-					app : './src/js/index.js',
-				},
-				output : {
-					filename : '[name].js',
-					publicPath : "assets/admin/dist/"
-				},
-				plugins : [ new ExtractTextPlugin('[name].css') ],
-				resolve : {
-					modulesDirectories : [ 'src', 'node_modules' ]
-				},
-				module : {
-					loaders : [ {
-						test : /\.css$/,
-						loader : ExtractTextPlugin.extract('style-loader',
-								'css-loader')
-					} ]
-				},
-			})).pipe(rename({
+	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(rename({
 		suffix : '.min'
-	})).pipe(gulp.dest('dist/'));
+	})).pipe(gulp.dest('dist/')).pipe(livereload());
 });
 
 gulp.task('html-watch', function() {
