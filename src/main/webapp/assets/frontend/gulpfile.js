@@ -2,9 +2,7 @@ var gulp = require('gulp');
 var clean = require('gulp-rimraf');
 var autoprefixer = require('gulp-autoprefixer');
 var minifycss = require('gulp-cssnano');
-var jshint = require('gulp-jshint');
 var uglify = require('gulp-uglify');
-var rename = require('gulp-rename');
 var livereload = require('gulp-livereload');
 var webpack = require('webpack-stream');
 var filter = require('gulp-filter');
@@ -16,11 +14,8 @@ gulp.task('build', function() {
 	var cssFilter = filter('**/*.css', {
 		restore : true
 	});
-	// .pipe(jshint('.jshintrc')).pipe(jshint.reporter('default'))
-	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(rename({
-		suffix : '.min'
-	})).pipe(jsFilter).pipe(uglify()).pipe(jsFilter.restore).pipe(cssFilter)
-			.pipe(
+	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(jsFilter)
+			.pipe(uglify()).pipe(jsFilter.restore).pipe(cssFilter).pipe(
 					autoprefixer('last 2 version', 'safari 5', 'ie 8', 'ie 9',
 							'opera 12.1', 'ios 6', 'android 4')).pipe(
 					minifycss()).pipe(cssFilter.restore).pipe(
@@ -28,9 +23,15 @@ gulp.task('build', function() {
 });
 
 gulp.task('dev', function() {
-	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(rename({
-		suffix : '.min'
-	})).pipe(gulp.dest('dist/')).pipe(livereload());
+	var jsFilter = filter('**/*.js', {
+		restore : true
+	});
+	var cssFilter = filter('**/*.css', {
+		restore : true
+	});
+	return gulp.src('src/js/**/*.js').pipe(webpack(config)).pipe(cssFilter)
+			.pipe(autoprefixer('last 2 version')).pipe(cssFilter.restore).pipe(
+					gulp.dest('dist/')).pipe(livereload());
 });
 
 gulp.task('html-watch', function() {

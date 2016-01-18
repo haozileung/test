@@ -7,6 +7,7 @@
     "build": "gulp"
   },
   "devDependencies": {
+    "assets-webpack-plugin": "^3.2.0",
     "autoprefixer-loader": "*",
     "babel-core": "*",
     "babel-loader": "*",
@@ -22,6 +23,7 @@
     "gulp-rename": "*",
     "gulp-rimraf": "*",
     "gulp-uglify": "*",
+    "html-webpack-plugin": "^1.7.0",
     "jshint": "*",
     "jsx-loader": "*",
     "style-loader": "*",
