@@ -21,7 +21,7 @@ module.exports = {
 		app : './assets/js/index.js'
 	},
 	output : {
-		chunkFilename:'[name]_[hash].js',
+		chunkFilename : '[name]_[hash].js',
 		filename : '[name]_[hash].js'
 	},
 	plugins : [ assetsPluginInstance, extractTextPluginInstance,

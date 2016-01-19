@@ -6,7 +6,7 @@
   "license": "MIT",
   "main": "app.js",
   "scripts": {
-    "start": "node bin/start.js"
+    "start": "gulp build | node bin/start.js"
   },
   "devDependencies": {
     "assets-webpack-plugin": "*",
@@ -19,15 +19,19 @@
     "file-loader": "^0.8.5",
     "gulp": "*",
     "gulp-autoprefixer": "*",
+    "gulp-connect": "^2.3.1",
     "gulp-cssnano": "*",
     "gulp-filter": "*",
-    "gulp-jshint": "*",
+    "gulp-if": "^2.0.0",
+    "gulp-jshint": "^2.0.0",
     "gulp-livereload": "*",
     "gulp-rename": "*",
     "gulp-rimraf": "*",
     "gulp-uglify": "*",
+    "gulp-watch": "^4.3.5",
     "html-webpack-plugin": "*",
-    "jshint": "*",
+    "jshint": "^2.9.1",
+    "jshint-jsx": "^0.4.1",
     "jsx-loader": "*",
     "style-loader": "*",
     "webpack-stream": "*"

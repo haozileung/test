@@ -10,7 +10,7 @@ render(app, {
   cache: true,
   debug: false,
 });
-var index = require('./routes/index');
+var index = require('./src/routes/index');
 app.use(compressor())
 app.use(index.routes());
 app.use(function *(next){
