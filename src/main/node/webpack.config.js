@@ -33,7 +33,8 @@ module.exports = {
 	externals : {
 		'moment' : true,
 		'jquery' : 'jQuery',
-		'bootstrap' : true
+		'bootstrap' : true,
+		'layer' : true
 	},
 	module : {
 		loaders : [

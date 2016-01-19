@@ -10,7 +10,6 @@
   },
   "devDependencies": {
     "assets-webpack-plugin": "*",
-    "autoprefixer-loader": "*",
     "babel-core": "*",
     "babel-loader": "*",
     "css-loader": "*",

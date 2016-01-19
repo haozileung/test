@@ -34,7 +34,7 @@ var jshintconfig = {
 	"jquery" : true,
 	linter : require('jshint-jsx').JSXHINT
 };
-gulp.task('build', [ 'clean' ], function() {
+gulp.task('build', [ 'clean', 'third' ], function() {
 	var jsFilter = filter('**/*.js', {
 		restore : true
 	});
@@ -48,7 +48,11 @@ gulp.task('build', [ 'clean' ], function() {
 					cssFilter.restore).pipe(gulp.dest('public'));
 });
 
-gulp.task('dev', function() {
+gulp.task('third', function() {
+	return gulp.src('./third/**/*.*').pipe(gulp.dest('./public/assets/'));
+});
+
+gulp.task('dev', [ 'third' ], function() {
 	var cssFilter = filter('**/*.css', {
 		restore : true
 	});
