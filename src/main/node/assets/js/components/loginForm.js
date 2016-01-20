@@ -1,6 +1,14 @@
+'use strict';
 var React = require('react');
-var ReactDOMServer = require('react-dom');
+var LinkedStateMixin = require('react-addons-linked-state-mixin');
 var LoginForm  =  React.createClass ({
+  mixins: [LinkedStateMixin],
+  getInitialState: function() {
+    return {email: '',password:'',remember:false};
+  },
+  submit:function(){
+	  console.debug(this.state);
+  },
   render :function(){
     return (
     <div className="col-md-4 col-md-offset-4">
@@ -13,19 +21,19 @@ var LoginForm  =  React.createClass ({
 			<fieldset>
 				<div className="form-group">
 					<input className="form-control" placeholder="邮箱" name="email"
-						type="email" autofocus />
+						type="email" autofocus valueLink={this.linkState('email')}/>
 				</div>
 				<div className="form-group">
 					<input className="form-control" placeholder="密码" name="password"
-						type="password" />
+						type="password" valueLink={this.linkState('password')} />
 				</div>
 				<div className="checkbox">
 					<label> <input name="remember" type="checkbox"
-						value="RememberMe" />记住我
+						checkedLink={this.linkState('remember')}/>记住我
 					</label>
 				</div>
-				<input type="submit" className="btn btn-lg btn-success btn-block"
-					id="login" value="登入" />
+				<input type="button" className="btn btn-lg btn-success btn-block"
+					id="login" value="登入" onClick={this.submit}/>
 			</fieldset>
 		</form>
 	</div>

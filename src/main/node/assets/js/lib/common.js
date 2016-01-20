@@ -1,5 +1,5 @@
+'use strict';
 var layer = require('layer');
-var $ = require('jquery');
 var index = null;
 $.ajaxSetup({
 	beforeSend : function() {
@@ -8,7 +8,7 @@ $.ajaxSetup({
 	complete : function() {
 		layer.close(index);
 	},
-	error : function(jqXHR, textStatus, errorThrown) {
+	error : function(jqXHR) {
 		switch (jqXHR.status) {
 		case (500):
 			layer.alert('服务器系统内部错误', {
