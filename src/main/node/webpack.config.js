@@ -1,10 +1,10 @@
+var path = require("path");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var webpack = require('webpack-stream').webpack;
-var AssetsPlugin = require('assets-webpack-plugin');
-var assetsPluginInstance = new AssetsPlugin();
 var extractTextPluginInstance = new ExtractTextPlugin('[name].css');
-var cmmonsChunkPluginInstance = new webpack.optimize.CommonsChunkPlugin(
-		'common', 'common.js');
+var cmmonsChunkPluginInstance = new webpack.optimize.CommonsChunkPlugin({
+	name : 'common',
+});
 var definePluginInstance = new webpack.DefinePlugin({
 	'process.env' : {
 		'NODE_ENV' : JSON.stringify(process.env.NODE_ENV)
@@ -15,20 +15,22 @@ var htmlWebpackPluginInstance = new HtmlWebpackPlugin({
 	inject : true,
 	template : './views/index.html'
 });
+var resolverPluginInstance = new webpack.ResolverPlugin(
+		new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin(
+				".bower.json", [ "main" ]))
 module.exports = {
 	entry : {
 		common : [ 'react', 'react-dom', './assets/js/lib/common.js' ],
 		app : './assets/js/index.js'
 	},
 	output : {
-		chunkFilename : '[name].js',
 		filename : '[name].js'
 	},
-	plugins : [ assetsPluginInstance, extractTextPluginInstance,
-			definePluginInstance, cmmonsChunkPluginInstance,
-			htmlWebpackPluginInstance ],
+	plugins : [ extractTextPluginInstance, definePluginInstance,
+			cmmonsChunkPluginInstance, htmlWebpackPluginInstance,
+			resolverPluginInstance ],
 	resolve : {
-		modulesDirectories : [ 'src', 'node_modules' ],
+		modulesDirectories : [ 'assets/js', 'node_modules', 'bower_components' ],
 		extensions : [ '', '.js', '.jsx', '.json' ]
 	},
 	externals : {
@@ -53,7 +55,7 @@ module.exports = {
 				},
 				{
 					test : /\.less$/,
-					loader : ExtractTextPlugin.extract('style',
+					loader : ExtractTextPlugin.extract('less',
 							[ 'css', 'less' ])
 				},
 				{
