@@ -4,5 +4,6 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 require('./lib/common');
 
-var LoginForm = require('./components/loginForm');
-ReactDOM.render(<LoginForm />, document.getElementById('content'));
+var Menu = require('./components/menu');
+var menus = [{name:'test',value:'test'},{name:'test',value:'test'},{name:'test',value:[{name:'test',value:'test'},{name:'test',value:'test'}]}];
+ReactDOM.render(<Menu menus={menus} level='0' />, document.getElementById('content'));

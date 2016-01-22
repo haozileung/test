@@ -18,7 +18,7 @@ app.use(function *(next){
 	  if (404 != this.status) {return;}
 	  this.status = 404;
 	      this.body = {
-	        message: 'Page Not Found'
+	        message: 'Not Found'
 	      };
 	});
 app.port = 3000;

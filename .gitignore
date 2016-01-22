@@ -4,5 +4,8 @@
 .project
 test.iml
 .idea/
-/target/
+target/
 classes
+bower_components/
+node_modules/
+public/
