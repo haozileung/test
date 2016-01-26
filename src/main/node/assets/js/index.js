@@ -1,5 +1,5 @@
 'use strict';
-require('../css/login.css');
+require('../less/admin.less');
 var React = require('react');
 var ReactDOM = require('react-dom');
 require('./lib/common');

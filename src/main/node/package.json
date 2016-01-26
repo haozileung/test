@@ -38,10 +38,6 @@
     "webpack-stream": "*"
   },
   "dependencies": {
-    "jquery": "*",
-    "moment": "*",
-    "react": "*",
-    "react-dom": "*",
     "koa": "*",
     "koa-compressor": "*",
     "koa-ejs2x": "*",

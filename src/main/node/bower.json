@@ -1,26 +1,29 @@
 {
-  "name": "test",
-  "description": "test project",
-  "main": "app.js",
-  "authors": [
-    "YamchaL"
-  ],
-  "license": "MIT",
-  "moduleType": [
-    "es6",
-    "node"
-  ],
-  "homepage": "",
-  "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
-  "dependencies": {
-    "validator-js": "~4.5.1",
-    "bootstrap": "~3.3.6"
-  }
+    "name": "test",
+    "description": "test project",
+    "main": "app.js",
+    "authors": [
+        "YamchaL"
+    ],
+    "license": "MIT",
+    "moduleType": [
+        "es6",
+        "node"
+    ],
+    "homepage": "",
+    "private": true,
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ],
+    "dependencies": {
+        "react" :"*",
+        "moment":"*",
+        "jquery": "*",
+        "bootstrap": "*",
+        "metisMenu": "*"
+    }
 }
