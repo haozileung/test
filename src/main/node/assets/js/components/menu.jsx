@@ -2,32 +2,34 @@
 var React = require('react');
 var Menu  =  React.createClass ({  
   getInitialState: function() {
-    return {current:''};
+    return {active:0};
   },  
-  handlerClick: function(level,i){
-      if(level > 0){
-          this.setState({current:level});
+  handlerClick: function(i){
+      if(this.state.active ===(i+1)){
+          this.setState({active:0});
       }else{
-          this.setState({current:i});
+          this.setState({active:i+1});
       }
-  },  
+  },
   render :function(){
-      var level = this.props.level;
+      var level = parseInt(this.props.level);
       var cx = require('classnames');
-      var classes = cx({
+      var ulclasses = cx({
           'nav': true,
-          'collapse': level > 0,
-          'in': level ===this.state.current
+          'nav-second-level collapse': level > 0,
+          'in': this.props.isOpen
       });
-      console.debug(level+"___"+this.state.current);
-      var click = this.handlerClick;
-      var _this = this;
       var menuList = this.props.menus.map(function(menu,i){
-               return Object.prototype.toString.call(menu.value) === '[object Array]'?
-               <li key={i} onClick={click.bind(_this,level,i)}><a href="javascript:;">{menu.name}<span className="fa arrow"></span></a><Menu menus={menu.value} level={i} /></li>:
-               <li key={i} onClick={click.bind(_this,level,i)}><a href={menu.value}>{menu.name}</a></li>;
-           });
-    return (<ul className={classes}>{menuList}</ul>);
+               var liclasses = cx({'active': this.state.active == (i+1)});             
+               if(Object.prototype.toString.call(menu.value) === '[object Array]'){
+                  var open = this.state.active === (i+1);
+                   var sumMenu = <Menu menus={menu.value} level={level+1} isOpen={open} />;
+                   return <li key={i} className={liclasses}><a href="javascript:;" onClick={this.handlerClick.bind(this,i)}>{menu.name}<span className="fa arrow"></span></a>{sumMenu}</li>;
+               }else{
+                   return <li key={i} className={liclasses}><a href={menu.value}>{menu.name}</a></li>;
+               }
+           },this);
+    return (<ul className={ulclasses}>{menuList}</ul>);
   }
 });
 module.exports = Menu;
