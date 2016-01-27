@@ -1,8 +1,6 @@
 'use strict';
 require('../less/admin.less');
-var React = require('react');
 var ReactDOM = require('react-dom');
-require('./lib/common');
 
 var Menu = require('./components/menu');
 var menus = [{name:'test',value:'test'},{name:'test',value:'test'},{name:'test',value:[{name:'test',value:'test'},{name:'test',value:'test'}]}];

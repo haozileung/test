@@ -11,7 +11,11 @@ var uglify = require('gulp-uglify');
 var connect = require('gulp-connect');
 var webpack = require('webpack-stream');
 var filter = require('gulp-filter');
-var config = require('./webpack.config');
+var source     = require('vinyl-source-stream'),
+    rename     = require('gulp-rename'),
+    browserify = require('browserify'),
+    glob       = require('glob'),
+    es         = require('event-stream');
 var jshintconfig = {
 	'node' : true,
 	'browser' : true,
@@ -37,15 +41,48 @@ var jshintconfig = {
 };
 
 gulp.task('build', function() {
-	var jsFilter = filter('**/*.js', {
-		restore : true
-	});
-	var cssFilter = filter('**/*.css', {
-		restore : true
-	});
+	glob('assets/js/*.js', function(err, files) {
+        if(err) {done(err);}
+        var tasks = files.map(function(entry) {
+            return browserify({ entries: [entry] })
+                .bundle()
+                .pipe(source(entry)).pipe(gulpif("production" === process.env.NODE_ENV, uglify()))
+                .pipe(rename({
+                    extname: '.bundle.js'
+                })).pipe(gulp.dest('public'));
+            });
+        es.merge(tasks).on('end', done);
+    })
 	return gulp.src('assets/**/*.js').pipe(jshint(jshintconfig)).pipe(
 			jshint.reporter('default')).pipe(webpack(config)).pipe(jsFilter)
-			.pipe(gulpif("production" === process.env.NODE_ENV, uglify()))
+			
+			.pipe(jsFilter.restore).pipe(cssFilter).pipe(
+					autoprefixer('last 2 version')).pipe(
+					gulpif("production" === process.env.NODE_ENV, minifycss()))
+			.pipe(cssFilter.restore).pipe(gulp.dest('public'));
+});
+
+gulp.task('build-css', function() {
+    .pipe(
+					autoprefixer('last 2 version')).pipe(
+					gulpif("production" === process.env.NODE_ENV, minifycss()))
+			.pipe(cssFilter.restore).pipe(gulp.dest('public'));
+	glob('assets/less/*.less', function(err, files) {
+        if(err) {done(err);}
+        var tasks = files.map(function(entry) {
+            return browserify({ entries: [entry] })
+                .bundle()
+                .pipe(source(entry)).pipe(gulpif("production" === process.env.NODE_ENV, uglify()))
+                .pipe(rename({
+                    extname: '.bundle.js'
+                }))
+                .pipe(gulp.dest('./dist'));
+            });
+        es.merge(tasks).on('end', done);
+    })
+	return gulp.src('assets/**/*.js').pipe(jshint(jshintconfig)).pipe(
+			jshint.reporter('default')).pipe(webpack(config)).pipe(jsFilter)
+			
 			.pipe(jsFilter.restore).pipe(cssFilter).pipe(
 					autoprefixer('last 2 version')).pipe(
 					gulpif("production" === process.env.NODE_ENV, minifycss()))
