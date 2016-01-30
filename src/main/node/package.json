@@ -9,14 +9,22 @@
     "start": "gulp build | node bin/start.js"
   },
   "devDependencies": {
-    "react": "*",
-    "browserify": "*",
     "babelify": "*",
+    "browserify": "*",
+    "event-stream": "*",
+    "glob": "*",
     "gulp": "*",
+    "gulp-if": "*",
+    "gulp-rename": "*",
+    "gulp-uglify": "*",
+    "gulp-webserver": "*",
+    "react": "*",
+    "reactify": "^1.1.1",
     "vinyl-source-stream": "*",
-    "gulp-webserver": "*"
+    "wiredep": "^3.0.0"
   },
   "dependencies": {
+    "gulp-less": "^3.0.5",
     "koa": "*",
     "koa-compressor": "*",
     "koa-ejs2x": "*",

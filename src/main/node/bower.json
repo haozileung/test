@@ -1,7 +1,6 @@
 {
     "name": "test",
     "description": "test project",
-    "main": "app.js",
     "authors": [
         "YamchaL"
     ],
@@ -10,20 +9,28 @@
         "es6",
         "node"
     ],
-    "homepage": "",
     "private": true,
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
     "dependencies": {
-        "react" :"*",
-        "moment":"*",
+        "react": "*",
+        "moment": "*",
         "jquery": "*",
         "bootstrap": "*",
-        "metisMenu": "*"
+        "metisMenu": "*",
+        "font-awesome": "*",
+        "layer": "*"
+    },
+    "overrides": {
+        "bootstrap": {
+            "main": [
+                "dist/js/bootstrap.js",
+                "dist/css/bootstrap.css",
+                "less/bootstrap.less"
+            ]
+        },
+        "font-awesome": {
+            "main": [
+                "css/font-awesome.css"
+            ]
+        }
     }
 }

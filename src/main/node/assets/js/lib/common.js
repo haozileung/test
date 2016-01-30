@@ -1,5 +1,4 @@
 'use strict';
-var layer = require('layer');
 var index = null;
 $.ajaxSetup({
 	beforeSend : function() {
