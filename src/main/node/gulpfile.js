@@ -17,7 +17,7 @@ function done(err){
 
 gulp.task('bower', function () {
   gulp.src('./views/index.html')
-    .pipe(wiredep())
+    .pipe(wiredep({'ignorePath':'../public/'}))
     .pipe(gulp.dest('./public'));
 });
 
@@ -41,13 +41,13 @@ gulp.task('browserify', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch('assets/**/*.*', ['browserify']);
+    gulp.watch('assets/js/*.js', ['browserify']);
     gulp.watch('assets/less/*.less', ['less']);
     gulp.watch('views/*.html', ['bower']);
 });
 
 gulp.task('webserver', function () {
-    gulp.src('./')
+    gulp.src('./public/')
         .pipe(webserver({
             host: '127.0.0.1',
             livereload: true
