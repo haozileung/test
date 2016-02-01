@@ -10,28 +10,31 @@ var source = require('vinyl-source-stream');
 var glob = require('glob');
 var es = require('event-stream');
 var wiredep = require('wiredep').stream;
-function done(err){
-    if(err){
-    console.log(err);}else {console.log("DONE");}
+function done(err) {
+    if (err) {
+        console.log(err);
+    } else {
+        console.log("DONE");
+    }
 }
 
 gulp.task('bower', function () {
-  gulp.src('./views/index.html')
-    .pipe(wiredep({'ignorePath':'../public/'}))
-    .pipe(gulp.dest('./public'));
+    gulp.src('./views/index.html')
+        .pipe(wiredep({ 'ignorePath': '../public/' }))
+        .pipe(gulp.dest('./public'));
 });
 
 gulp.task('less', function () {
-  return gulp.src('./assets/less/*.less')
-    .pipe(less())
-    .pipe(gulp.dest('./public/assets/css'));
+    return gulp.src('./assets/less/*.less')
+        .pipe(less())
+        .pipe(gulp.dest('./public/assets/css'));
 });
 
 gulp.task('browserify', function () {
     glob('assets/js/*.js', function (err, files) {
         if (err) { done(err); }
         var tasks = files.map(function (entry) {
-            return browserify({ entries: [entry] }).transform("babelify", {presets: ["es2015", "react"]})
+            return browserify({ entries: [entry] }).transform("babelify", { presets: ["es2015", "react"] })
                 .bundle()
                 .pipe(source(entry))
                 .pipe(gulp.dest('public'));
@@ -54,4 +57,4 @@ gulp.task('webserver', function () {
         }));
 });
 
-gulp.task('default', ['browserify','less','bower', 'watch', 'webserver']);
+gulp.task('default', ['browserify', 'less', 'bower', 'watch', 'webserver']);
