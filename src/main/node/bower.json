@@ -1,36 +1,42 @@
 {
-    "name": "test",
-    "description": "test project",
-    "authors": [
-        "YamchaL"
-    ],
-    "license": "MIT",
-    "moduleType": [
-        "es6",
-        "node"
-    ],
-    "private": true,
-    "dependencies": {
-        "react": "*",
-        "moment": "*",
-        "jquery": "*",
-        "bootstrap": "*",
-        "metisMenu": "*",
-        "font-awesome": "*",
-        "layer": "*"
+  "name": "test",
+  "authors": [
+    "YamchaL"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "private": true,
+  "dependencies": {
+    "react": "*",
+    "moment": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "metisMenu": "*",
+    "font-awesome": "*",
+    "layer": "*",
+    "echarts": "*",
+    "bootstrap-table": "*"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
     },
-    "overrides": {
-        "bootstrap": {
-            "main": [
-                "dist/js/bootstrap.js",
-                "dist/css/bootstrap.css",
-                "less/bootstrap.less"
-            ]
-        },
-        "font-awesome": {
-            "main": [
-                "css/font-awesome.css"
-            ]
-        }
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    },
+    "echarts": {
+      "main": [
+        "dist/echarts.min.js"
+      ]
     }
+  }
 }

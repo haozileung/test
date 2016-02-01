@@ -13,18 +13,14 @@
     "browserify": "*",
     "event-stream": "*",
     "glob": "*",
-    "gulp": "*",
-    "gulp-if": "*",
-    "gulp-rename": "*",
-    "gulp-uglify": "*",
+    "gulp": "*",    
     "gulp-webserver": "*",
     "react": "*",
-    "reactify": "^1.1.1",
     "vinyl-source-stream": "*",
-    "wiredep": "^3.0.0"
+    "wiredep": "*"
   },
   "dependencies": {
-    "gulp-less": "^3.0.5",
+    "gulp-less": "*",
     "koa": "*",
     "koa-compressor": "*",
     "koa-ejs2x": "*",
