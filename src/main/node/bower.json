@@ -18,7 +18,8 @@
     "font-awesome": "*",
     "layer": "*",
     "echarts": "*",
-    "bootstrap-table": "*"
+    "bootstrap-table": "*",
+    "jquery-form": "*"
   },
   "overrides": {
     "bootstrap": {
@@ -31,6 +32,11 @@
     "font-awesome": {
       "main": [
         "css/font-awesome.css"
+      ]
+    },
+    "jquery-form": {
+      "main": [
+        "jquery.form.js"
       ]
     },
     "echarts": {
