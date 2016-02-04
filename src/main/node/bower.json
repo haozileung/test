@@ -19,7 +19,8 @@
     "layer": "*",
     "echarts": "*",
     "bootstrap-table": "*",
-    "jquery-form": "*"
+    "jquery-form": "*",
+    "eonasdan-bootstrap-datetimepicker": "^4.17.37"
   },
   "overrides": {
     "bootstrap": {
@@ -27,6 +28,13 @@
         "dist/js/bootstrap.js",
         "dist/css/bootstrap.css",
         "less/bootstrap.less"
+      ]
+    },
+    "bootstrap-table": {
+      "main": [
+        "src/bootstrap-table.js",
+        "src/locale/bootstrap-table-zh-CN.js",
+        "src/bootstrap-table.css"
       ]
     },
     "font-awesome": {
@@ -41,7 +49,7 @@
     },
     "echarts": {
       "main": [
-        "dist/echarts.min.js"
+        "dist/echarts.js"
       ]
     }
   }
