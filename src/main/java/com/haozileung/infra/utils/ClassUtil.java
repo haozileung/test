@@ -34,10 +34,10 @@ public class ClassUtil {
 	 */
 	public static BeanInfo getBeanInfo(Class<?> clazz, Class<?> stopClazz) {
 		try {
-			BeanInfo beanInfo;
+			BeanInfo beandebug;
 			if (classCache.get(clazz) == null) {
-				beanInfo = Introspector.getBeanInfo(clazz, stopClazz);
-				classCache.put(clazz, beanInfo);
+				beandebug = Introspector.getBeanInfo(clazz, stopClazz);
+				classCache.put(clazz, beandebug);
 				// Immediately remove class from Introspector cache, to allow
 				// for proper
 				// garbage collection on class loader shutdown - we cache it
@@ -52,9 +52,9 @@ public class ClassUtil {
 					classToFlush = classToFlush.getSuperclass();
 				} while (classToFlush != null);
 			} else {
-				beanInfo = classCache.get(clazz);
+				beandebug = classCache.get(clazz);
 			}
-			return beanInfo;
+			return beandebug;
 		} catch (IntrospectionException e) {
 			throw new RuntimeException("获取BeanInfo失败", e);
 		}
@@ -90,8 +90,8 @@ public class ClassUtil {
 	 * @return
 	 */
 	public static PropertyDescriptor getPropertyDescriptor(Class<?> clazz, String name) {
-		BeanInfo beanInfo = getBeanInfo(clazz);
-		PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+		BeanInfo beandebug = getBeanInfo(clazz);
+		PropertyDescriptor[] propertyDescriptors = beandebug.getPropertyDescriptors();
 		if (propertyDescriptors == null) {
 			return null;
 		}
@@ -111,8 +111,8 @@ public class ClassUtil {
 	 */
 	public static Map<String, Object> getBeanPropMap(Object object) {
 
-		BeanInfo beanInfo = getBeanInfo(object.getClass());
-		PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+		BeanInfo beandebug = getBeanInfo(object.getClass());
+		PropertyDescriptor[] propertyDescriptors = beandebug.getPropertyDescriptors();
 		if (propertyDescriptors == null) {
 			return null;
 		}

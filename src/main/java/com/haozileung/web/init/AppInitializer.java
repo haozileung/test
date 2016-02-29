@@ -38,7 +38,7 @@ public class AppInitializer implements ServletContextListener {
 
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		injector = Guice.createInjector(Stage.PRODUCTION, new UtilModule(), new CacheModule(), new DaoModule());
+		injector = Guice.createInjector(Stage.DEVELOPMENT, new UtilModule(), new CacheModule(), new DaoModule());
 		logger.info("项目已启动...");
 	}
 

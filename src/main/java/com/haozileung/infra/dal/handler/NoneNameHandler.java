@@ -7,22 +7,27 @@ package com.haozileung.infra.dal.handler;
  */
 public class NoneNameHandler implements NameHandler {
 
+	@Override
 	public String getTableName(Class<?> entityClass) {
 		return entityClass.getSimpleName();
 	}
 
+	@Override
 	public String getPkFieldName(Class<?> entityClass) {
 		return entityClass.getSimpleName() + "Id";
 	}
 
+	@Override
 	public String getPkColumnName(Class<?> entityClass) {
 		return entityClass.getSimpleName() + "Id";
 	}
 
+	@Override
 	public String getColumnName(Class<?> entityClass, String fieldName) {
 		return fieldName;
 	}
 
+	@Override
 	public String getPkNativeValue(Class<?> entityClass, String dialect) {
 		return null;
 	}

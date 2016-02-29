@@ -9,32 +9,34 @@ import com.haozileung.infra.dal.BoundSql;
  */
 public class CriteriaBoundSql implements BoundSql {
 
-    /**
-     * sql
-     */
-    private String       sql;
+	/**
+	 * sql
+	 */
+	private String sql;
 
-    /**
-     * parameters
-     */
-    private List<Object> parameters;
+	/**
+	 * parameters
+	 */
+	private List<Object> parameters;
 
-    /**
-     * Constructor
-     *
-     * @param sql
-     * @param parameters
-     */
-    public CriteriaBoundSql(String sql, List<Object> parameters) {
-        this.sql = sql;
-        this.parameters = parameters;
-    }
+	/**
+	 * Constructor
+	 *
+	 * @param sql
+	 * @param parameters
+	 */
+	public CriteriaBoundSql(String sql, List<Object> parameters) {
+		this.sql = sql;
+		this.parameters = parameters;
+	}
 
-    public String getSql() {
-        return this.sql;
-    }
+	@Override
+	public String getSql() {
+		return this.sql;
+	}
 
-    public List<Object> getParameters() {
-        return this.parameters;
-    }
+	@Override
+	public List<Object> getParameters() {
+		return this.parameters;
+	}
 }

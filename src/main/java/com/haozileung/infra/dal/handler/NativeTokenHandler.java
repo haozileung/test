@@ -19,6 +19,7 @@ public class NativeTokenHandler implements TokenHandler {
 		this.nameHandler = nameHandler;
 	}
 
+	@Override
 	public String handleToken(String content) {
 		String columnName = nameHandler.getColumnName(this.clazz, content);
 		if (StringUtils.isBlank(alias)) {

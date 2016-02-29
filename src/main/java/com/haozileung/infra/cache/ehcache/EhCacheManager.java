@@ -18,20 +18,22 @@ public class EhCacheManager implements CacheManager {
 
 	private CacheProvider provider;
 
+	@Override
 	@Inject
 	public void init(@Named("ehcacheProvider") CacheProvider provider) {
 		if (provider != null) {
 			this.provider = provider;
 			provider.start();
-			logger.info("EhCacheManager started...");
+			logger.debug("EhCacheManager started...");
 		}
 	}
 
+	@Override
 	public void destroy() {
 		if (provider != null) {
 			provider.stop();
 			provider = null;
-			logger.info("EhCacheManager stopped...");
+			logger.debug("EhCacheManager stopped...");
 		}
 
 	}
@@ -47,6 +49,7 @@ public class EhCacheManager implements CacheManager {
 	 * @param key
 	 * @return
 	 */
+	@Override
 	public <T> T get(String name, String key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
@@ -62,6 +65,7 @@ public class EhCacheManager implements CacheManager {
 	 * @param key
 	 * @return
 	 */
+	@Override
 	public <T> T get(Class<T> resultClass, String name, String key) {
 		if (name != null && key != null)
 			return _GetCache(name).get(key);
@@ -75,6 +79,7 @@ public class EhCacheManager implements CacheManager {
 	 * @param key
 	 * @param value
 	 */
+	@Override
 	public <T> void set(String name, String key, T value) {
 		if (name != null && key != null && value != null)
 			_GetCache(name).put(key, value);
@@ -86,6 +91,7 @@ public class EhCacheManager implements CacheManager {
 	 * @param name
 	 * @param key
 	 */
+	@Override
 	public void evict(String name, String key) {
 		if (name != null && key != null)
 			_GetCache(name).remove(key);

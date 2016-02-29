@@ -1,16 +1,18 @@
 package com.haozileung.infra.utils;
 
-import com.google.common.collect.Maps;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
 import org.apache.commons.beanutils.converters.DateConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
+import com.google.common.collect.Maps;
 
 public class RequestUtil {
 	private final static Logger logger = LoggerFactory.getLogger(RequestUtil.class);

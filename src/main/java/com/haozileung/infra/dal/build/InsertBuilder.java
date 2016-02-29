@@ -15,16 +15,19 @@ public class InsertBuilder extends AbstractSqlBuilder {
 
 	protected static final String COMMAND_OPEN = "INSERT INTO ";
 
+	@Override
 	public void addField(String fieldName, String sqlOperator, String fieldOperator, AutoFieldType type, Object value) {
 		AutoField autoField = buildAutoField(fieldName, sqlOperator, fieldOperator, type, value);
 		this.autoFields.put(fieldName, autoField);
 	}
 
+	@Override
 	public void addCondition(String fieldName, String sqlOperator, String fieldOperator, AutoFieldType type,
 			Object value) {
 		throw new JdbcAssistantException("InsertBuilder不支持设置条件");
 	}
 
+	@Override
 	public BoundSql build(Class<?> clazz, Object entity, boolean isIgnoreNull, NameHandler nameHandler) {
 		super.mergeEntityFields(entity, AutoFieldType.INSERT, nameHandler, isIgnoreNull);
 		StringBuilder sql = new StringBuilder(COMMAND_OPEN);
@@ -52,7 +55,7 @@ public class InsertBuilder extends AbstractSqlBuilder {
 				params.add(autoField.getValue());
 			}
 			args.append(",");
-			
+
 		}
 		sql.deleteCharAt(sql.length() - 1);
 		args.deleteCharAt(args.length() - 1);

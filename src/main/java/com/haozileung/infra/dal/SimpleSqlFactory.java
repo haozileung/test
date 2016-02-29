@@ -10,7 +10,8 @@ import com.haozileung.infra.dal.build.CriteriaBoundSql;
  */
 public class SimpleSqlFactory implements SqlFactory {
 
-    public BoundSql getBoundSql(String refSql, String expectParamKey, Object[] parameters) {
-        return new CriteriaBoundSql(refSql, parameters == null ? new ArrayList<Object>() : Arrays.asList(parameters));
-    }
+	@Override
+	public BoundSql getBoundSql(String refSql, String expectParamKey, Object[] parameters) {
+		return new CriteriaBoundSql(refSql, parameters == null ? new ArrayList<Object>() : Arrays.asList(parameters));
+	}
 }

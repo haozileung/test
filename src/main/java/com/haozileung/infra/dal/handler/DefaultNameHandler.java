@@ -19,22 +19,26 @@ public class DefaultNameHandler implements NameHandler {
 	 */
 	private static final String PRI_COLUMN_SUFFIX = "_ID";
 
+	@Override
 	public String getTableName(Class<?> entityClass) {
 		// Java属性的骆驼命名法转换回数据库下划线“_”分隔的格式
 		return NameUtil.getUnderlineName(entityClass.getSimpleName());
 	}
 
+	@Override
 	public String getPkFieldName(Class<?> entityClass) {
 		String firstLowerName = NameUtil.getFirstLowerName(entityClass.getSimpleName());
 		// 主键以类名加上“Id” 如user表主键属性即userId
 		return firstLowerName + PRI_FIELD_SUFFIX;
 	}
 
+	@Override
 	public String getPkColumnName(Class<?> entityClass) {
 		String underlineName = NameUtil.getUnderlineName(entityClass.getSimpleName());
 		return underlineName + PRI_COLUMN_SUFFIX;
 	}
 
+	@Override
 	public String getColumnName(Class<?> entityClass, String fieldName) {
 		// 主键field跟column不一致的情况
 		String pkFieldName = this.getPkFieldName(entityClass);
@@ -44,6 +48,7 @@ public class DefaultNameHandler implements NameHandler {
 		return NameUtil.getUnderlineName(fieldName);
 	}
 
+	@Override
 	public String getPkNativeValue(Class<?> entityClass, String dialect) {
 		if (StringUtils.equalsIgnoreCase(dialect, "oracle")) {
 			// 获取序列就可以了，默认seq_加上表名为序列名

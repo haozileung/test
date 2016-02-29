@@ -16,13 +16,13 @@
  */
 package com.haozileung.infra.cache.ehcache;
 
-import net.sf.ehcache.CacheManager;
-import net.sf.ehcache.Element;
-
 import java.util.List;
 
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheException;
+
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 /**
  * EHCache

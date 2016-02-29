@@ -48,6 +48,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 	@Inject
 	protected ConnectionManager connectionManager;
 
+	@Override
 	public int delete(Class<?> clazz, Long id) {
 		BoundSql boundSql = Criteria.delete(clazz).where(getNameHandler().getPkFieldName(clazz), new Object[] { id })
 				.build(true, getNameHandler());
@@ -59,6 +60,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int delete(Criteria criteria) {
 		BoundSql boundSql = criteria.build(true, getNameHandler());
 		try {
@@ -69,6 +71,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int delete(Object entity) {
 		BoundSql boundSql = Criteria.delete(entity.getClass()).build(entity, true, getNameHandler());
 		try {
@@ -79,6 +82,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public void deleteAll(Class<?> clazz) {
 		String tableName = this.getNameHandler().getTableName(clazz);
 		String sql = "TRUNCATE TABLE " + tableName;
@@ -89,14 +93,15 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public <T> T get(Class<T> clazz, Long id) {
 		BoundSql boundSql = Criteria.select(clazz).where(getNameHandler().getPkFieldName(clazz), new Object[] { id })
 				.build(true, getNameHandler());
 		// 采用list方式查询，当记录不存在时返回null而不会抛出异常
 		List<T> list = null;
 		try {
-			list = this.runner.query(connectionManager.getConnection(),boundSql.getSql(), new BeanListHandler<T>(clazz),
-					boundSql.getParameters().toArray());
+			list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+					new BeanListHandler<T>(clazz), boundSql.getParameters().toArray());
 		} catch (Exception e) {
 			throw new JdbcAssistantException(e);
 		}
@@ -106,6 +111,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return list.iterator().next();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T get(Criteria criteria, Long id) {
 		BoundSql boundSql = criteria
@@ -114,7 +120,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		// 采用list方式查询，当记录不存在时返回null而不会抛出异常
 		List<T> list = null;
 		try {
-			list = (List<T>) this.runner.query(connectionManager.getConnection(),boundSql.getSql(),
+			list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
 					new BeanListHandler<T>((Class<T>) criteria.getEntityClass()), id);
 		} catch (Exception e) {
 			throw new JdbcAssistantException(e);
@@ -175,11 +181,13 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public Long insert(Criteria criteria) {
 		final BoundSql boundSql = criteria.build(true, getNameHandler());
 		return this.insert(boundSql);
 	}
 
+	@Override
 	public Long insert(Object entity) {
 		NameHandler handler = this.getNameHandler();
 		Criteria criteria = Criteria.insert(entity.getClass());
@@ -193,6 +201,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return this.insert(boundSql);
 	}
 
+	@Override
 	public int queryCount(Criteria criteria) {
 		BoundSql boundSql = criteria.addSelectFunc("count(*)").build(true, getNameHandler());
 		try {
@@ -203,6 +212,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int queryCount(Object entity) {
 		BoundSql boundSql = Criteria.select(entity.getClass()).addSelectFunc("count(*)").build(entity, true,
 				getNameHandler());
@@ -214,16 +224,18 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int queryCount(Object entity, Criteria criteria) {
 		BoundSql boundSql = criteria.addSelectFunc("count(*)").build(entity, true, getNameHandler());
 		try {
-			return this.runner.query(connectionManager.getConnection(),boundSql.getSql(), new ScalarHandler<Integer>(),
+			return this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
 					boundSql.getParameters().toArray());
 		} catch (Exception e) {
 			throw new JdbcAssistantException(e);
 		}
 	}
 
+	@Override
 	public List<Map<String, Object>> queryForList(Criteria criteria) {
 		BoundSql boundSql = criteria.build(true, getNameHandler());
 		List<Map<String, Object>> mapList = null;
@@ -237,18 +249,22 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return mapList;
 	}
 
+	@Override
 	public <T> T queryForObject(Criteria criteria) {
 		return querySingleResult(criteria);
 	}
 
+	@Override
 	public List<Map<String, Object>> queryForSql(String refSql) {
 		return this.queryForSql(refSql, null, null);
 	}
 
+	@Override
 	public List<Map<String, Object>> queryForSql(String refSql, Object[] params) {
 		return this.queryForSql(refSql, null, params);
 	}
 
+	@Override
 	public List<Map<String, Object>> queryForSql(String refSql, String expectParamKey, Object[] params) {
 		BoundSql boundSql = this.sqlFactory.getBoundSql(refSql, expectParamKey, params);
 		List<Map<String, Object>> mapList = null;
@@ -262,6 +278,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return mapList;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> List<T> queryList(Class<?> clazz) {
 		BoundSql boundSql = Criteria.select(clazz).build(true, getNameHandler());
@@ -276,6 +293,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return (List<T>) list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> List<T> queryList(Criteria criteria) {
 		BoundSql boundSql = criteria.build(true, getNameHandler());
@@ -289,6 +307,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> List<T> queryList(T entity) {
 		BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
@@ -303,6 +322,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> List<T> queryList(T entity, Criteria criteria) {
 		BoundSql boundSql = criteria.build(entity, true, getNameHandler());
@@ -317,6 +337,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return list;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T querySingleResult(Criteria criteria) {
 		BoundSql boundSql = criteria.build(true, getNameHandler());
@@ -335,13 +356,14 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return (T) list.iterator().next();
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T querySingleResult(T entity) {
 		BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
 		// 采用list方式查询，当记录不存在时返回null而不会抛出异常
 		List<T> list = null;
 		try {
-			list = (List<T>) this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+			list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
 					new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
 		} catch (Exception e) {
 
@@ -353,6 +375,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		return list.iterator().next();
 	}
 
+	@Override
 	public void save(Criteria criteria) {
 		final BoundSql boundSql = criteria.build(true, getNameHandler());
 		try {
@@ -364,6 +387,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public void save(Object entity) {
 		final BoundSql boundSql = Criteria.insert(entity.getClass()).build(entity, true, getNameHandler());
 		try {
@@ -391,6 +415,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		this.sqlFactory = sqlFactory;
 	}
 
+	@Override
 	public int update(Criteria criteria) {
 		BoundSql boundSql = criteria.build(true, getNameHandler());
 		try {
@@ -401,6 +426,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int update(Object entity) {
 		BoundSql boundSql = Criteria.update(entity.getClass()).build(entity, true, getNameHandler());
 		try {
@@ -411,6 +437,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int update(Object entity, boolean isIgnoreNull) {
 		BoundSql boundSql = Criteria.update(entity.getClass()).build(entity, isIgnoreNull, getNameHandler());
 		try {
@@ -421,14 +448,17 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 		}
 	}
 
+	@Override
 	public int updateForSql(String refSql) {
 		return this.updateForSql(refSql, null, null);
 	}
 
+	@Override
 	public int updateForSql(String refSql, Object[] params) {
 		return this.updateForSql(refSql, null, params);
 	}
 
+	@Override
 	public int updateForSql(String refSql, String expectParamKey, Object[] params) {
 		BoundSql boundSql = this.sqlFactory.getBoundSql(refSql, expectParamKey, params);
 		try {

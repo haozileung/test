@@ -4,23 +4,23 @@ package com.haozileung.infra.dal.build;
  * Created by yamcha on 2015-12-4.
  */
 public enum AutoFieldType {
-    INSERT,
+	INSERT,
 
-    UPDATE,
+	UPDATE,
 
-    WHERE,
+	WHERE,
 
-    INCLUDE,
+	INCLUDE,
 
-    EXCLUDE,
+	EXCLUDE,
 
-    ORDER_BY_ASC,
+	ORDER_BY_ASC,
 
-    ORDER_BY_DESC,
+	ORDER_BY_DESC,
 
-    BRACKET_BEGIN,
+	BRACKET_BEGIN,
 
-    BRACKET_END,
+	BRACKET_END,
 
-    FUNC
+	FUNC
 }

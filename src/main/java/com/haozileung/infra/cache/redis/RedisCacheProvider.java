@@ -1,5 +1,10 @@
 package com.haozileung.infra.cache.redis;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Properties;
+
 import com.google.common.io.ByteSource;
 import com.google.common.io.Resources;
 import com.haozileung.infra.cache.Cache;
@@ -9,11 +14,6 @@ import com.haozileung.infra.cache.CacheProvider;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.URL;
-import java.util.Properties;
 
 /**
  * Redis 缓存实现

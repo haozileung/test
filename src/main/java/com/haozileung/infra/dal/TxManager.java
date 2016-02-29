@@ -15,6 +15,7 @@ public class TxManager implements MethodInterceptor {
 	@Inject
 	private ConnectionManager connectionManager;
 
+	@Override
 	public Object invoke(MethodInvocation invocation) throws Throwable {
 		Connection conn = connectionManager.getConnection();
 		conn.setAutoCommit(false);

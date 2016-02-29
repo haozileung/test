@@ -40,7 +40,7 @@ public class IntrospectionCache {
 
 		try {
 
-			final BeanInfo beanInfo = Introspector.getBeanInfo(beanClass);
+			final BeanInfo beandebug = Introspector.getBeanInfo(beanClass);
 
 			// 从Introspector缓存立即移除类，在类加载终止时允许适当的垃圾收集
 			// 我们不管如何总是缓存在这里,这是一个GC友好的方式，对比于IntrospectionCache，
@@ -54,7 +54,7 @@ public class IntrospectionCache {
 			this.propertyDescriptorCache = new LinkedHashMap<String, PropertyDescriptor>();
 
 			// 此调用较慢，所以我们只执行一次
-			PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+			PropertyDescriptor[] pds = beandebug.getPropertyDescriptors();
 
 			for (PropertyDescriptor pd : pds) {
 

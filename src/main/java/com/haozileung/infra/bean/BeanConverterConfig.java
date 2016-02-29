@@ -13,6 +13,7 @@ public class BeanConverterConfig {
 	private static final ContextClassLoaderLocal BEANS_BY_CLASSLOADER = new ContextClassLoaderLocal() {
 
 		// 创建默认的实例
+		@Override
 		protected Object initialValue() {
 			return new BeanConverterConfig();
 		}
