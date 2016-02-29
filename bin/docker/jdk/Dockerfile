@@ -1,18 +1,17 @@
 FROM alpine
 MAINTAINER yamchaleung <yamchaleung@gmail.com>
 
-ENV JAVA_HOME /usr/local/java
-
-RUN apk add --update curl ca-certificates && \
+ENV JAVA_HOME=/usr/local/java PATH=${PATH}:/usr/local/java/bin
+RUN apk update && \
   cd /tmp && \
-  curl -o glibc-2.21-r2.apk "https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-2.21-r2.apk" && \
-  apk add --allow-untrusted glibc-2.21-r2.apk && \
-  curl -o glibc-bin-2.21-r2.apk "https://circle-artifacts.com/gh/andyshinn/alpine-pkg-glibc/6/artifacts/0/home/ubuntu/alpine-pkg-glibc/packages/x86_64/glibc-bin-2.21-r2.apk" && \
-  apk add --allow-untrusted glibc-bin-2.21-r2.apk && \
-  /usr/glibc/usr/bin/ldconfig /lib /usr/glibc/usr/lib && \
-  curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" \
-  http://download.oracle.com/otn-pub/java/jdk/8u66-b17/jdk-8u66-linux-x64.tar.gz | gunzip -c - | tar -xf - && \
-  mv jdk* ${JAVA_HOME} && \
+  wget -q http://172.17.0.1:8000/glibc.apk && \
+  wget -q http://172.17.0.1:8000/glibc-bin.apk && \
+  wget -q http://172.17.0.1:8000/jdk.tar.gz && \
+  tar -zxvf jdk.tar.gz && \
+  apk add --allow-untrusted glibc.apk && \
+  apk add --allow-untrusted glibc-bin.apk && \
+  ldconfig /lib /usr/glibc/usr/lib && \
+  mv jdk1.8* ${JAVA_HOME} && \
   rm -rf "$JAVA_HOME/"*src.zip && \
     rm -rf "$JAVA_HOME/lib/missioncontrol" \
            "$JAVA_HOME/lib/visualvm" \
@@ -49,5 +48,3 @@ RUN apk add --update curl ca-certificates && \
            "$JAVA_HOME/jre/lib/oblique-fonts" && \
   echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
   rm -rf /tmp/* /var/cache/apk/*
-
-ENV PATH ${PATH}:${JAVA_HOME}/bin

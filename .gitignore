@@ -2,7 +2,7 @@
 .settings/
 .classpath
 .project
-test.iml
+*.iml
 .idea/
 target/
 classes
