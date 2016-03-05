@@ -20,7 +20,7 @@ public class ConnectionManager {
 		if (connMap == null) {
 			connMap = Maps.newHashMap();
 		}
-		String name = MoreObjects.firstNonNull(DataSourceHolder.getName(), "read");
+		String name = MoreObjects.firstNonNull(DataSourceHolder.getName(), "default");
 		Connection conn = connMap.get(name);
 		if (conn == null || conn.isClosed()) {
 			DataSource dataSource = AppInitializer.getInjector()
