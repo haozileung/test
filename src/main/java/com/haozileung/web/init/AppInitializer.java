@@ -8,45 +8,38 @@ import java.util.Enumeration;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
-import javax.sql.DataSource;
 
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.beetl.ext.servlet.ServletGroupTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.google.inject.Guice;
-import com.google.inject.Injector;
 import com.google.inject.Stage;
 import com.haozileung.infra.cache.CacheHelper;
 import com.haozileung.infra.cache.CacheModule;
 import com.haozileung.infra.dao.DaoModule;
 import com.haozileung.infra.utils.ThreadExecution;
 import com.haozileung.infra.utils.UtilModule;
+import com.haozileung.infra.web.Initializer;
 import com.mysql.jdbc.AbandonedConnectionCleanupThread;
 
 @WebListener
-public class AppInitializer implements ServletContextListener {
+public class AppInitializer extends Initializer implements ServletContextListener {
 
 	private final static Logger logger = LoggerFactory.getLogger(AppInitializer.class);
 
-	private static Injector injector;
-
-	public static Injector getInjector() {
-		return injector;
-	}
-
 	@Override
 	public void contextInitialized(ServletContextEvent sce) {
-		injector = Guice.createInjector(Stage.DEVELOPMENT, new UtilModule(), new CacheModule(), new DaoModule());
-		logger.info("项目已启动...");
+		injector = Guice.createInjector(Stage.PRODUCTION, new UtilModule(), new CacheModule(), new DaoModule());
+		logger.info("已启动...");
 	}
 
 	@Override
 	public void contextDestroyed(ServletContextEvent sce) {
 		injector.getInstance(CacheHelper.class).close();
 		injector.getInstance(ThreadExecution.class).shutdown();
-		((DruidDataSource) injector.getInstance(DataSource.class)).close();
+		((DataSource) injector.getInstance(DataSource.class)).close();
 		ServletGroupTemplate.instance().getGroupTemplate().close();
 		Enumeration<Driver> drivers = DriverManager.getDrivers();
 		Driver d = null;
@@ -64,6 +57,6 @@ public class AppInitializer implements ServletContextListener {
 		} catch (InterruptedException e) {
 			logger.warn("SEVERE problem cleaning up: {}", e.getMessage());
 		}
-		logger.info("项目已停止...");
+		logger.info("已停止...");
 	}
 }

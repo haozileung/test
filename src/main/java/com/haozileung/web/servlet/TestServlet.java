@@ -7,14 +7,18 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.inject.Inject;
 import com.haozileung.infra.web.BaseServlet;
+import com.haozileung.web.service.IMyService;
 
 /**
  * @author Haozi
  *
  */
-@WebServlet(urlPatterns = "*.html", loadOnStartup = 1)
-public class ViewServlet extends BaseServlet {
+@WebServlet(urlPatterns = "/test", loadOnStartup = 1)
+public class TestServlet extends BaseServlet {
+	@Inject
+	private IMyService service;
 	/**
 	 * 
 	 */
@@ -22,9 +26,8 @@ public class ViewServlet extends BaseServlet {
 
 	@Override
 	public String get(HttpServletRequest req, HttpServletResponse resp) {
-		if (req.getRequestURI().endsWith("/")) {
-			return req.getRequestURI() + "index.html";
-		}
-		return req.getRequestURI();
+		service.test();
+		return null;
 	}
+
 }
