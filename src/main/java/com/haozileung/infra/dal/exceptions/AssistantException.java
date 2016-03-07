@@ -7,79 +7,75 @@ package com.haozileung.infra.dal.exceptions;
  */
 public class AssistantException extends RuntimeException {
 
-	private static final long serialVersionUID = -3039546280700778038L;
+    private static final long serialVersionUID = -3039546280700778038L;
 
-	/**
-	 * Exception code
-	 */
-	protected String resultCode = "UN_KNOWN_EXCEPTION";
+    /**
+     * Exception code
+     */
+    protected String resultCode = "UN_KNOWN_EXCEPTION";
 
-	/**
-	 * Exception message
-	 */
-	protected String resultMsg = "未知异常";
+    /**
+     * Exception message
+     */
+    protected String resultMsg = "未知异常";
 
-	/**
-	 * Constructor
-	 */
-	public AssistantException() {
-		super();
-	}
+    /**
+     * Constructor
+     */
+    public AssistantException() {
+        super();
+    }
 
-	public AssistantException(String message, Throwable e) {
-		super(message, e);
-		this.resultMsg = message;
-	}
+    public AssistantException(String message, Throwable e) {
+        super(message, e);
+        this.resultMsg = message;
+    }
 
-	/**
-	 * Instantiates a new AssistantException.
-	 *
-	 * @param e
-	 *            the e
-	 */
-	public AssistantException(Throwable e) {
-		super(e);
-		this.resultMsg = e.getMessage();
-	}
+    /**
+     * Instantiates a new AssistantException.
+     *
+     * @param e the e
+     */
+    public AssistantException(Throwable e) {
+        super(e);
+        this.resultMsg = e.getMessage();
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param message
-	 *            the message
-	 */
-	public AssistantException(String message) {
-		super(message);
-		this.resultMsg = message;
-	}
+    /**
+     * Constructor
+     *
+     * @param message the message
+     */
+    public AssistantException(String message) {
+        super(message);
+        this.resultMsg = message;
+    }
 
-	/**
-	 * Constructor
-	 *
-	 * @param code
-	 *            the code
-	 * @param message
-	 *            the message
-	 */
-	public AssistantException(String code, String message) {
-		super(message);
-		this.resultCode = code;
-		this.resultMsg = message;
-	}
+    /**
+     * Constructor
+     *
+     * @param code    the code
+     * @param message the message
+     */
+    public AssistantException(String code, String message) {
+        super(message);
+        this.resultCode = code;
+        this.resultMsg = message;
+    }
 
-	public String getResultCode() {
-		return resultCode;
-	}
+    public String getResultCode() {
+        return resultCode;
+    }
 
-	public void setResultCode(String resultCode) {
-		this.resultCode = resultCode;
-	}
+    public void setResultCode(String resultCode) {
+        this.resultCode = resultCode;
+    }
 
-	public String getResultMsg() {
-		return resultMsg;
-	}
+    public String getResultMsg() {
+        return resultMsg;
+    }
 
-	public void setResultMsg(String resultMsg) {
-		this.resultMsg = resultMsg;
-	}
+    public void setResultMsg(String resultMsg) {
+        this.resultMsg = resultMsg;
+    }
 }

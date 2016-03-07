@@ -9,89 +9,89 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AutoField {
 
-	/**
-	 * 不以传参方式构建，符号中内容不会被转换
-	 */
-	public static final String[] NATIVE_CODE_TOKEN = { "{", "}" };
+    /**
+     * 不以传参方式构建，符号中内容不会被转换
+     */
+    public static final String[] NATIVE_CODE_TOKEN = {"{", "}"};
 
-	/**
-	 * 不以传参方式构建，符号中内容会被转换(field -> column)
-	 */
-	public static final String[] NATIVE_FIELD_TOKEN = { "[", "]" };
+    /**
+     * 不以传参方式构建，符号中内容会被转换(field -> column)
+     */
+    public static final String[] NATIVE_FIELD_TOKEN = {"[", "]"};
 
-	/**
-	 * 名称
-	 */
-	private String name;
+    /**
+     * 名称
+     */
+    private String name;
 
-	/**
-	 * 操作符 and or
-	 */
-	private String sqlOperator;
+    /**
+     * 操作符 and or
+     */
+    private String sqlOperator;
 
-	/**
-	 * 本身操作符 值大于、小于、in等
-	 */
-	private String fieldOperator;
+    /**
+     * 本身操作符 值大于、小于、in等
+     */
+    private String fieldOperator;
 
-	/**
-	 * 值
-	 */
-	private Object value;
+    /**
+     * 值
+     */
+    private Object value;
 
-	/**
-	 * 类型
-	 */
-	private AutoFieldType type;
+    /**
+     * 类型
+     */
+    private AutoFieldType type;
 
-	/**
-	 * 是否原生字段
-	 *
-	 * @return
-	 */
-	public boolean isNativeField() {
-		return (StringUtils.startsWith(name, NATIVE_CODE_TOKEN[0]) && StringUtils.endsWith(name, NATIVE_CODE_TOKEN[1])
-				|| StringUtils.startsWith(name, NATIVE_FIELD_TOKEN[0])
-						&& StringUtils.endsWith(name, NATIVE_FIELD_TOKEN[1]));
-	}
+    /**
+     * 是否原生字段
+     *
+     * @return
+     */
+    public boolean isNativeField() {
+        return (StringUtils.startsWith(name, NATIVE_CODE_TOKEN[0]) && StringUtils.endsWith(name, NATIVE_CODE_TOKEN[1])
+                || StringUtils.startsWith(name, NATIVE_FIELD_TOKEN[0])
+                && StringUtils.endsWith(name, NATIVE_FIELD_TOKEN[1]));
+    }
 
-	public String getName() {
-		return name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public Object getValue() {
-		return value;
-	}
+    public Object getValue() {
+        return value;
+    }
 
-	public void setValue(Object value) {
-		this.value = value;
-	}
+    public void setValue(Object value) {
+        this.value = value;
+    }
 
-	public AutoFieldType getType() {
-		return type;
-	}
+    public AutoFieldType getType() {
+        return type;
+    }
 
-	public void setType(AutoFieldType type) {
-		this.type = type;
-	}
+    public void setType(AutoFieldType type) {
+        this.type = type;
+    }
 
-	public String getSqlOperator() {
-		return sqlOperator;
-	}
+    public String getSqlOperator() {
+        return sqlOperator;
+    }
 
-	public void setSqlOperator(String sqlOperator) {
-		this.sqlOperator = sqlOperator;
-	}
+    public void setSqlOperator(String sqlOperator) {
+        this.sqlOperator = sqlOperator;
+    }
 
-	public String getFieldOperator() {
-		return fieldOperator;
-	}
+    public String getFieldOperator() {
+        return fieldOperator;
+    }
 
-	public void setFieldOperator(String fieldOperator) {
-		this.fieldOperator = fieldOperator;
-	}
+    public void setFieldOperator(String fieldOperator) {
+        this.fieldOperator = fieldOperator;
+    }
 }

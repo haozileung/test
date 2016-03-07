@@ -13,7 +13,7 @@
     "browserify": "*",
     "event-stream": "*",
     "glob": "*",
-    "gulp": "*",    
+    "gulp": "*",
     "gulp-webserver": "*",
     "react": "*",
     "vinyl-source-stream": "*",

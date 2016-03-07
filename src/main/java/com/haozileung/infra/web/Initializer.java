@@ -4,10 +4,10 @@ import com.google.inject.Injector;
 
 public class Initializer {
 
-	protected static Injector injector;
+    protected static Injector injector;
 
-	public static Injector getInjector() {
-		return injector;
-	}
+    public static Injector getInjector() {
+        return injector;
+    }
 
 }

@@ -3,53 +3,70 @@ package com.haozileung.web.domain;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
-import com.haozileung.infra.dal.annotation.Column;
-import com.haozileung.infra.dal.annotation.Table;
-
-@Table("test")
 public class User {
 
-	private Integer age;
-	private Integer id;
-	private Integer status;
-	@Column("name")
-	private String userName;
+    private Long userId;
 
-	public Integer getAge() {
-		return age;
-	}
+    private String username;
 
-	public Integer getId() {
-		return id;
-	}
+    private String password;
 
-	public Integer getStatus() {
-		return status;
-	}
+    private String email;
 
-	public String getUserName() {
-		return userName;
-	}
+    private Long roleId;
 
-	public void setAge(Integer age) {
-		this.age = age;
-	}
+    private Status status;
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public String getUsername() {
+        return username;
+    }
 
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-	}
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }
+
+    public Long getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(Long roleId) {
+        this.roleId = roleId;
+    }
 }

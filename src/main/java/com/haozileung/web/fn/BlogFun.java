@@ -7,8 +7,8 @@ import org.beetl.core.Function;
  * @author liang
  */
 public class BlogFun implements Function {
-	@Override
-	public String call(Object[] paras, Context ctx) {
-		return "test223";
-	}
+    @Override
+    public String call(Object[] paras, Context ctx) {
+        return "test223";
+    }
 }

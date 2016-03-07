@@ -5,5 +5,5 @@ package com.haozileung.infra.dal.handler;
  */
 public interface TokenHandler {
 
-	String handleToken(String content);
+    String handleToken(String content);
 }

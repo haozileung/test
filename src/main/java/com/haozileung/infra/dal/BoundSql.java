@@ -9,20 +9,20 @@ import java.util.List;
  */
 public interface BoundSql {
 
-	/**
-	 * Get execute sql. Parameter with a ? mark and corresponds below
-	 * parameters.
-	 *
-	 * @return
-	 */
-	String getSql();
+    /**
+     * Get execute sql. Parameter with a ? mark and corresponds below
+     * parameters.
+     *
+     * @return
+     */
+    String getSql();
 
-	/**
-	 * Get execute sql parameters. Allowed to return empty list,Don't return
-	 * null.
-	 *
-	 * @return
-	 */
-	List<Object> getParameters();
+    /**
+     * Get execute sql parameters. Allowed to return empty list,Don't return
+     * null.
+     *
+     * @return
+     */
+    List<Object> getParameters();
 
 }
