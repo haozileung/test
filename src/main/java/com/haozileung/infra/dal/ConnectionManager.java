@@ -4,16 +4,20 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
 
-import javax.sql.DataSource;
+import org.apache.tomcat.jdbc.pool.DataSource;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.Maps;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
 import com.google.inject.Key;
 import com.google.inject.name.Names;
-import com.haozileung.web.init.AppInitializer;
 
 public class ConnectionManager {
 	private final ThreadLocal<Map<String, Connection>> connections = new ThreadLocal<Map<String, Connection>>();
+
+	@Inject
+	private Injector injector;
 
 	public Connection getConnection() throws SQLException {
 		Map<String, Connection> connMap = connections.get();
@@ -23,8 +27,7 @@ public class ConnectionManager {
 		String name = MoreObjects.firstNonNull(DataSourceHolder.getName(), "default");
 		Connection conn = connMap.get(name);
 		if (conn == null || conn.isClosed()) {
-			DataSource dataSource = AppInitializer.getInjector()
-					.getInstance(Key.get(DataSource.class, Names.named(name)));
+			DataSource dataSource = injector.getInstance(Key.get(DataSource.class, Names.named(name)));
 			if (dataSource == null) {
 				return null;
 			}
