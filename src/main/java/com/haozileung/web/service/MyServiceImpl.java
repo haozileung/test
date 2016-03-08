@@ -3,7 +3,7 @@ package com.haozileung.web.service;
 import com.google.inject.Inject;
 import com.haozileung.infra.dal.JdbcDao;
 import com.haozileung.infra.dal.build.Criteria;
-import com.haozileung.web.domain.system.User;
+import com.haozileung.web.domain.system.permission.User;
 
 public class MyServiceImpl implements IMyService {
     @Inject

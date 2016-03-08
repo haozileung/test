@@ -1,7 +1,4 @@
-package com.haozileung.web.domain.system;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
+package com.haozileung.web.domain.system.permission;
 
 public class User {
 
@@ -13,9 +10,9 @@ public class User {
 
     private String email;
 
-    private Long roleId;
+    private String remarks;
 
-    private Status status;
+    private Integer status;
 
     public Long getUserId() {
         return userId;
@@ -49,24 +46,19 @@ public class User {
         this.email = email;
     }
 
-    public Status getStatus() {
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(Integer status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
-    }
-
-    public Long getRoleId() {
-        return roleId;
-    }
-
-    public void setRoleId(Long roleId) {
-        this.roleId = roleId;
     }
 }
