@@ -1,3 +1,0 @@
-#!/usr/bin/env bash
-docker run --name test-data --link mysql:mysql -d test-data-img
-docker run -d -p 8080:8080 --name test-app --volumes-from=test-data -e JAVA_OPTS='-server -Xms1024m -Xmx1024m' yamchaleung/tomcat
