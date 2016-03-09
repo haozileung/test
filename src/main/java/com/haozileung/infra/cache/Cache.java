@@ -15,7 +15,7 @@ public interface Cache {
      * @return the cached object or <tt>null</tt>
      * @throws CacheException
      */
-    <T> T get(Object key) throws CacheException;
+    <T> T get(String key) throws CacheException;
 
     /**
      * Add an item to the cache, nontransactionally, with failfast semantics
@@ -24,7 +24,7 @@ public interface Cache {
      * @param value
      * @throws CacheException
      */
-    <T> void put(Object key, T value) throws CacheException;
+    <T> void put(String key, T value) throws CacheException;
 
     /**
      * Add an item to the cache
@@ -33,14 +33,14 @@ public interface Cache {
      * @param value
      * @throws CacheException
      */
-    void update(Object key, Object value) throws CacheException;
+    void update(String key, Object value) throws CacheException;
 
-    <T> List<T> keys() throws CacheException;
+    List<String> keys() throws CacheException;
 
     /**
      * Remove an item from the cache
      */
-    void remove(Object key) throws CacheException;
+    void remove(String key) throws CacheException;
 
     /**
      * Clear the cache

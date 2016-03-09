@@ -1,34 +1,30 @@
-package com.haozileung.web.domain.system.dictionary;
+package com.haozileung.web.domain.permission;
 
 /**
  * Created by haozi on 16-3-8.
  */
-public class DicType {
-
-    private Long dicTypeId;
-
-    private Long dictionaryId;
-
+public class Operation {
+    private Long operationId;
+    private String url;
     private String name;
-
     private String remarks;
 
     private Integer status;
 
-    public Long getDicTypeId() {
-        return dicTypeId;
+    public Long getOperationId() {
+        return operationId;
     }
 
-    public void setDicTypeId(Long dicTypeId) {
-        this.dicTypeId = dicTypeId;
+    public void setOperationId(Long operationId) {
+        this.operationId = operationId;
     }
 
-    public Long getDictionaryId() {
-        return dictionaryId;
+    public String getUrl() {
+        return url;
     }
 
-    public void setDictionaryId(Long dictionaryId) {
-        this.dictionaryId = dictionaryId;
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public String getName() {

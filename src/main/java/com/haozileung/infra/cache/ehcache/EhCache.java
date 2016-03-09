@@ -16,6 +16,7 @@
  */
 package com.haozileung.infra.cache.ehcache;
 
+import com.google.common.base.Strings;
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheException;
 import net.sf.ehcache.CacheManager;
@@ -55,14 +56,12 @@ public class EhCache implements Cache {
      * not found or expired
      * @throws CacheException
      */
-
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Object key) throws CacheException {
+    public <T> T get(String key) throws CacheException {
         try {
-            if (key == null)
+            if (Strings.isNullOrEmpty(key)) {
                 return null;
-            else {
+            } else {
                 Element element = cache.get(key);
                 if (element != null)
                     return (T) element.getObjectValue();
@@ -82,7 +81,7 @@ public class EhCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void update(Object key, Object value) throws CacheException {
+    public void update(String key, Object value) throws CacheException {
         put(key, value);
     }
 
@@ -95,7 +94,7 @@ public class EhCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void put(Object key, Object value) throws CacheException {
+    public void put(String key, Object value) throws CacheException {
         try {
             Element element = new Element(key, value);
             cache.put(element);
@@ -118,7 +117,7 @@ public class EhCache implements Cache {
      * @throws CacheException
      */
     @Override
-    public void remove(Object key) throws CacheException {
+    public void remove(String key) throws CacheException {
         try {
             cache.remove(key);
         } catch (IllegalStateException e) {

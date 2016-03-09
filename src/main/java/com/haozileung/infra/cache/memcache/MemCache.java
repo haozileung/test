@@ -1,5 +1,6 @@
 package com.haozileung.infra.cache.memcache;
 
+import com.google.common.base.Strings;
 import com.haozileung.infra.cache.Cache;
 import com.haozileung.infra.cache.CacheException;
 import com.haozileung.infra.cache.ehcache.EhCacheManager;
@@ -26,7 +27,6 @@ public class MemCache implements Cache {
         this.hash = name.hashCode();
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public List<String> keys() throws CacheException {
         return null;
@@ -40,10 +40,9 @@ public class MemCache implements Cache {
      * not found or expired
      * @throws CacheException
      */
-    @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Object key) throws CacheException {
-        return (key != null) ? (T) mc.get(String.valueOf(key), hash) : null;
+    public <T> T get(String key) throws CacheException {
+        return !Strings.isNullOrEmpty(key) ? (T) mc.get(key, hash) : null;
     }
 
     /**
@@ -55,7 +54,7 @@ public class MemCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void update(Object key, Object value) throws CacheException {
+    public void update(String key, Object value) throws CacheException {
         put(key, value);
     }
 
@@ -68,16 +67,16 @@ public class MemCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void put(Object key, Object value) throws CacheException {
-        if (key == null) {
+    public void put(String key, Object value) throws CacheException {
+        if (Strings.isNullOrEmpty(key)) {
             return;
         }
         if (secondToLive <= 0) {
-            mc.set(String.valueOf(key), value, hash);
+            mc.set(key, value, hash);
         } else {
             Calendar cal = Calendar.getInstance();
             cal.add(Calendar.SECOND, secondToLive);
-            mc.set(String.valueOf(key), value, cal.getTime(), hash);
+            mc.set(key, value, cal.getTime(), hash);
         }
     }
 
@@ -90,9 +89,9 @@ public class MemCache implements Cache {
      * @throws CacheException
      */
     @Override
-    public void remove(Object key) throws CacheException {
-        if (key != null) {
-            mc.delete(String.valueOf(key));
+    public void remove(String key) throws CacheException {
+        if (!Strings.isNullOrEmpty(key)) {
+            mc.delete(key);
         }
     }
 

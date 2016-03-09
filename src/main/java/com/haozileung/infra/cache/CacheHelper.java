@@ -16,7 +16,7 @@ public class CacheHelper {
     private static final Logger logger = LoggerFactory.getLogger(CacheHelper.class);
 
     @Inject
-    @Named("ecache")
+    @Named("ehcache")
     private CacheManager l1cache;
     @Inject
     @Named("memcached")

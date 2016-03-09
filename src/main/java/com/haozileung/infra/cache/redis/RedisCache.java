@@ -31,21 +31,12 @@ public class RedisCache implements Cache {
      * @return
      */
     @SuppressWarnings("rawtypes")
-    private String getKeyName(Object key) {
-
-        if (key instanceof Number)
-            return region + ":I:" + key;
-        else {
-            Class keyClass = key.getClass();
-            if (String.class.equals(keyClass) || StringBuffer.class.equals(keyClass)
-                    || StringBuilder.class.equals(keyClass))
-                return region + ":S:" + key;
-        }
-        return region + ":O:" + key;
+    private String getKeyName(String key) {
+        return region + ":" + key;
     }
 
     @Override
-    public <T> T get(Object key) throws CacheException {
+    public <T> T get(String key) throws CacheException {
         T obj = null;
         Jedis cache = provider.getResource();
         try {
@@ -55,7 +46,7 @@ public class RedisCache implements Cache {
             if (b != null)
                 obj = SerializationUtils.deserialize(b);
         } catch (Exception e) {
-            log.error("Error occured when get data from L2 cache", e);
+            log.error("Error when get data from redis cache", e);
             if (e instanceof IOException || e instanceof NullPointerException)
                 remove(key);
         } finally {
@@ -65,7 +56,7 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    public void put(Object key, Object value) throws CacheException {
+    public void put(String key, Object value) throws CacheException {
         if (value == null)
             remove(key);
         else {
@@ -81,12 +72,12 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    public void update(Object key, Object value) throws CacheException {
+    public void update(String key, Object value) throws CacheException {
         put(key, value);
     }
 
     @Override
-    public void remove(Object key) throws CacheException {
+    public void remove(String key) throws CacheException {
         Jedis cache = provider.getResource();
         try {
             cache.del(getKeyName(key));
@@ -105,7 +96,7 @@ public class RedisCache implements Cache {
             List<String> keys = new ArrayList<String>();
             keys.addAll(cache.keys(region + ":*"));
             for (int i = 0; i < keys.size(); i++) {
-                keys.set(i, keys.get(i).substring(region.length() + 3));
+                keys.set(i, keys.get(i).substring(region.length() + 1));
             }
             return keys;
         } catch (Exception e) {

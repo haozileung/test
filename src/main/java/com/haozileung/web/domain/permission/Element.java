@@ -1,30 +1,30 @@
-package com.haozileung.web.domain.system.permission;
+package com.haozileung.web.domain.permission;
 
 /**
  * Created by haozi on 16-3-8.
  */
-public class Operation {
-    private Long operationId;
-    private String url;
+public class Element {
+    private Long elementId;
+    private String code;
     private String name;
     private String remarks;
 
     private Integer status;
 
-    public Long getOperationId() {
-        return operationId;
+    public Long getElementId() {
+        return elementId;
     }
 
-    public void setOperationId(Long operationId) {
-        this.operationId = operationId;
+    public void setElementId(Long elementId) {
+        this.elementId = elementId;
     }
 
-    public String getUrl() {
-        return url;
+    public String getCode() {
+        return code;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {

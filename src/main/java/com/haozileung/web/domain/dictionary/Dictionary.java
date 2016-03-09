@@ -1,4 +1,4 @@
-package com.haozileung.web.domain.system.dictionary;
+package com.haozileung.web.domain.dictionary;
 
 /**
  * Created by haozi on 16-3-7.

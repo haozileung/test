@@ -25,7 +25,7 @@ public class CacheModule extends AbstractModule {
     @Override
     protected void configure() {
         bind(CacheHelper.class).toInstance(new CacheHelper());
-        bind(CacheManager.class).annotatedWith(Names.named("ecache")).to(EhCacheManager.class);
+        bind(CacheManager.class).annotatedWith(Names.named("ehcache")).to(EhCacheManager.class);
         bind(CacheManager.class).annotatedWith(Names.named("memcached")).to(MemcacheManager.class);
         bind(CacheManager.class).annotatedWith(Names.named("redisCache")).to(RedisCacheManager.class);
         bind(CacheProvider.class).annotatedWith(Names.named("redisCacheProvider")).to(RedisCacheProvider.class);

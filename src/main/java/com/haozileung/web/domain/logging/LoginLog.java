@@ -1,4 +1,4 @@
-package com.haozileung.web.domain.system.logging;
+package com.haozileung.web.domain.logging;
 
 import java.util.Date;
 

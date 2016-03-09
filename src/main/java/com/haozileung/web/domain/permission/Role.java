@@ -1,4 +1,4 @@
-package com.haozileung.web.domain.system.permission;
+package com.haozileung.web.domain.permission;
 
 /**
  * Created by haozi on 16-3-7.
