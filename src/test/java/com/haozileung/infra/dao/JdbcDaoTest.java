@@ -3,14 +3,14 @@ package com.haozileung.infra.dao;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-import com.haozileung.web.service.IMyService;
+import com.haozileung.web.service.dictionary.IDictionaryService;
 import org.junit.Before;
 import org.junit.Test;
 
 public class JdbcDaoTest {
 
     @Inject
-    private IMyService service;
+    private IDictionaryService service;
 
     @Test
     public void testGuiceIOC() {

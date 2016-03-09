@@ -56,7 +56,7 @@ public class DaoModule extends AbstractModule {
             DataSource ds = new DataSource();
             ds.setPoolProperties(p);
             logger.debug("Binding DataSouce to {}", ds);
-            bind(DataSource.class).annotatedWith(Names.named("default")).toInstance(ds);
+            bind(javax.sql.DataSource.class).annotatedWith(Names.named("default")).toInstance(ds);
         } catch (ConfigurationException e) {
             logger.error("Config File Load Error: {}", e.getMessage());
         }

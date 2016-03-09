@@ -52,7 +52,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = Criteria.delete(clazz).where(getNameHandler().getPkFieldName(clazz), new Object[]{id})
                 .build(true, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -63,7 +63,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int delete(Criteria criteria) {
         BoundSql boundSql = criteria.build(true, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -74,7 +74,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int delete(Object entity) {
         BoundSql boundSql = Criteria.delete(entity.getClass()).build(entity, true, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -83,10 +83,10 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 
     @Override
     public void deleteAll(Class<?> clazz) {
-        String tableName = this.getNameHandler().getTableName(clazz);
+        String tableName = getNameHandler().getTableName(clazz);
         String sql = "TRUNCATE TABLE " + tableName;
         try {
-            this.runner.update(connectionManager.getConnection(), sql);
+            runner.update(connectionManager.getConnection(), sql);
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
         }
@@ -99,7 +99,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         // 采用list方式查询，当记录不存在时返回null而不会抛出异常
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>(clazz), boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -119,7 +119,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         // 采用list方式查询，当记录不存在时返回null而不会抛出异常
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) criteria.getEntityClass()), id);
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -133,7 +133,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     protected String getDialect() {
         if (StringUtils.isBlank(dialect)) {
             try {
-                dialect = this.connectionManager.getConnection().getMetaData().getDatabaseProductName().toUpperCase();
+                dialect = connectionManager.getConnection().getMetaData().getDatabaseProductName().toUpperCase();
             } catch (Exception e) {
                 return null;
             }
@@ -143,7 +143,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     }
 
     public void setDialect(String dialect) {
-        this.dialect = dialect;
+        dialect = dialect;
     }
 
     /**
@@ -152,11 +152,11 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
      * @return
      */
     protected NameHandler getNameHandler() {
-        return this.nameHandler;
+        return nameHandler;
     }
 
     public void setNameHandler(NameHandler nameHandler) {
-        this.nameHandler = nameHandler;
+        nameHandler = nameHandler;
     }
 
     /**
@@ -165,19 +165,19 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
      * @return
      */
     protected QueryRunner getRunner() {
-        return this.runner;
+        return runner;
     }
 
     public void setRunner(QueryRunner runner) {
-        this.runner = runner;
+        runner = runner;
     }
 
     protected SqlFactory getSqlFactory() {
-        return this.sqlFactory;
+        return sqlFactory;
     }
 
     public void setSqlFactory(SqlFactory sqlFactory) {
-        this.sqlFactory = sqlFactory;
+        sqlFactory = sqlFactory;
     }
 
     /**
@@ -188,7 +188,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
      */
     protected Long insert(final BoundSql boundSql) {
         try {
-            return this.runner.insert(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Long>(),
+            return runner.insert(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Long>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -198,12 +198,12 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     @Override
     public Long insert(Criteria criteria) {
         final BoundSql boundSql = criteria.build(true, getNameHandler());
-        return this.insert(boundSql);
+        return insert(boundSql);
     }
 
     @Override
     public Long insert(Object entity) {
-        NameHandler handler = this.getNameHandler();
+        NameHandler handler = getNameHandler();
         Criteria criteria = Criteria.insert(entity.getClass());
         String nativePKValue = handler.getPkNativeValue(entity.getClass(), getDialect());
         if (StringUtils.isNotBlank(nativePKValue)) {
@@ -212,14 +212,14 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
                     nativePKValue);
         }
         final BoundSql boundSql = criteria.build(entity, true, getNameHandler());
-        return this.insert(boundSql);
+        return insert(boundSql);
     }
 
     @Override
     public int queryCount(Criteria criteria) {
         BoundSql boundSql = criteria.addSelectFunc("count(*)").build(true, getNameHandler());
         try {
-            return this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -231,7 +231,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = Criteria.select(entity.getClass()).addSelectFunc("count(*)").build(entity, true,
                 getNameHandler());
         try {
-            return this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -242,7 +242,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int queryCount(Object entity, Criteria criteria) {
         BoundSql boundSql = criteria.addSelectFunc("count(*)").build(entity, true, getNameHandler());
         try {
-            return this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -254,7 +254,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = criteria.build(true, getNameHandler());
         List<Map<String, Object>> mapList = null;
         try {
-            mapList = this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new MapListHandler(),
+            mapList = runner.query(connectionManager.getConnection(), boundSql.getSql(), new MapListHandler(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -264,26 +264,21 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     }
 
     @Override
-    public <T> T queryForObject(Criteria criteria) {
-        return querySingleResult(criteria);
-    }
-
-    @Override
     public List<Map<String, Object>> queryForSql(String refSql) {
-        return this.queryForSql(refSql, null, null);
+        return queryForSql(refSql, null, null);
     }
 
     @Override
     public List<Map<String, Object>> queryForSql(String refSql, Object[] params) {
-        return this.queryForSql(refSql, null, params);
+        return queryForSql(refSql, null, params);
     }
 
     @Override
     public List<Map<String, Object>> queryForSql(String refSql, String expectParamKey, Object[] params) {
-        BoundSql boundSql = this.sqlFactory.getBoundSql(refSql, expectParamKey, params);
+        BoundSql boundSql = sqlFactory.getBoundSql(refSql, expectParamKey, params);
         List<Map<String, Object>> mapList = null;
         try {
-            mapList = this.runner.query(connectionManager.getConnection(), boundSql.getSql(), new MapListHandler(),
+            mapList = runner.query(connectionManager.getConnection(), boundSql.getSql(), new MapListHandler(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -298,10 +293,9 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = Criteria.select(clazz).build(true, getNameHandler());
         List<?> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) clazz), boundSql.getParameters().toArray());
         } catch (Exception e) {
-
             throw new JdbcAssistantException(e);
         }
         return (List<T>) list;
@@ -313,7 +307,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = criteria.build(true, getNameHandler());
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) criteria.getEntityClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -327,7 +321,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -342,7 +336,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         BoundSql boundSql = criteria.build(entity, true, getNameHandler());
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -358,7 +352,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         // 采用list方式查询，当记录不存在时返回null而不会抛出异常
         List<?> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) criteria.getEntityClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -377,7 +371,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
         // 采用list方式查询，当记录不存在时返回null而不会抛出异常
         List<T> list = null;
         try {
-            list = this.runner.query(connectionManager.getConnection(), boundSql.getSql(),
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
                     new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -393,7 +387,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public void save(Criteria criteria) {
         final BoundSql boundSql = criteria.build(true, getNameHandler());
         try {
-            this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -405,7 +399,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public void save(Object entity) {
         final BoundSql boundSql = Criteria.insert(entity.getClass()).build(entity, true, getNameHandler());
         try {
-            this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
 
@@ -417,7 +411,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int update(Criteria criteria) {
         BoundSql boundSql = criteria.build(true, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -428,7 +422,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int update(Object entity) {
         BoundSql boundSql = Criteria.update(entity.getClass()).build(entity, true, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -439,7 +433,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     public int update(Object entity, boolean isIgnoreNull) {
         BoundSql boundSql = Criteria.update(entity.getClass()).build(entity, isIgnoreNull, getNameHandler());
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -448,19 +442,19 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 
     @Override
     public int updateForSql(String refSql) {
-        return this.updateForSql(refSql, null, null);
+        return updateForSql(refSql, null, null);
     }
 
     @Override
     public int updateForSql(String refSql, Object[] params) {
-        return this.updateForSql(refSql, null, params);
+        return updateForSql(refSql, null, params);
     }
 
     @Override
     public int updateForSql(String refSql, String expectParamKey, Object[] params) {
-        BoundSql boundSql = this.sqlFactory.getBoundSql(refSql, expectParamKey, params);
+        BoundSql boundSql = sqlFactory.getBoundSql(refSql, expectParamKey, params);
         try {
-            return this.runner.update(connectionManager.getConnection(), boundSql.getSql(),
+            return runner.update(connectionManager.getConnection(), boundSql.getSql(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);

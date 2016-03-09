@@ -405,39 +405,4 @@ public class Pager implements Serializable {
 
         return 0;
     }
-
-    /**
-     * 转换成字符串表示。
-     *
-     * @return 字符串表示。
-     */
-    @Override
-    public String toString() {
-        StringBuffer sb = new StringBuffer("Pager: page ");
-
-        if (getPages() < 1) {
-            sb.append(getCurPage());
-        } else {
-            int[] slider = getSlider();
-
-            for (int i = 0; i < slider.length; i++) {
-                if (isDisabledPage(slider[i])) {
-                    sb.append('[').append(slider[i]).append(']');
-                } else {
-                    sb.append(slider[i]);
-                }
-
-                if (i < (slider.length - 1)) {
-                    sb.append('\t');
-                }
-            }
-        }
-
-        sb.append(" of ").append(getPages()).append(",\n");
-        sb.append("    Showing items ").append(getBeginIndex()).append(" to ").append(getEndIndex()).append(" (total ")
-                .append(getItemsTotal()).append(" items), ");
-        sb.append("offset=").append(getOffset()).append(", length=").append(getActualLength());
-
-        return sb.toString();
-    }
 }

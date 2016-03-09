@@ -195,8 +195,6 @@ public interface JdbcDao {
      */
     <T> T querySingleResult(Criteria criteria);
 
-    <T> T queryForObject(Criteria criteria);
-
     List<Map<String, Object>> queryForList(Criteria criteria);
 
     /**

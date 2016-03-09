@@ -5,7 +5,7 @@ package com.haozileung.web.servlet;
 
 import com.google.inject.Inject;
 import com.haozileung.infra.web.BaseServlet;
-import com.haozileung.web.service.IMyService;
+import com.haozileung.web.service.dictionary.IDictionaryService;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,7 +21,7 @@ public class TestServlet extends BaseServlet {
      */
     private static final long serialVersionUID = 4737169523928049554L;
     @Inject
-    private IMyService service;
+    private IDictionaryService service;
 
     @Override
     public String get(HttpServletRequest req, HttpServletResponse resp) {
