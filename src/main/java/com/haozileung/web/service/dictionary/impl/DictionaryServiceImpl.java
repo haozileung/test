@@ -28,7 +28,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
     @Override
     public PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize) {
         PageResult<Dictionary> pager = new PageResult<Dictionary>();
-        pager.setRows(dao.queryList(dictionary));
+        pager.setRows(dao.queryList(dictionary,pageNo,pageSize));
         pager.setTotal(Long.valueOf(dao.queryCount(dictionary)));
         return pager;
     }

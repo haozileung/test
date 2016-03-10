@@ -289,7 +289,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> List<T> queryList(Class<?> clazz) {
+    public <T> List<T> queryAll(Class<?> clazz) {
         BoundSql boundSql = Criteria.select(clazz).build(true, getNameHandler());
         List<?> list = null;
         try {
@@ -317,6 +317,24 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 
     @Override
     @SuppressWarnings("unchecked")
+    public <T> List<T> queryList(Criteria criteria, int pageNo, int pageSize) {
+        String page = "";
+        if (pageNo > 1 && pageSize > 0) {
+            page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
+        }
+        BoundSql boundSql = criteria.build(true, getNameHandler());
+        List<T> list = null;
+        try {
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql() + page,
+                    new BeanListHandler<T>((Class<T>) criteria.getEntityClass()), boundSql.getParameters().toArray());
+        } catch (Exception e) {
+            throw new JdbcAssistantException(e);
+        }
+        return list;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public <T> List<T> queryList(T entity) {
         BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
         List<T> list = null;
@@ -332,11 +350,49 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
 
     @Override
     @SuppressWarnings("unchecked")
+    public <T> List<T> queryList(T entity, int pageNo, int pageSize) {
+        String page = "";
+        if (pageNo > 1 && pageSize > 0) {
+            page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
+        }
+        BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
+        List<T> list = null;
+        try {
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql() + page,
+                    new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
+        } catch (Exception e) {
+
+            throw new JdbcAssistantException(e);
+        }
+        return list;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
     public <T> List<T> queryList(T entity, Criteria criteria) {
         BoundSql boundSql = criteria.build(entity, true, getNameHandler());
         List<T> list = null;
         try {
             list = runner.query(connectionManager.getConnection(), boundSql.getSql(),
+                    new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
+        } catch (Exception e) {
+
+            throw new JdbcAssistantException(e);
+        }
+        return list;
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> List<T> queryList(T entity, Criteria criteria, int pageNo, int pageSize) {
+        String page = "";
+        if (pageNo > 1 && pageSize > 0) {
+            page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
+        }
+        BoundSql boundSql = criteria.build(entity, true, getNameHandler());
+        List<T> list = null;
+        try {
+            list = runner.query(connectionManager.getConnection(), boundSql.getSql() + page,
                     new BeanListHandler<T>((Class<T>) entity.getClass()), boundSql.getParameters().toArray());
         } catch (Exception e) {
 

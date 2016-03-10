@@ -108,11 +108,21 @@ public interface JdbcDao {
     /**
      * 按设置的条件查询
      *
+     * @param <T>      the type parameter
+     * @param criteria the criteria
+     * @return list
+     * @throws SQLException
+     */
+    <T> List<T> queryList(Criteria criteria, int pageNo, int pageSize);
+
+    /**
+     * 按设置的条件查询
+     *
      * @param <T>   the type parameter
      * @param clazz the clazz
      * @return list
      */
-    <T> List<T> queryList(Class<?> clazz);
+    <T> List<T> queryAll(Class<?> clazz);
 
     /**
      * 查询列表
@@ -125,12 +135,30 @@ public interface JdbcDao {
     /**
      * 查询列表
      *
+     * @param entity the entity
+     * @return the list
+     */
+    <T> List<T> queryList(T entity, int pageNo, int pageSize);
+
+    /**
+     * 查询列表
+     *
      * @param <T>      the type parameter
      * @param entity   the entity
      * @param criteria the criteria
      * @return the list
      */
     <T> List<T> queryList(T entity, Criteria criteria);
+
+    /**
+     * 查询列表
+     *
+     * @param <T>      the type parameter
+     * @param entity   the entity
+     * @param criteria the criteria
+     * @return the list
+     */
+    <T> List<T> queryList(T entity, Criteria criteria, int pageNo, int pageSize);
 
     /**
      * 查询记录数
