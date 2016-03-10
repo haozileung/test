@@ -166,24 +166,24 @@ public interface JdbcDao {
      * @param entity
      * @return
      */
-    int queryCount(Object entity);
+    Long queryCount(Object entity);
 
     /**
      * 查询记录数
      *
      * @param criteria the criteria
-     * @return int int
+     * @return Long int
      */
-    int queryCount(Criteria criteria);
+    Long queryCount(Criteria criteria);
 
     /**
      * 查询记录数
      *
      * @param entity   the entity
      * @param criteria the criteria
-     * @return int int
+     * @return Long int
      */
-    int queryCount(Object entity, Criteria criteria);
+    Long queryCount(Object entity, Criteria criteria);
 
     /**
      * 根据主键得到记录

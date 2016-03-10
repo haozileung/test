@@ -1,9 +1,14 @@
 package com.haozileung.web.domain.logging;
 
+import com.haozileung.infra.dal.annotation.ID;
+import com.haozileung.infra.dal.annotation.Table;
+
 /**
  * Created by haozi on 16-3-8.
  */
+@Table("sys_operate_log")
 public class OperateLog {
+    @ID
     private Long operateLogId;
     private Long operationId;
     private String params;

@@ -1,9 +1,14 @@
 package com.haozileung.web.domain.dictionary;
 
+import com.haozileung.infra.dal.annotation.ID;
+import com.haozileung.infra.dal.annotation.Table;
+
 /**
  * Created by haozi on 16-3-7.
  */
+@Table("sys_dictionary")
 public class Dictionary {
+    @ID
     private Long dictionaryId;
     private Long dicTypeId;
     private String code;

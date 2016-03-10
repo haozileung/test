@@ -1,13 +1,18 @@
 package com.haozileung.web.domain.dictionary;
 
+import com.haozileung.infra.dal.annotation.ID;
+import com.haozileung.infra.dal.annotation.Table;
+
 /**
  * Created by haozi on 16-3-8.
  */
+@Table("sys_dic_type")
 public class DicType {
 
+    @ID
     private Long dicTypeId;
 
-    private Long dictionaryId;
+    private Long parentId;
 
     private String name;
 
@@ -23,12 +28,12 @@ public class DicType {
         this.dicTypeId = dicTypeId;
     }
 
-    public Long getDictionaryId() {
-        return dictionaryId;
+    public Long getParentId() {
+        return parentId;
     }
 
-    public void setDictionaryId(Long dictionaryId) {
-        this.dictionaryId = dictionaryId;
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 
     public String getName() {

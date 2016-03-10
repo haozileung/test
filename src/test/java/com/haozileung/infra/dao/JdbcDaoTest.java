@@ -1,8 +1,11 @@
 package com.haozileung.infra.dao;
 
+import com.alibaba.fastjson.JSON;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.haozileung.infra.pager.PageResult;
+import com.haozileung.web.domain.dictionary.Dictionary;
 import com.haozileung.web.service.dictionary.IDictionaryService;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +17,9 @@ public class JdbcDaoTest {
 
     @Test
     public void testGuiceIOC() {
-        service.test();
+        Dictionary dictionary = new Dictionary();
+        PageResult<Dictionary> list = service.query(dictionary, 2, 1);
+        System.out.println(JSON.toJSON(list));
     }
 
     @Before

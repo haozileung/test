@@ -1,11 +1,16 @@
 package com.haozileung.web.domain.logging;
 
+import com.haozileung.infra.dal.annotation.ID;
+import com.haozileung.infra.dal.annotation.Table;
+
 import java.util.Date;
 
 /**
  * Created by haozi on 16-3-8.
  */
+@Table("sys_login_log")
 public class LoginLog {
+    @ID
     private Long loginLogId;
     private Long userId;
     private String ipAddress;

@@ -216,10 +216,10 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     }
 
     @Override
-    public int queryCount(Criteria criteria) {
+    public Long queryCount(Criteria criteria) {
         BoundSql boundSql = criteria.addSelectFunc("count(*)").build(true, getNameHandler());
         try {
-            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Long>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -227,11 +227,11 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     }
 
     @Override
-    public int queryCount(Object entity) {
+    public Long queryCount(Object entity) {
         BoundSql boundSql = Criteria.select(entity.getClass()).addSelectFunc("count(*)").build(entity, true,
                 getNameHandler());
         try {
-            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Long>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -239,10 +239,10 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     }
 
     @Override
-    public int queryCount(Object entity, Criteria criteria) {
+    public Long queryCount(Object entity, Criteria criteria) {
         BoundSql boundSql = criteria.addSelectFunc("count(*)").build(entity, true, getNameHandler());
         try {
-            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Integer>(),
+            return runner.query(connectionManager.getConnection(), boundSql.getSql(), new ScalarHandler<Long>(),
                     boundSql.getParameters().toArray());
         } catch (Exception e) {
             throw new JdbcAssistantException(e);
@@ -319,7 +319,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     @SuppressWarnings("unchecked")
     public <T> List<T> queryList(Criteria criteria, int pageNo, int pageSize) {
         String page = "";
-        if (pageNo > 1 && pageSize > 0) {
+        if (pageNo > 0 && pageSize > 0) {
             page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
         }
         BoundSql boundSql = criteria.build(true, getNameHandler());
@@ -352,7 +352,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     @SuppressWarnings("unchecked")
     public <T> List<T> queryList(T entity, int pageNo, int pageSize) {
         String page = "";
-        if (pageNo > 1 && pageSize > 0) {
+        if (pageNo > 0 && pageSize > 0) {
             page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
         }
         BoundSql boundSql = Criteria.select(entity.getClass()).build(entity, true, getNameHandler());
@@ -386,7 +386,7 @@ public class JdbcDaoDbUtilsImpl implements JdbcDao {
     @SuppressWarnings("unchecked")
     public <T> List<T> queryList(T entity, Criteria criteria, int pageNo, int pageSize) {
         String page = "";
-        if (pageNo > 1 && pageSize > 0) {
+        if (pageNo > 0 && pageSize > 0) {
             page = " LIMIT " + (pageNo - 1) * pageSize + "," + pageSize;
         }
         BoundSql boundSql = criteria.build(entity, true, getNameHandler());
