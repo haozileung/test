@@ -6,6 +6,7 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.haozileung.infra.pager.PageResult;
 import com.haozileung.web.domain.dictionary.Dictionary;
+import com.haozileung.web.init.DaoModule;
 import com.haozileung.web.service.dictionary.IDictionaryService;
 import org.junit.Before;
 import org.junit.Test;

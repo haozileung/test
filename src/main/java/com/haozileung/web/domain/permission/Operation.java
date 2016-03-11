@@ -1,53 +1,97 @@
+/*
+ * Powered By [rapid-framework]
+ * Web Site: http://www.rapid-framework.org.cn
+ * Google Code: http://code.google.com/p/rapid-framework/
+ * Since 2008 - 2016
+ */
+
 package com.haozileung.web.domain.permission;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
+
+import java.io.Serializable;
+
 /**
- * Created by haozi on 16-3-8.
+ * @author Haozi
+ * @version 1.0
+ * @since 1.0
  */
-public class Operation {
+
+public class Operation implements Serializable {
+
+    // columns START
     private Long operationId;
     private String url;
     private String name;
     private String remarks;
-
     private Integer status;
+    // columns END
 
-    public Long getOperationId() {
-        return operationId;
+    public Operation() {
     }
 
-    public void setOperationId(Long operationId) {
+    public Operation(Long operationId) {
         this.operationId = operationId;
     }
 
-    public String getUrl() {
-        return url;
+    public Long getOperationId() {
+        return this.operationId;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setOperationId(Long value) {
+        this.operationId = value;
+    }
+
+    public String getUrl() {
+        return this.url;
+    }
+
+    public void setUrl(String value) {
+        this.url = value;
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String value) {
+        this.name = value;
     }
 
     public String getRemarks() {
-        return remarks;
+        return this.remarks;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRemarks(String value) {
+        this.remarks = value;
     }
 
     public Integer getStatus() {
-        return status;
+        return this.status;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatus(Integer value) {
+        this.status = value;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder().append(getOperationId()).toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof Operation == false)
+            return false;
+        if (this == obj)
+            return true;
+        Operation other = (Operation) obj;
+        return new EqualsBuilder().append(getOperationId(), other.getOperationId()).isEquals();
     }
 }

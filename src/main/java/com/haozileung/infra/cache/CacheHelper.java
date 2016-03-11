@@ -16,10 +16,10 @@ public class CacheHelper {
     private static final Logger logger = LoggerFactory.getLogger(CacheHelper.class);
 
     @Inject
-    @Named("ehcache")
+    @Named("CacheOne")
     private CacheManager l1cache;
     @Inject
-    @Named("memcached")
+    @Named("CacheTwo")
     private CacheManager l2cache;
     @Inject
     private ThreadExecution excutor;

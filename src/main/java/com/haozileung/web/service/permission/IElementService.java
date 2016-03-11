@@ -1,18 +1,15 @@
 package com.haozileung.web.service.permission;
 
-import com.google.inject.ImplementedBy;
 import com.haozileung.infra.pager.PageResult;
-import com.haozileung.web.domain.dictionary.Dictionary;
-import com.haozileung.web.service.dictionary.impl.DictionaryServiceImpl;
+import com.haozileung.web.domain.permission.Element;
 
-@ImplementedBy(DictionaryServiceImpl.class)
 public interface IElementService {
 
-    void save(Dictionary dictionary);
+    void save(Element dictionary);
 
-    void update(Dictionary dictionary);
+    void update(Element dictionary);
 
-    void delete(Dictionary dictionary);
+    void delete(Element dictionary);
 
-    PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize);
+    PageResult<Element> query(Element dictionary, int pageNo, int pageSize);
 }

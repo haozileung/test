@@ -1,18 +1,15 @@
 package com.haozileung.web.service.logging;
 
-import com.google.inject.ImplementedBy;
 import com.haozileung.infra.pager.PageResult;
-import com.haozileung.web.domain.dictionary.Dictionary;
-import com.haozileung.web.service.dictionary.impl.DictionaryServiceImpl;
+import com.haozileung.web.domain.logging.LoginLog;
 
-@ImplementedBy(DictionaryServiceImpl.class)
 public interface ILoginLogService {
 
-    void save(Dictionary dictionary);
+    void save(LoginLog dictionary);
 
-    void update(Dictionary dictionary);
+    void update(LoginLog dictionary);
 
-    void delete(Dictionary dictionary);
+    void delete(LoginLog dictionary);
 
-    PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize);
+    PageResult<LoginLog> query(LoginLog dictionary, int pageNo, int pageSize);
 }

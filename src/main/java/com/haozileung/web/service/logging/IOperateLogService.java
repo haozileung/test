@@ -1,18 +1,15 @@
 package com.haozileung.web.service.logging;
 
-import com.google.inject.ImplementedBy;
 import com.haozileung.infra.pager.PageResult;
-import com.haozileung.web.domain.dictionary.Dictionary;
-import com.haozileung.web.service.dictionary.impl.DictionaryServiceImpl;
+import com.haozileung.web.domain.logging.OperateLog;
 
-@ImplementedBy(DictionaryServiceImpl.class)
 public interface IOperateLogService {
 
-    void save(Dictionary dictionary);
+    void save(OperateLog dictionary);
 
-    void update(Dictionary dictionary);
+    void update(OperateLog dictionary);
 
-    void delete(Dictionary dictionary);
+    void delete(OperateLog dictionary);
 
-    PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize);
+    PageResult<OperateLog> query(OperateLog dictionary, int pageNo, int pageSize);
 }

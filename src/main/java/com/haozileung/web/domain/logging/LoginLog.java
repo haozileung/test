@@ -1,16 +1,29 @@
+/*
+ * Powered By [rapid-framework]
+ * Web Site: http://www.rapid-framework.org.cn
+ * Google Code: http://code.google.com/p/rapid-framework/
+ * Since 2008 - 2016
+ */
+
 package com.haozileung.web.domain.logging;
 
-import com.haozileung.infra.dal.annotation.ID;
-import com.haozileung.infra.dal.annotation.Table;
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang.builder.ToStringStyle;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * Created by haozi on 16-3-8.
+ * @author Haozi
+ * @version 1.0
+ * @since 1.0
  */
-@Table("sys_login_log")
-public class LoginLog {
-    @ID
+
+public class LoginLog implements Serializable {
+
+    // columns START
     private Long loginLogId;
     private Long userId;
     private String ipAddress;
@@ -18,60 +31,86 @@ public class LoginLog {
     private Integer result;
     private String browser;
     private String remarks;
+    // columns END
 
-    public Long getLoginLogId() {
-        return loginLogId;
+    public LoginLog() {
     }
 
-    public void setLoginLogId(Long loginLogId) {
+    public LoginLog(Long loginLogId) {
         this.loginLogId = loginLogId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getLoginLogId() {
+        return this.loginLogId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setLoginLogId(Long value) {
+        this.loginLogId = value;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public void setUserId(Long value) {
+        this.userId = value;
     }
 
     public String getIpAddress() {
-        return ipAddress;
+        return this.ipAddress;
     }
 
-    public void setIpAddress(String ipAddress) {
-        this.ipAddress = ipAddress;
+    public void setIpAddress(String value) {
+        this.ipAddress = value;
     }
 
     public Date getLoginTime() {
-        return loginTime;
+        return this.loginTime;
     }
 
-    public void setLoginTime(Date loginTime) {
-        this.loginTime = loginTime;
+    public void setLoginTime(Date value) {
+        this.loginTime = value;
     }
 
     public Integer getResult() {
-        return result;
+        return this.result;
     }
 
-    public void setResult(Integer result) {
-        this.result = result;
+    public void setResult(Integer value) {
+        this.result = value;
     }
 
     public String getBrowser() {
-        return browser;
+        return this.browser;
     }
 
-    public void setBrowser(String browser) {
-        this.browser = browser;
+    public void setBrowser(String value) {
+        this.browser = value;
     }
 
     public String getRemarks() {
-        return remarks;
+        return this.remarks;
     }
 
-    public void setRemarks(String remarks) {
-        this.remarks = remarks;
+    public void setRemarks(String value) {
+        this.remarks = value;
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+
+    public int hashCode() {
+        return new HashCodeBuilder().append(getLoginLogId()).toHashCode();
+    }
+
+    public boolean equals(Object obj) {
+        if (obj instanceof LoginLog == false)
+            return false;
+        if (this == obj)
+            return true;
+        LoginLog other = (LoginLog) obj;
+        return new EqualsBuilder().append(getLoginLogId(), other.getLoginLogId()).isEquals();
     }
 }
