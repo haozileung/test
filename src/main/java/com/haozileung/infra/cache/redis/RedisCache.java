@@ -36,7 +36,7 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    public <T> T get(String key) throws CacheException {
+    public <T extends Serializable> T get(String key) throws CacheException {
         T obj = null;
         Jedis cache = provider.getResource();
         try {
@@ -56,7 +56,7 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    public void put(String key, Object value) throws CacheException {
+    public <T extends Serializable> void put(String key, T value) throws CacheException {
         if (value == null)
             remove(key);
         else {
@@ -72,7 +72,7 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    public void update(String key, Object value) throws CacheException {
+    public <T extends Serializable> void update(String key, T value) throws CacheException {
         put(key, value);
     }
 
@@ -89,8 +89,7 @@ public class RedisCache implements Cache {
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public List keys() throws CacheException {
+    public List<String> keys() throws CacheException {
         Jedis cache = provider.getResource();
         try {
             List<String> keys = new ArrayList<String>();

@@ -32,7 +32,7 @@ public class CacheHelper {
      * @param invoker 回调方法
      * @return 返回对应类型的数据
      */
-    public <T> T get(final String region, final String key, final ICacheInvoker<T> invoker) {
+    public <T extends Serializable> T get(final String region, final String key, final ICacheInvoker<T> invoker) {
         // 1. 从正常缓存中获取数据
         T data = l1cache.get(region, key);
         if (data == null) {
@@ -51,7 +51,7 @@ public class CacheHelper {
                     excutor.addTask(new Thread(thread_name) {
                         @Override
                         public void run() {
-                            Object result = invoker.callback();
+                            T result = invoker.callback();
                             if (result != null) {
                                 l1cache.set(region, key, result);
                                 l2cache.set(region, key, result);

@@ -6,6 +6,7 @@ import com.haozileung.infra.cache.CacheException;
 import com.haozileung.infra.cache.ehcache.EhCacheManager;
 import com.whalin.MemCached.MemCachedClient;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class MemCache implements Cache {
      * @throws CacheException
      */
     @Override
-    public <T> T get(String key) throws CacheException {
+    public <T extends Serializable> T get(String key) throws CacheException {
         return !Strings.isNullOrEmpty(key) ? (T) mc.get(key, hash) : null;
     }
 
@@ -54,7 +55,7 @@ public class MemCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void update(String key, Object value) throws CacheException {
+    public <T extends Serializable> void update(String key, T value) throws CacheException {
         put(key, value);
     }
 
@@ -67,7 +68,7 @@ public class MemCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void put(String key, Object value) throws CacheException {
+    public <T extends Serializable> void put(String key, T value) throws CacheException {
         if (Strings.isNullOrEmpty(key)) {
             return;
         }

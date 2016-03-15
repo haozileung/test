@@ -1,5 +1,6 @@
 package com.haozileung.infra.cache;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public interface Cache {
      * @return the cached object or <tt>null</tt>
      * @throws CacheException
      */
-    <T> T get(String key) throws CacheException;
+    <T extends Serializable> T get(String key) throws CacheException;
 
     /**
      * Add an item to the cache, nontransactionally, with failfast semantics
@@ -24,7 +25,7 @@ public interface Cache {
      * @param value
      * @throws CacheException
      */
-    <T> void put(String key, T value) throws CacheException;
+    <T extends Serializable> void put(String key, T value) throws CacheException;
 
     /**
      * Add an item to the cache
@@ -33,7 +34,7 @@ public interface Cache {
      * @param value
      * @throws CacheException
      */
-    void update(String key, Object value) throws CacheException;
+    <T extends Serializable> void update(String key, T value) throws CacheException;
 
     List<String> keys() throws CacheException;
 

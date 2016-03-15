@@ -8,6 +8,8 @@ import com.haozileung.infra.cache.CacheProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
+
 /**
  * 缓存助手
  */
@@ -48,7 +50,7 @@ public class MemcacheManager implements CacheManager {
      * @return
      */
     @Override
-    public final <T> T get(String name, String key) {
+    public final <T extends Serializable> T get(String name, String key) {
         if (name != null && key != null)
             return _GetCache(name).get(key);
         return null;
@@ -57,14 +59,14 @@ public class MemcacheManager implements CacheManager {
     /**
      * 获取缓存中的数据
      *
-     * @param <T>
+     * @param <T extends Serializable>
      * @param resultClass
      * @param name
      * @param key
      * @return
      */
     @Override
-    public final <T> T get(Class<T> resultClass, String name, String key) {
+    public final <T extends Serializable> T get(Class<T> resultClass, String name, String key) {
         if (name != null && key != null)
             return _GetCache(name).get(key);
         return null;
@@ -78,7 +80,7 @@ public class MemcacheManager implements CacheManager {
      * @param value
      */
     @Override
-    public final <T> void set(String name, String key, T value) {
+    public final <T extends Serializable> void set(String name, String key, T value) {
         if (name != null && key != null && value != null)
             _GetCache(name).put(key, value);
     }

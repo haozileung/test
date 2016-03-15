@@ -22,6 +22,7 @@ import com.haozileung.infra.cache.CacheException;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -42,8 +43,7 @@ public class EhCache implements Cache {
     }
 
     @Override
-    @SuppressWarnings({"rawtypes", "unchecked"})
-    public List keys() throws CacheException {
+    public List<String> keys() throws CacheException {
         return this.cache.getKeys();
     }
 
@@ -57,7 +57,7 @@ public class EhCache implements Cache {
      * @throws CacheException
      */
     @Override
-    public <T> T get(String key) throws CacheException {
+    public <T extends Serializable> T get(String key) throws CacheException {
         try {
             if (Strings.isNullOrEmpty(key)) {
                 return null;
@@ -81,7 +81,7 @@ public class EhCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void update(String key, Object value) throws CacheException {
+    public <T extends Serializable> void update(String key, T value) throws CacheException {
         put(key, value);
     }
 
@@ -94,7 +94,7 @@ public class EhCache implements Cache {
      *                        {@link Exception} occurs.
      */
     @Override
-    public void put(String key, Object value) throws CacheException {
+    public <T extends Serializable> void put(String key, T value) throws CacheException {
         try {
             Element element = new Element(key, value);
             cache.put(element);
