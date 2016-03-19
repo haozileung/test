@@ -3,9 +3,11 @@
 .classpath
 .project
 *.iml
+*.iws
+*.ipr
 .idea/
 target/
 classes
 bower_components/
 node_modules/
-public/
+assets/
