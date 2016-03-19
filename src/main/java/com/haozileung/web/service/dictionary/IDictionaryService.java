@@ -8,11 +8,11 @@ import com.haozileung.web.service.dictionary.impl.DictionaryServiceImpl;
 @ImplementedBy(DictionaryServiceImpl.class)
 public interface IDictionaryService {
 
-    void save(Dictionary dictionary);
+    Long save(Dictionary dictionary);
 
-    void update(Dictionary dictionary);
+    Integer update(Dictionary dictionary);
 
-    void delete(Dictionary dictionary);
+    Integer delete(Dictionary dictionary);
 
     PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize);
 }

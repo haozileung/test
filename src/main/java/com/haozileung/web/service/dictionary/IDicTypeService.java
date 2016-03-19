@@ -8,11 +8,11 @@ import com.haozileung.web.service.dictionary.impl.DicTypeServiceImpl;
 @ImplementedBy(DicTypeServiceImpl.class)
 public interface IDicTypeService {
 
-    void save(DicType dictionary);
+    Long save(DicType dic);
 
-    void update(DicType dictionary);
+    Integer update(DicType dic);
 
-    void delete(DicType dictionary);
+    Integer delete(DicType dic);
 
-    PageResult<DicType> query(DicType dictionary, int pageNo, int pageSize);
+    PageResult<DicType> query(DicType dic, int pageNo, int pageSize);
 }

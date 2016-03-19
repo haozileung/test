@@ -60,12 +60,11 @@ public class MemCache implements Cache {
     }
 
     /**
-     * Puts an object into the cache.
      *
      * @param key
      * @param value
-     * @throws CacheException if the {@link EhCacheManager} is shutdown or another
-     *                        {@link Exception} occurs.
+     * @param <T>
+     * @throws CacheException
      */
     @Override
     public <T extends Serializable> void put(String key, T value) throws CacheException {

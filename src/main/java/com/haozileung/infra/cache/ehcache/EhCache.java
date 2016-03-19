@@ -33,10 +33,8 @@ public class EhCache implements Cache {
     private net.sf.ehcache.Cache cache;
 
     /**
-     * Creates a new Hibernate pluggable cache based on a cache name.
-     * <p/>
      *
-     * @param cache The underlying EhCache instance to use.
+     * @param cache
      */
     public EhCache(net.sf.ehcache.Cache cache) {
         this.cache = cache;
@@ -48,12 +46,10 @@ public class EhCache implements Cache {
     }
 
     /**
-     * Gets a value of an element which matches the given key.
      *
+     * @param key
      * @param <T>
-     * @param key the key of the element to return.
-     * @return The value placed into the cache with an earlier put, or null if
-     * not found or expired
+     * @return
      * @throws CacheException
      */
     @Override
