@@ -1,0 +1,55 @@
+{
+  "name": "test",
+  "authors": [
+    "YamchaL"
+  ],
+  "license": "MIT",
+  "moduleType": [
+    "es6",
+    "node"
+  ],
+  "private": true,
+  "dependencies": {
+    "moment": "*",
+    "jquery": "*",
+    "bootstrap": "*",
+    "metisMenu": "*",
+    "font-awesome": "*",
+    "layer": "*",
+    "echarts": "*",
+    "bootstrap-table": "*",
+    "jquery-form": "*",
+    "eonasdan-bootstrap-datetimepicker": "*"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "dist/js/bootstrap.js",
+        "dist/css/bootstrap.css",
+        "less/bootstrap.less"
+      ]
+    },
+    "bootstrap-table": {
+      "main": [
+        "src/bootstrap-table.js",
+        "src/locale/bootstrap-table-zh-CN.js",
+        "src/bootstrap-table.css"
+      ]
+    },
+    "font-awesome": {
+      "main": [
+        "css/font-awesome.css"
+      ]
+    },
+    "jquery-form": {
+      "main": [
+        "jquery.form.js"
+      ]
+    },
+    "echarts": {
+      "main": [
+        "dist/echarts.js"
+      ]
+    }
+  }
+}

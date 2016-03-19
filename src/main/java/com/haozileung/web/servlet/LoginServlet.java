@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * @author Haozi
  */
-@WebServlet(name = "index", urlPatterns = "/index", loadOnStartup = 1)
-public class IndexServlet extends BaseServlet {
+@WebServlet(name = "login", urlPatterns = "/login", loadOnStartup = 1)
+public class LoginServlet extends BaseServlet {
     /**
      *
      */
@@ -21,7 +21,7 @@ public class IndexServlet extends BaseServlet {
 
     @Override
     public String get(HttpServletRequest req, HttpServletResponse resp) {
-        return "index.html";
+        return "login.html";
     }
 
 }

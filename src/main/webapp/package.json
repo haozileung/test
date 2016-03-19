@@ -1,0 +1,22 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "description": "test project",
+  "author": "Haozi Leung",
+  "license": "MIT",
+  "devDependencies": {
+    "babel-preset-es2015": "*",
+    "babel-preset-react": "*",
+    "babelify": "*",
+    "bower": "*",
+    "browserify": "*",
+    "event-stream": "*",
+    "glob": "*",
+    "gulp": "*",
+    "gulp-less": "*",
+    "gulp-rename": "*",
+    "gulp-webserver": "*",
+    "vinyl-source-stream": "*",
+    "wiredep": "*"
+  }
+}

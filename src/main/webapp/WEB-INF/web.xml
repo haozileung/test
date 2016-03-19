@@ -16,6 +16,6 @@
         <location>/errors/500.html</location>
     </error-page>
     <welcome-file-list>
-        <welcome-file>index.html</welcome-file>
+        <welcome-file>index</welcome-file>
     </welcome-file-list>
 </web-app>
