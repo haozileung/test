@@ -40,7 +40,6 @@ public class DictionaryServlet extends BaseServlet {
             BeanUtilsBean.getInstance().populate(dictionary, req.getParameterMap());
             int pageNo = Integer.parseInt(req.getParameter("pageNo"));
             result = dictionaryService.query(dictionary,pageNo,20);
-            return result;
         } catch (IllegalAccessException e) {
             logger.error(e.getMessage(), e);
         } catch (InvocationTargetException e) {
