@@ -1,5 +1,6 @@
 package com.haozileung.web.service.dictionary.impl;
 
+import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.inject.Inject;
 import com.haozileung.infra.pager.PageResult;
@@ -55,7 +56,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
     }
 
     @Override
-    public PageResult<Dictionary> query(Dictionary dictionary, int pageNo, int pageSize) {
+    public PageResult<Dictionary> query(Dictionary dictionary, int offset, int limit) {
         PageResult<Dictionary> pager = new PageResult<Dictionary>();
         StringBuffer querySQL = new StringBuffer("SELECT * FROM sys_dictionary WHERE 1=1 ");
         StringBuffer countSQL = new StringBuffer("SELECT COUNT(*) FROM sys_dictionary WHERE 1=1 ");
@@ -69,11 +70,11 @@ public class DictionaryServiceImpl implements IDictionaryService {
             where.append("AND dicTypeId = ?");
             params.add(dictionary.getDicTypeId());
         }
-        if (dictionary.getCode() != null) {
+        if (!Strings.isNullOrEmpty(dictionary.getCode())) {
             where.append("AND code = ?");
             params.add(dictionary.getCode());
         }
-        if (dictionary.getName() != null) {
+        if (!Strings.isNullOrEmpty(dictionary.getName())) {
             where.append("AND name = ?");
             params.add(dictionary.getName());
         }
@@ -81,16 +82,22 @@ public class DictionaryServiceImpl implements IDictionaryService {
             where.append("AND status = ?");
             params.add(dictionary.getStatus());
         }
-        if (pageNo <= 0) {
-            pageNo = 1;
+        if (offset < 0) {
+            offset = 0;
         }
-        if (pageSize > 0) {
-            querySQL.append(where).append(" LIMIT ").append((pageNo - 1) * pageSize).append(",").append(pageSize);
+        Long total = Long.MAX_VALUE;
+        if (limit > 0) {
+            querySQL.append(where).append(" LIMIT ").append(offset).append(",").append(limit);
+            countSQL.append(where);
+            try {
+                total = runner.query(countSQL.toString(), new ScalarHandler<Long>(), params.toArray());
+            } catch (SQLException e) {
+                logger.error(e.getMessage(),e);
+                total = 0L;
+            }
         }
-        countSQL.append(where);
         try {
-            List<Dictionary> list = runner.query(querySQL.toString(), new BeanListHandler<Dictionary>(Dictionary.class), params.toArray());
-            Long total = runner.query(countSQL.toString(), new ScalarHandler<Long>(), params.toArray());
+            List<Dictionary> list = runner.query(querySQL.toString(), new BeanListHandler<>(Dictionary.class), params.toArray());
             pager.setRows(list);
             pager.setTotal(total);
         } catch (SQLException e) {

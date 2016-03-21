@@ -1,24 +1,18 @@
 'use strict';
 require('./lib/common.js');
 function getFormData(params) {
-    return $.extend(true, params, require('./lib/formutil.js').getData('testForm'));
+    return $.extend(true, params, require('./lib/formutil.js').getData('searchForm'));
 }
 $('#table').bootstrapTable({
-    sortOrder: 'desc',
-    url: 'data.json',
+    url: '/dictionary',
     sidePagination: 'server',
     pagination: true,
     queryParams: getFormData,
-    columns: [{
-        field: 'id',
-        title: 'Item ID'
-    }, {
-        field: 'name',
-        title: 'Item Name'
-    }, {
-        field: 'price',
-        title: 'Item Price'
-    }]
+    columns: [
+    {field: 'code',title: '编码'},
+    {field: 'name',title: '名称'},
+    {field: 'remarks',title: '备注'}
+    ]
 });
 $("#test").on('click', function () {
     $('#table').bootstrapTable('selectPage', 1);
