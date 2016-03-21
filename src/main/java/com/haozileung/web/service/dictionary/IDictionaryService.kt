@@ -79,17 +79,16 @@ class IDictionaryService {
         }
         try {
             var total = 0L;
-            println(params)
             if (limit > 0) {
                 querySQL.append(where).append(" LIMIT ").append(offset).append(",").append(limit);
                 countSQL.append(where);
                 try {
-                    total = runner.query(countSQL.toString(), ScalarHandler<Long>(), params.toArray());
+                    total = runner.query(countSQL.toString(), ScalarHandler<Long>(), *params.toArray());
                 } catch (e: SQLException) {
                     logger.error(e.message);
                 }
             }
-            val list = runner.query(querySQL.toString(), BeanListHandler<Dictionary>(Dictionary::class.java), params.toArray());
+            val list = runner.query(querySQL.toString(), BeanListHandler<Dictionary>(Dictionary::class.java), *params.toArray());
             pager.rows = list;
             pager.total = total;
         } catch (e: SQLException) {

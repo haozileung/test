@@ -33,7 +33,6 @@ class DictionaryServlet() : BaseServlet() {
             BeanUtilsBean.getInstance().populate(dictionary, req.parameterMap);
             val offset = Integer.parseInt(req.getParameter("offset"));
             val limit = Integer.parseInt(req.getParameter("limit"));
-            println(dictionary)
             return dictionaryService.query(dictionary, offset, limit);
         } catch (e: IllegalAccessException) {
             logger.error(e.message, e);
