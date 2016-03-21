@@ -33,7 +33,6 @@ public class EhCache implements Cache {
     private net.sf.ehcache.Cache cache;
 
     /**
-     *
      * @param cache
      */
     public EhCache(net.sf.ehcache.Cache cache) {
@@ -46,7 +45,6 @@ public class EhCache implements Cache {
     }
 
     /**
-     *
      * @param key
      * @param <T>
      * @return

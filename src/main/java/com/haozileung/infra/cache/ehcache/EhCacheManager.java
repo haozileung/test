@@ -60,7 +60,7 @@ public class EhCacheManager implements CacheManager {
     /**
      * 获取缓存中的数据
      *
-     * @param <T extends Serializable>
+     * @param <T          extends Serializable>
      * @param resultClass
      * @param name
      * @param key

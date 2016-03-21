@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse
 /**
  * Created by haozi on 16-3-20.
  */
-@WebServlet(name = "index", value = "/index",loadOnStartup = 1)
-class IndexController: BaseServlet() {
-    private val logger : Logger = LoggerFactory.getLogger(IndexController::class.java);
-    override fun get(req: HttpServletRequest, res: HttpServletResponse):Any {
-       return "index.html";
+@WebServlet(name = "index", value = "/index", loadOnStartup = 1)
+class IndexController : BaseServlet() {
+    val logger: Logger = LoggerFactory.getLogger(IndexController::class.java);
+    override fun get(req: HttpServletRequest, res: HttpServletResponse): Any {
+        return "index.html";
     }
 }

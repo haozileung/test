@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServlet
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
-abstract class BaseServlet : HttpServlet() {
+open abstract class BaseServlet : HttpServlet() {
     private final val logger: Logger = LoggerFactory.getLogger(BaseServlet::class.java);
 
     override fun init() {

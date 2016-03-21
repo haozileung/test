@@ -3,6 +3,7 @@
  */
 package com.haozileung.web.controller;
 
+import com.google.inject.Inject
 import com.haozileung.infra.pager.PageResult
 import com.haozileung.infra.web.BaseServlet
 import com.haozileung.infra.web.Initializer
@@ -19,27 +20,26 @@ import javax.servlet.http.HttpServletResponse
 /**
  * @author Haozi
  */
-@WebServlet(name = "dictionary", value = "/dictionary",loadOnStartup = 1)
+@WebServlet(name = "dictionary", value = "/dictionary", loadOnStartup = 1)
 class DictionaryServlet() : BaseServlet() {
 
-    private final val logger:Logger = LoggerFactory.getLogger(DictionaryServlet::class.java);
+    private final val logger: Logger = LoggerFactory.getLogger(DictionaryServlet::class.java);
 
-    val dictionaryService: IDictionaryService = Initializer.instance?.getInstance(IDictionaryService::class.java)!!;
+    @Inject
+    lateinit var dictionaryService: IDictionaryService;
 
-    override fun  get(req:HttpServletRequest, resp:HttpServletResponse) :PageResult<Dictionary>{
-        val  dictionary :Dictionary =  Dictionary();
-        var result:PageResult<Dictionary>  = PageResult();
+    override fun get(req: HttpServletRequest, resp: HttpServletResponse): PageResult<Dictionary> {
+        val dictionary: Dictionary = Dictionary();
         try {
             BeanUtilsBean.getInstance().populate(dictionary, req.parameterMap);
             val offset = Integer.parseInt(req.getParameter("offset"));
-            val  limit = Integer.parseInt(req.getParameter("limit"));
-            result = dictionaryService.query(dictionary,offset,limit);
-        } catch ( e:IllegalAccessException) {
+            val limit = Integer.parseInt(req.getParameter("limit"));
+            return dictionaryService.query(dictionary, offset, limit);
+        } catch (e: IllegalAccessException) {
             logger.error(e.message, e);
-        } catch ( e:InvocationTargetException) {
+        } catch (e: InvocationTargetException) {
             logger.error(e.message, e);
-        }finally {
-            return result;
         }
+        return PageResult();
     }
 }

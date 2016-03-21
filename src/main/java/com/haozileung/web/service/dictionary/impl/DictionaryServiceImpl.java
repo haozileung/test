@@ -19,6 +19,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
     private static final Logger logger = LoggerFactory.getLogger(DictionaryServiceImpl.class);
     @Inject
     private QueryRunner runner;
+
     @Override
     public Long save(Dictionary dictionary) {
         String sql = "INSERT INTO sys_dictionary (dicTypeId,code,name,remarks,status)values(?,?,?,?,?,?,?)";
@@ -92,7 +93,7 @@ public class DictionaryServiceImpl implements IDictionaryService {
             try {
                 total = runner.query(countSQL.toString(), new ScalarHandler<Long>(), params.toArray());
             } catch (SQLException e) {
-                logger.error(e.getMessage(),e);
+                logger.error(e.getMessage(), e);
                 total = 0L;
             }
         }
