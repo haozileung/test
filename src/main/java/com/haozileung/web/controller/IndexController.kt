@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
 @WebServlet(name = "index", value = "/index", loadOnStartup = 1)
 class IndexController : BaseServlet() {
     val logger: Logger = LoggerFactory.getLogger(IndexController::class.java);
-    override fun get(req: HttpServletRequest, res: HttpServletResponse): Any {
+    override fun get(req: HttpServletRequest, resp: HttpServletResponse): Any {
         return "index.html";
     }
 }

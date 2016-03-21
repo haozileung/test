@@ -4,7 +4,7 @@ import com.google.inject.Injector
 import javax.servlet.Filter
 import javax.servlet.FilterConfig
 
-open abstract class BaseFilter : Filter {
+abstract class BaseFilter : Filter {
 
     override fun init(filterConfig: FilterConfig) {
         if (Initializer.instance != null) {

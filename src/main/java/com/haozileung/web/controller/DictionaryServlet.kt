@@ -6,7 +6,6 @@ package com.haozileung.web.controller;
 import com.google.inject.Inject
 import com.haozileung.infra.pager.PageResult
 import com.haozileung.infra.web.BaseServlet
-import com.haozileung.infra.web.Initializer
 import com.haozileung.web.domain.dictionary.Dictionary
 import com.haozileung.web.service.dictionary.IDictionaryService
 import org.apache.commons.beanutils.BeanUtilsBean
@@ -34,6 +33,7 @@ class DictionaryServlet() : BaseServlet() {
             BeanUtilsBean.getInstance().populate(dictionary, req.parameterMap);
             val offset = Integer.parseInt(req.getParameter("offset"));
             val limit = Integer.parseInt(req.getParameter("limit"));
+            println(dictionary)
             return dictionaryService.query(dictionary, offset, limit);
         } catch (e: IllegalAccessException) {
             logger.error(e.message, e);

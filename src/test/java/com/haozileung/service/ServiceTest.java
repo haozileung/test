@@ -7,7 +7,6 @@ import com.google.inject.Injector;
 import com.haozileung.infra.pager.PageResult;
 import com.haozileung.web.domain.dictionary.Dictionary;
 import com.haozileung.web.init.DaoModule;
-import com.haozileung.web.service.dictionary.IDictionaryService;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -18,7 +17,7 @@ public class ServiceTest {
 
     @Test
     public void testGuiceIOC() {
-        Dictionary dictionary = new Dictionary();
+        Dictionary dictionary = new Dictionary(0);
         dictionary.setDictionaryId(1L);
         PageResult<Dictionary> list = service.query(dictionary, 1, 20);
         System.out.println(JSON.toJSON(list));
