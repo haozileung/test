@@ -7,4 +7,3 @@ class Initializer {
         var instance: Injector? = null;
     }
 }
-

@@ -20,13 +20,10 @@ import javax.servlet.http.HttpServletResponse
  * @author Haozi
  */
 @WebServlet(name = "dictionary", value = "/dictionary", loadOnStartup = 1)
-class DictionaryServlet() : BaseServlet() {
-
-    private final val logger: Logger = LoggerFactory.getLogger(DictionaryServlet::class.java);
-
+class DictionaryController : BaseServlet() {
+    private final val logger: Logger = LoggerFactory.getLogger(DictionaryController::class.java);
     @Inject
     lateinit var dictionaryService: IDictionaryService;
-
     override fun get(req: HttpServletRequest, resp: HttpServletResponse): PageResult<Dictionary> {
         val dictionary: Dictionary = Dictionary();
         try {
