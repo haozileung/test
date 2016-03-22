@@ -24,5 +24,4 @@ data class LoginLog(var loginLogId: Long? = null,
                     var loginTime: Date? = null,
                     var result: Int? = null,
                     var browser: String? = null,
-                    var remarks: String? = null) : Serializable {
-}
+                    var remarks: String? = null) : Serializable

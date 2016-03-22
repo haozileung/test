@@ -17,5 +17,4 @@ import java.io.Serializable
  * @since 1.0
  */
 data class UserRole(var userId: Long? = null,
-                    var roleId: Long? = null) : Serializable {
-}
+                    var roleId: Long? = null) : Serializable

@@ -20,5 +20,4 @@ import java.io.Serializable
 data class Role(var roleId: Long? = null,
                 var name: String? = null,
                 var remarks: String? = null,
-                var status: Int? = null) : Serializable {
-}
+                var status: Int? = null) : Serializable

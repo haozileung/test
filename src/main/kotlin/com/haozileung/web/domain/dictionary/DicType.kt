@@ -19,5 +19,4 @@ data class DicType(var dicTypeId: Long? = null,
                    var parentId: Long? = null,
                    var name: String? = null,
                    var remarks: String? = null,
-                   var status: Int? = null) : Serializable {
-}
+                   var status: Int? = null) : Serializable

@@ -21,6 +21,4 @@ data class Menu(var menuId: Long? = null,
                 var name: String? = null,
                 var parentId: Long? = null,
                 var remarks: String? = null,
-                var status: Int? = null) : Serializable {
-
-}
+                var status: Int? = null) : Serializable

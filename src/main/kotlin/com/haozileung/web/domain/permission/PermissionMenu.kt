@@ -17,6 +17,4 @@ import java.io.Serializable
  * @since 1.0
  */
 data class PermissionMenu(var permissionId: Long? = null,
-                          var menuId: Long? = null) : Serializable {
-
-}
+                          var menuId: Long? = null) : Serializable

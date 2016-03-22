@@ -20,6 +20,4 @@ data class Operation(var operationId: Long? = null,
                      var url: String? = null,
                      var name: String? = null,
                      var remarks: String? = null,
-                     var status: Int? = null) : Serializable {
-
-}
+                     var status: Int? = null) : Serializable

@@ -17,5 +17,4 @@ import java.io.Serializable
  * @since 1.0
  */
 data class RolePermission(var roleId: Long? = null,
-                          var permissionId: Long? = null) : Serializable {
-}
+                          var permissionId: Long? = null) : Serializable

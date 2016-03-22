@@ -21,5 +21,4 @@ data class Permission(var permissionId: Long? = null,
                       var type: String? = null,
                       var code: String? = null,
                       var remarks: String? = null,
-                      var status: Int? = null) : Serializable {
-}
+                      var status: Int? = null) : Serializable

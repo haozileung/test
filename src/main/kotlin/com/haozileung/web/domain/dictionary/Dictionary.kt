@@ -19,5 +19,4 @@ data class Dictionary(var dictionaryId: Long? = null,
                       var code: String? = null,
                       var name: String? = null,
                       var remarks: String? = null,
-                      var status: Int? = null) : Serializable {
-}
+                      var status: Int? = null) : Serializable

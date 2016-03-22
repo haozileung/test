@@ -21,5 +21,4 @@ data class OperateLog(var operateLogId: Long? = null,
                       var params: String? = null,
                       var userId: Long? = null,
                       var ipAddress: String? = null,
-                      var remarks: String? = null) : Serializable {
-}
+                      var remarks: String? = null) : Serializable

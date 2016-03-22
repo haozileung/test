@@ -22,5 +22,4 @@ data class User(var userId: Long? = null,
                 var password: String? = null,
                 var email: String? = null,
                 var remarks: String? = null,
-                var status: Int? = null) : Serializable {
-}
+                var status: Int? = null) : Serializable

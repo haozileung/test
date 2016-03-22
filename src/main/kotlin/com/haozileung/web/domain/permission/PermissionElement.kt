@@ -17,6 +17,4 @@ import java.io.Serializable
  * @since 1.0
  */
 data class PermissionElement(var permissionId: Long? = null,
-                             var elementId: Long? = null) : Serializable {
-
-}
+                             var elementId: Long? = null) : Serializable
