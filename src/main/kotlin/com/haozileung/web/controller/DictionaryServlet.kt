@@ -35,9 +35,9 @@ class DictionaryServlet() : BaseServlet() {
             val limit = Integer.parseInt(req.getParameter("limit"));
             return dictionaryService.query(dictionary, offset, limit);
         } catch (e: IllegalAccessException) {
-            logger.error(e.message, e);
+            logger.error(e.message);
         } catch (e: InvocationTargetException) {
-            logger.error(e.message, e);
+            logger.error(e.message);
         }
         return PageResult();
     }
