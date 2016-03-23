@@ -49,8 +49,7 @@ class DaoModule : AbstractModule() {
             p.jdbcInterceptors = "org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer";
             val ds: DataSource = DataSource();
             ds.poolProperties = p;
-            bind(QueryRunner::class.java
-            ).toInstance(QueryRunner(ds));
+            bind(QueryRunner::class.java).toInstance(QueryRunner(ds));
         } catch (e: ConfigurationException) {
             logger.error("Config File Load Error: {}", e.message);
         }

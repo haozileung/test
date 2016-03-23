@@ -8,7 +8,9 @@
     <title>${title} - 后台管理系统</title>
     <!-- bower:css -->
     <!-- endbower -->
-    <link rel="stylesheet" href="assets/css/admin.css"/>
+    <!--: if(isNotEmpty(css)) {-->
+    <link rel="stylesheet" href="assets/css/${css}.css"/>
+    <!--: }-->
 </head>
 
 <body>
@@ -58,7 +60,9 @@
 <!-- /#wrapper -->
 <!-- bower:js -->
 <!-- endbower -->
-<script src="assets/js/admin.js"></script>
+<!--: if(isNotEmpty(js)) {-->
+<script src="assets/js/${js}.js"></script>
+<!--: } -->
 </body>
 
 </html>

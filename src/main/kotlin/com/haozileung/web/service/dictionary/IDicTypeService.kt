@@ -1,6 +1,6 @@
 package com.haozileung.web.service.dictionary;
 
-import com.haozileung.infra.pager.PageResult;
+import com.haozileung.infra.page.PageResult;
 import com.haozileung.web.domain.dictionary.DicType;
 
 

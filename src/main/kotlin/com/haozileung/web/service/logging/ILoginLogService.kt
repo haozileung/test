@@ -1,6 +1,6 @@
 package com.haozileung.web.service.logging
 
-import com.haozileung.infra.pager.PageResult
+import com.haozileung.infra.page.PageResult
 import com.haozileung.web.domain.logging.LoginLog
 
 interface ILoginLogService {

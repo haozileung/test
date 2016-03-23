@@ -1,4 +1,4 @@
-package com.haozileung.infra.pager
+package com.haozileung.infra.page
 
 import com.google.common.collect.Lists
 import java.io.Serializable

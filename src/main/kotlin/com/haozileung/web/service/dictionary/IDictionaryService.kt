@@ -1,7 +1,7 @@
 package com.haozileung.web.service.dictionary;
 
 import com.google.inject.ImplementedBy
-import com.haozileung.infra.pager.PageResult
+import com.haozileung.infra.page.PageResult
 import com.haozileung.web.domain.dictionary.Dictionary
 import com.haozileung.web.service.dictionary.impl.DictionaryServiceImpl
 

@@ -14,6 +14,6 @@ $('#table').bootstrapTable({
     {field: 'remarks',title: '备注'}
     ]
 });
-$("#test").on('click', function () {
+$("#search").on('click', function () {
     $('#table').bootstrapTable('selectPage', 1);
 });

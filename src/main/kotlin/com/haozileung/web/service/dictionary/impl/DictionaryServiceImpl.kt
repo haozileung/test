@@ -1,7 +1,7 @@
 package com.haozileung.web.service.dictionary.impl
 
 import com.google.common.base.Strings
-import com.haozileung.infra.pager.PageResult
+import com.haozileung.infra.page.PageResult
 import com.haozileung.web.domain.dictionary.Dictionary
 import com.haozileung.web.service.dictionary.IDictionaryService
 import org.apache.commons.dbutils.QueryRunner

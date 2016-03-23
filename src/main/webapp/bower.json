@@ -19,7 +19,8 @@
     "echarts": "*",
     "bootstrap-table": "*",
     "jquery-form": "*",
-    "eonasdan-bootstrap-datetimepicker": "*"
+    "eonasdan-bootstrap-datetimepicker": "*",
+    "vue": "*"
   },
   "overrides": {
     "bootstrap": {
